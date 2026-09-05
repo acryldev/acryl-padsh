@@ -1,7 +1,7 @@
-"""AMIDE session-to-session messaging skill.
+"""ACRYL session-to-session messaging skill.
 
 All routing and sender identity live in the TypeScript daemon. These functions
-only call the host bridge exposed inside the AMIDE kernel.
+only call the host bridge exposed inside the ACRYL kernel.
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
-"""Read-only AMIDE session observation skill.
+"""Read-only ACRYL session observation skill.
 
 All session lookup and data access live in the TypeScript daemon. These
-functions only call the host bridge exposed inside the AMIDE Python
+functions only call the host bridge exposed inside the ACRYL Python
 kernel.
 """
 
