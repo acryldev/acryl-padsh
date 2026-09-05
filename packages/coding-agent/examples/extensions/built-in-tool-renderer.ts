@@ -26,8 +26,8 @@
  */
 
 import { Text } from "@earendil-works/pi-tui";
-import type { BashToolDetails, EditToolDetails, ExtensionAPI } from "amide";
-import { createBashTool, createEditTool } from "amide";
+import type { BashToolDetails, EditToolDetails, ExtensionAPI } from "acryl";
+import { createBashTool, createEditTool } from "acryl";
 
 export default function (pi: ExtensionAPI) {
 	const cwd = process.cwd();

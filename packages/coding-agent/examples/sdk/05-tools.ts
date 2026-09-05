@@ -10,7 +10,7 @@
  * extensions system using pi.registerTool().
  */
 
-import { createAgentSession, SessionManager } from "amide";
+import { createAgentSession, SessionManager } from "acryl";
 
 // Default tool surface
 await createAgentSession({

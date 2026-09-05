@@ -10,7 +10,7 @@
  */
 
 import { matchesKey, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { CustomEditor, type ExtensionAPI } from "amide";
+import { CustomEditor, type ExtensionAPI } from "acryl";
 
 // Normal mode key mappings: key -> escape sequence (or null for mode switch)
 const NORMAL_KEYS: Record<string, string | null> = {

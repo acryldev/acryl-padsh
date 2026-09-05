@@ -53,7 +53,7 @@ describe("package commands", () => {
 		originalCwd = process.cwd();
 		originalAgentDir = process.env[ENV_AGENT_DIR];
 		originalPiPackageDir = process.env.PI_PACKAGE_DIR;
-		originalPrimeAgentDownloadBaseUrl = process.env.AMIDE_DOWNLOAD_BASE_URL;
+		originalPrimeAgentDownloadBaseUrl = process.env.ACRYL_DOWNLOAD_BASE_URL;
 		originalTmpDir = process.env.TMPDIR;
 		originalExitCode = process.exitCode;
 		originalExecPath = process.execPath;
@@ -69,7 +69,7 @@ describe("package commands", () => {
 		process.exitCode = originalExitCode;
 		restoreEnv(ENV_AGENT_DIR, originalAgentDir);
 		restoreEnv("PI_PACKAGE_DIR", originalPiPackageDir);
-		restoreEnv("AMIDE_DOWNLOAD_BASE_URL", originalPrimeAgentDownloadBaseUrl);
+		restoreEnv("ACRYL_DOWNLOAD_BASE_URL", originalPrimeAgentDownloadBaseUrl);
 		restoreEnv("TMPDIR", originalTmpDir);
 		Object.defineProperty(process, "execPath", { value: originalExecPath, configurable: true });
 		rmSync(tempDir, { recursive: true, force: true });
@@ -325,7 +325,7 @@ else {
 		}
 	});
 
-	it("installs the AMIDE tarball from the update manifest during self-update", async () => {
+	it("installs the ACRYL tarball from the update manifest during self-update", async () => {
 		const globalPrefix = join(tempDir, "global-prefix");
 		const selfPackageDir = join(globalPrefix, "lib", "node_modules", "@earendil-works", "pi-coding-agent");
 		const fakeNpmPath = join(tempDir, "fake-npm.cjs");
@@ -349,7 +349,7 @@ else {
 			JSON.stringify({ npmCommand: [originalExecPath, fakeNpmPath, "--prefix", globalPrefix] }, null, 2),
 		);
 		process.env.PI_PACKAGE_DIR = selfPackageDir;
-		process.env.AMIDE_DOWNLOAD_BASE_URL = baseUrl;
+		process.env.ACRYL_DOWNLOAD_BASE_URL = baseUrl;
 		Object.defineProperty(process, "execPath", {
 			value: join(selfPackageDir, "dist", "cli.js"),
 			configurable: true,
@@ -378,7 +378,7 @@ else {
 		}
 	});
 
-	it("does not self-update when the same-version manifest uses the AMIDE package alias", async () => {
+	it("does not self-update when the same-version manifest uses the ACRYL package alias", async () => {
 		const globalPrefix = join(tempDir, "global-prefix");
 		const selfPackageDir = join(globalPrefix, "lib", "node_modules", "@earendil-works", "pi-coding-agent");
 		const fakeNpmPath = join(tempDir, "fake-npm.cjs");
@@ -397,7 +397,7 @@ else fs.writeFileSync(${JSON.stringify(recordPath)},JSON.stringify(args));
 			JSON.stringify({ npmCommand: [originalExecPath, fakeNpmPath, "--prefix", globalPrefix] }, null, 2),
 		);
 		process.env.PI_PACKAGE_DIR = selfPackageDir;
-		process.env.AMIDE_DOWNLOAD_BASE_URL = baseUrl;
+		process.env.ACRYL_DOWNLOAD_BASE_URL = baseUrl;
 		Object.defineProperty(process, "execPath", {
 			value: join(selfPackageDir, "dist", "cli.js"),
 			configurable: true,

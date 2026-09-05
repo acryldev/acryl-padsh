@@ -1,9 +1,9 @@
 # MCP Integrations
 
-Connect external services (Linear, Notion, …) to AMIDE over the
+Connect external services (Linear, Notion, …) to ACRYL over the
 [Model Context Protocol](https://modelcontextprotocol.io).
 
-Consistent with AMIDE's single-tool design, MCP integrations are **not**
+Consistent with ACRYL's single-tool design, MCP integrations are **not**
 exposed as new agent tools. Each integration is a [Python-backed skill](skills.md)
 that the model imports and calls from the Python kernel:
 
@@ -39,7 +39,7 @@ Built-in integrations (Linear, Notion) ship **disabled**. Logging in enables the
 - `/mcp` lists integrations and connection status; `/mcp logout <name>`
   disconnects.
 
-Credentials are stored once in `~/.amide/agent/auth.json` under `mcp:<name>`.
+Credentials are stored once in `~/.acryl/agent/auth.json` under `mcp:<name>`.
 Enablement is derived from whether valid credentials exist — there is no separate
 on/off switch.
 
@@ -73,20 +73,20 @@ result = await linear.list_issues(team="Engineering")
 ## Generic MCP servers
 
 Manage generic servers from either the shell (which exits without starting an
-agent) or the TUI. Both surfaces update only `~/.amide/agent/settings.json`:
+agent) or the TUI. Both surfaces update only `~/.acryl/agent/settings.json`:
 
 ```bash
-amide mcp add remote --url https://mcp.example.com/mcp --bearer-token-env-var EXAMPLE_TOKEN
-amide mcp add local --cwd /absolute/path --env TOKEN=EXAMPLE_TOKEN -- node server.js --stdio
-amide mcp list
-amide mcp get remote
-amide mcp remove remote
+acryl mcp add remote --url https://mcp.example.com/mcp --bearer-token-env-var EXAMPLE_TOKEN
+acryl mcp add local --cwd /absolute/path --env TOKEN=EXAMPLE_TOKEN -- node server.js --stdio
+acryl mcp list
+acryl mcp get remote
+acryl mcp remove remote
 ```
 
 Use the same forms after `/mcp` in the TUI. Add `--oauth` for the existing OAuth
 login flow and then use `/mcp login <name>`; use `--force` to replace a complete
 existing entry. Static secret values are not accepted: bearer and stdio secrets
-are environment-variable references. Project `.amide/agent/settings.json` MCP
+are environment-variable references. Project `.acryl/agent/settings.json` MCP
 entries are ignored for execution, so a repository cannot start a local process
 or shadow a user server.
 
@@ -174,9 +174,9 @@ activate the integration.
 ## Caveats
 
 - Discover before assuming tool names or argument schemas.
-- Generic MCP connections are kernel-local. Separate AMIDE sessions use
+- Generic MCP connections are kernel-local. Separate ACRYL sessions use
   separate connections even when they reference the same user setting.
-- A custom `AMIDE_KERNEL_PYTHON` must include the current
+- A custom `ACRYL_KERNEL_PYTHON` must include the current
   `prime-agent-runtime` dependencies.
 
 See also: [Skills](skills.md), [Settings](settings.md).

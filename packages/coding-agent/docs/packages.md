@@ -1,14 +1,14 @@
-> AMIDE can help you create resource packages. Ask it to bundle your extensions, skills, prompt templates, or themes.
+> ACRYL can help you create resource packages. Ask it to bundle your extensions, skills, prompt templates, or themes.
 
-# AMIDE Packages
+# ACRYL Packages
 
-AMIDE packages bundle extensions, skills, prompt templates, and themes so you can share them through npm or git. For compatibility with the inherited extension ecosystem, a package declares resources in `package.json` under the `pi` key, or uses conventional directories.
+ACRYL packages bundle extensions, skills, prompt templates, and themes so you can share them through npm or git. For compatibility with the inherited extension ecosystem, a package declares resources in `package.json` under the `pi` key, or uses conventional directories.
 
 ## Table of Contents
 
 - [Install and Manage](#install-and-manage)
 - [Package Sources](#package-sources)
-- [Creating a AMIDE Package](#creating-a-prime-agent-package)
+- [Creating a ACRYL Package](#creating-a-prime-agent-package)
 - [Package Structure](#package-structure)
 - [Dependencies](#dependencies)
 - [Package Filtering](#package-filtering)
@@ -17,35 +17,35 @@ AMIDE packages bundle extensions, skills, prompt templates, and themes so you ca
 
 ## Install and Manage
 
-> **Security:** AMIDE packages run with full system access. Extensions execute arbitrary code, and skills can instruct the model to perform any action including running executables. Review source code before installing third-party packages.
+> **Security:** ACRYL packages run with full system access. Extensions execute arbitrary code, and skills can instruct the model to perform any action including running executables. Review source code before installing third-party packages.
 
 ```bash
-amide package install npm:@foo/bar@1.0.0
-amide package install git:github.com/user/repo@v1
-amide package install https://github.com/user/repo  # raw URLs work too
-amide package install /absolute/path/to/package
-amide package install ./relative/path/to/package
+acryl package install npm:@foo/bar@1.0.0
+acryl package install git:github.com/user/repo@v1
+acryl package install https://github.com/user/repo  # raw URLs work too
+acryl package install /absolute/path/to/package
+acryl package install ./relative/path/to/package
 
-amide package remove npm:@foo/bar
-amide package list                  # show installed packages from settings
-amide package update                # update all non-pinned packages
-amide package update npm:@foo/bar   # update one package
-amide update                        # update AMIDE
-amide update --force                # reinstall AMIDE even if current
+acryl package remove npm:@foo/bar
+acryl package list                  # show installed packages from settings
+acryl package update                # update all non-pinned packages
+acryl package update npm:@foo/bar   # update one package
+acryl update                        # update ACRYL
+acryl update --force                # reinstall ACRYL even if current
 ```
 
-By default, `package install` and `package remove` write to global settings (`~/.amide/agent/settings.json`). Use `--local` to write to project settings (`.amide/agent/settings.json`) instead. Project settings can be shared with your team, and AMIDE installs any missing packages automatically on startup.
+By default, `package install` and `package remove` write to global settings (`~/.acryl/agent/settings.json`). Use `--local` to write to project settings (`.acryl/agent/settings.json`) instead. Project settings can be shared with your team, and ACRYL installs any missing packages automatically on startup.
 
 To try a package without installing it, use `--extension` or `-e`. This installs to a temporary directory for the current run only:
 
 ```bash
-amide -e npm:@foo/bar
-amide -e git:github.com/user/repo
+acryl -e npm:@foo/bar
+acryl -e git:github.com/user/repo
 ```
 
 ## Package Sources
 
-AMIDE accepts three source types in settings and `amide package install`.
+ACRYL accepts three source types in settings and `acryl package install`.
 
 ### npm
 
@@ -54,9 +54,9 @@ npm:@scope/pkg@1.2.3
 npm:pkg
 ```
 
-- Versioned specs are pinned and skipped by `amide package update`.
+- Versioned specs are pinned and skipped by `acryl package update`.
 - Global installs use `npm install -g`.
-- Project installs go under `.amide/agent/npm/`.
+- Project installs go under `.acryl/agent/npm/`.
 - Set `npmCommand` in `settings.json` to pin npm package lookup and install operations to a specific wrapper command such as `mise` or `asdf`.
 
 Example:
@@ -81,20 +81,20 @@ ssh://git@github.com/user/repo@v1
 - HTTPS and SSH URLs are both supported.
 - SSH URLs use your configured SSH keys automatically (respects `~/.ssh/config`).
 - For non-interactive runs (for example CI), you can set `GIT_TERMINAL_PROMPT=0` to disable credential prompts and set `GIT_SSH_COMMAND` (for example `ssh -o BatchMode=yes -o ConnectTimeout=5`) to fail fast.
-- Refs pin the package and skip `amide package update`.
-- Cloned to `~/.amide/agent/git/<host>/<path>` (global) or `.amide/agent/git/<host>/<path>` (project).
+- Refs pin the package and skip `acryl package update`.
+- Cloned to `~/.acryl/agent/git/<host>/<path>` (global) or `.acryl/agent/git/<host>/<path>` (project).
 - Runs `npm install` after clone or pull if `package.json` exists.
 
 **SSH examples:**
 ```bash
 # git@host:path shorthand (requires git: prefix)
-amide package install git:git@github.com:user/repo
+acryl package install git:git@github.com:user/repo
 
 # ssh:// protocol format
-amide package install ssh://git@github.com/user/repo
+acryl package install ssh://git@github.com/user/repo
 
 # With version ref
-amide package install git:git@github.com:user/repo@v1.0.0
+acryl package install git:git@github.com:user/repo@v1.0.0
 ```
 
 ### Local Paths
@@ -104,9 +104,9 @@ amide package install git:git@github.com:user/repo@v1.0.0
 ./relative/path/to/package
 ```
 
-Local paths point to files or directories on disk and are added to settings without copying. Relative paths are resolved against the settings file they appear in. If the path is a file, it loads as a single extension. If it is a directory, AMIDE loads resources using package rules.
+Local paths point to files or directories on disk and are added to settings without copying. Relative paths are resolved against the settings file they appear in. If the path is a file, it loads as a single extension. If it is a directory, ACRYL loads resources using package rules.
 
-## Creating a AMIDE Package
+## Creating a ACRYL Package
 
 Add a `pi` manifest to `package.json` or use conventional directories. Include the `pi-package` keyword for discoverability.
 
@@ -150,7 +150,7 @@ If both are set, video takes precedence.
 
 ### Convention Directories
 
-If no `pi` manifest is present, AMIDE auto-discovers resources from these directories:
+If no `pi` manifest is present, ACRYL auto-discovers resources from these directories:
 
 - `extensions/` loads `.ts` and `.js` files
 - `skills/` recursively finds `SKILL.md` folders and loads top-level `.md` files as skills
@@ -159,11 +159,11 @@ If no `pi` manifest is present, AMIDE auto-discovers resources from these direct
 
 ## Dependencies
 
-Third party runtime dependencies belong in `dependencies` in `package.json`. Dependencies that do not register extensions, skills, prompt templates, or themes also belong in `dependencies`. When AMIDE installs a package from npm or git, it runs `npm install`, so those dependencies are installed automatically.
+Third party runtime dependencies belong in `dependencies` in `package.json`. Dependencies that do not register extensions, skills, prompt templates, or themes also belong in `dependencies`. When ACRYL installs a package from npm or git, it runs `npm install`, so those dependencies are installed automatically.
 
-AMIDE bundles core packages for extensions and skills. The workspace still publishes these inherited package names; if you import any of them, list them in `peerDependencies` with a `"*"` range and do not bundle them: `@earendil-works/pi-ai`, `@earendil-works/pi-agent-core`, `@earendil-works/pi-coding-agent`, `@earendil-works/pi-tui`, `typebox`.
+ACRYL bundles core packages for extensions and skills. The workspace still publishes these inherited package names; if you import any of them, list them in `peerDependencies` with a `"*"` range and do not bundle them: `@earendil-works/pi-ai`, `@earendil-works/pi-agent-core`, `@earendil-works/pi-coding-agent`, `@earendil-works/pi-tui`, `typebox`.
 
-Other resource packages must be bundled in your tarball. Add them to `dependencies` and `bundledDependencies`, then reference their resources through `node_modules/` paths. AMIDE loads packages with separate module roots, so separate installs do not collide or share modules.
+Other resource packages must be bundled in your tarball. Add them to `dependencies` and `bundledDependencies`, then reference their resources through `node_modules/` paths. ACRYL loads packages with separate module roots, so separate installs do not collide or share modules.
 
 Example:
 
@@ -210,7 +210,7 @@ Filter what a package loads using the object form in settings:
 
 ## Enable and Disable Resources
 
-Use `amide config` to enable or disable extensions, skills, prompt templates, and themes from installed packages and local directories. This works for both global (`~/.amide/agent`) and project (`.amide/agent/`) scopes.
+Use `acryl config` to enable or disable extensions, skills, prompt templates, and themes from installed packages and local directories. This works for both global (`~/.acryl/agent`) and project (`.acryl/agent/`) scopes.
 
 ## Scope and Deduplication
 

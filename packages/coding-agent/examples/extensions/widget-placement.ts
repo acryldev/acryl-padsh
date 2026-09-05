@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 
 export default function widgetPlacementExtension(pi: ExtensionAPI) {
 	pi.on("session_start", (_event, ctx) => {

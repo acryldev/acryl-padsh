@@ -15,7 +15,7 @@
 
 import { mkdtemp, writeFile } from "node:fs/promises";
 import { Text } from "@earendil-works/pi-tui";
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 import {
 	DEFAULT_MAX_BYTES,
 	DEFAULT_MAX_LINES,
@@ -23,7 +23,7 @@ import {
 	type TruncationResult,
 	truncateHead,
 	withFileMutationQueue,
-} from "amide";
+} from "acryl";
 import { execSync } from "child_process";
 import { tmpdir } from "os";
 import { join } from "path";

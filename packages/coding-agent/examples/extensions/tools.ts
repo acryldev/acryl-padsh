@@ -10,8 +10,8 @@
  */
 
 import { Container, type SettingItem, SettingsList } from "@earendil-works/pi-tui";
-import type { ExtensionAPI, ExtensionContext, ToolInfo } from "amide";
-import { getSettingsListTheme } from "amide";
+import type { ExtensionAPI, ExtensionContext, ToolInfo } from "acryl";
+import { getSettingsListTheme } from "acryl";
 
 // State persisted to session
 interface ToolsState {

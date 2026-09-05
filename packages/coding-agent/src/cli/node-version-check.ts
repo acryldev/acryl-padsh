@@ -48,11 +48,11 @@ export function assertNodeVersion(io: NodeVersionGuardIO): boolean {
 		return true;
 	}
 
-	io.log(`amide requires Node ${MIN_NODE_VERSION} or newer, but the active Node is v${io.version}.`);
+	io.log(`acryl requires Node ${MIN_NODE_VERSION} or newer, but the active Node is v${io.version}.`);
 	io.log("");
 	io.log(`  1. Install Node ${MIN_NODE_VERSION}+ (e.g. "nvm install 22 && nvm use 22", or from https://nodejs.org)`);
-	io.log("  2. Reinstall amide under that Node so the command resolves to it:");
-	io.log("     npm install -g @webboxes/amide");
+	io.log("  2. Reinstall acryl under that Node so the command resolves to it:");
+	io.log("     npm install -g acryl");
 	io.exit(1);
 	return false;
 }

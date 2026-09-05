@@ -8,7 +8,7 @@
  */
 
 import { Box, Text } from "@earendil-works/pi-tui";
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 
 export default function (pi: ExtensionAPI) {
 	pi.registerMessageRenderer("status-update", (message, { expanded }, theme) => {

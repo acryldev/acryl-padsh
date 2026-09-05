@@ -1,15 +1,15 @@
 import { ensureKernelPython } from "./core/kernel/bootstrap.js";
 import { ensureTool } from "./utils/tools-manager.js";
 
-const bootstrapKernel = process.env.AMIDE_BOOTSTRAP_KERNEL_ON_INSTALL === "1";
-const bootstrapTools = process.env.AMIDE_BOOTSTRAP_TOOLS_ON_INSTALL === "1";
+const bootstrapKernel = process.env.ACRYL_BOOTSTRAP_KERNEL_ON_INSTALL === "1";
+const bootstrapTools = process.env.ACRYL_BOOTSTRAP_TOOLS_ON_INSTALL === "1";
 
 if (!bootstrapKernel && !bootstrapTools) {
 	process.exit(0);
 }
 
-if (bootstrapKernel && process.env.AMIDE_INSTALL_UV === undefined) {
-	process.env.AMIDE_INSTALL_UV = "1";
+if (bootstrapKernel && process.env.ACRYL_INSTALL_UV === undefined) {
+	process.env.ACRYL_INSTALL_UV = "1";
 }
 
 function errorMessage(error: unknown): string {
@@ -28,5 +28,5 @@ try {
 		await ensureKernelPython();
 	}
 } catch (error) {
-	console.error(`amide: postinstall setup skipped: ${oneLine(errorMessage(error))}`);
+	console.error(`acryl: postinstall setup skipped: ${oneLine(errorMessage(error))}`);
 }

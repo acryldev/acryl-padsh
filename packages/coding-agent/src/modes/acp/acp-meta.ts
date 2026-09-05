@@ -10,7 +10,7 @@
  */
 
 /** Reverse-domain namespace for every prime-agent `_meta` payload. */
-export const AMIDE_META_NAMESPACE = "ai.primeintellect.prime-agent";
+export const ACRYL_META_NAMESPACE = "ai.primeintellect.prime-agent";
 
 export interface PrimeAgentSubagentMeta {
 	id: string;
@@ -86,7 +86,7 @@ export interface PrimeAgentCwdMeta {
  * whichever prompt happens to be running when an update is delivered. `0`
  * means a session-scoped event with no prompt origin (for example a heartbeat
  * change before the first prompt). `eventSequence` is connection-wide and
- * strictly increases for every update AMIDE publishes.
+ * strictly increases for every update ACRYL publishes.
  */
 export type PrimeAgentEventPhase = "event" | "responseBoundary" | "terminalQuiescence";
 
@@ -128,5 +128,5 @@ export interface PrimeAgentSessionMeta {
 
 /** Wrap a prime-agent payload in its reverse-domain `_meta` envelope. */
 export function primeAgentMeta(payload: PrimeAgentSessionMeta): Record<string, unknown> {
-	return { [AMIDE_META_NAMESPACE]: payload };
+	return { [ACRYL_META_NAMESPACE]: payload };
 }

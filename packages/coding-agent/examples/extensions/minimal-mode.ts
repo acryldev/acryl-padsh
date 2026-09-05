@@ -17,8 +17,8 @@
  */
 
 import { Text } from "@earendil-works/pi-tui";
-import type { ExtensionAPI } from "amide";
-import { createBashTool, createEditTool } from "amide";
+import type { ExtensionAPI } from "acryl";
+import { createBashTool, createEditTool } from "acryl";
 import { homedir } from "os";
 
 /**

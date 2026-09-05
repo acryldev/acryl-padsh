@@ -14,8 +14,8 @@
  */
 
 import { complete } from "@earendil-works/pi-ai";
-import type { ExtensionAPI } from "amide";
-import { convertToLlm, serializeConversation } from "amide";
+import type { ExtensionAPI } from "acryl";
+import { convertToLlm, serializeConversation } from "acryl";
 
 export default function (pi: ExtensionAPI) {
 	pi.on("session_before_compact", async (event, ctx) => {

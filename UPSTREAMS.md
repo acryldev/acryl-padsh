@@ -1,8 +1,8 @@
 # Upstreams
 
-AMIDE combines three upstream sources. This file records exactly which
+ACRYL combines three upstream sources. This file records exactly which
 commit of each was used, and what has been ported or changed locally, per
-`docs/AMIDE Implementation Specification.md` §99–§100.
+`docs/ACRYL Implementation Specification.md` §99–§100.
 
 ## Prime Agent (execution/RLM/product base)
 
@@ -15,7 +15,7 @@ commit of each was used, and what has been ported or changed locally, per
   `README.md`) — not real Prime Agent content, despite being this repo's
   first commit. The actual import landed in `7b72016` (commit message
   literally reads "init acryl-padsh" — immutable history from before this
-  repo's move to `amidedev/amide`, not a naming gap; do not edit it),
+  repo's move to `acryldev/acryl-padsh`, not a naming gap; do not edit it),
   1239 files. Its `package.json` version (`0.9.1`) matches upstream tag
   `v0.9.1` (`81ae3cb34d27d38ee37f9e205a1e73694993b344`), but the two are
   **not identical** — `git diff --stat 7b72016 v0.9.1` shows real behavioral
@@ -32,8 +32,8 @@ commit of each was used, and what has been ported or changed locally, per
 
 - Repository: `earendil-works/pi`, source of the `@earendil-works/pi-*`
   workspace packages under `packages/{tui,agent,ai}`. Deliberately left
-  unrenamed (see `docs/AMIDE Implementation Specification.md` §15) — these
-  are a third-party dependency AMIDE builds on, not AMIDE's own branding.
+  unrenamed (see `docs/ACRYL Implementation Specification.md` §15) — these
+  are a third-party dependency ACRYL builds on, not ACRYL's own branding.
 - `git remote add upstream-pi https://github.com/earendil-works/pi.git` is
   configured in this checkout (fetched 2026-09-04; tag `v0.85.0` resolves to
   `107d79f11072bbc8a3a757ed7fd69596bee7d68c`, dated 2026-09-04 — matches the
@@ -52,7 +52,7 @@ commit of each was used, and what has been ported or changed locally, per
   in `acryldev/acryl`'s `upstream.json` at the same time.
 - Not embedded as a sub-runtime. Only architectural patterns and, where
   explicitly ported, MIT-licensed source are used — see
-  `docs/AMIDE Implementation Specification.md` §68 for what is
+  `docs/ACRYL Implementation Specification.md` §68 for what is
   deliberately not ported.
 - License: MIT.
 
@@ -76,9 +76,9 @@ destination path, and what changed locally.
 
 - `docs/workmethodology/acryl-hybrid-engineering-methodology.md`,
   `.specify/memory/constitution.md`, `specs/000-wayfinding/`,
-  `docs/AMIDE-ROADMAP.md`: Spec Kit + Wayfinder + Ponytail methodology
+  `docs/ACRYL-PADSH-ROADMAP.md`: Spec Kit + Wayfinder + Ponytail methodology
   bootstrap, adapted from `acryldev/acryl`'s equivalent setup.
 - `package.json`, `README.md`, `LICENSE`, `THIRD_PARTY_NOTICES.md`: surface
-  rebrand to AMIDE identity. No internal Prime Agent source, env vars,
+  rebrand to ACRYL identity. No internal Prime Agent source, env vars,
   or install scripts were touched — see `specs/000-wayfinding/map.md`
   "Decisions so far" for the deferred deep-rename scope.

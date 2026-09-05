@@ -1,10 +1,10 @@
-> AMIDE can create skills. Ask it to build one for your use case.
+> ACRYL can create skills. Ask it to build one for your use case.
 
 # Skills
 
-Skills are self-contained capability packages that AMIDE loads on demand. A skill provides specialized workflows, setup instructions, helper scripts, and reference documentation for specific tasks.
+Skills are self-contained capability packages that ACRYL loads on demand. A skill provides specialized workflows, setup instructions, helper scripts, and reference documentation for specific tasks.
 
-AMIDE implements the [Agent Skills standard](https://agentskills.io/specification), warning about violations but remaining lenient. It also supports Python-backed skills: a superset of markdown skills that install Python packages into the persistent Python kernel.
+ACRYL implements the [Agent Skills standard](https://agentskills.io/specification), warning about violations but remaining lenient. It also supports Python-backed skills: a superset of markdown skills that install Python packages into the persistent Python kernel.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ AMIDE implements the [Agent Skills standard](https://agentskills.io/specificatio
 - [Built-in Skills](#built-in-skills)
 - [How Skills Work](#how-skills-work)
 - [Python-Backed Skills](#python-backed-skills)
-- [Creating Skills with AMIDE](#creating-skills-with-amide)
+- [Creating Skills with ACRYL](#creating-skills-with-acryl)
 - [Skill Commands](#skill-commands)
 - [Skill Structure](#skill-structure)
 - [Frontmatter](#frontmatter)
@@ -24,21 +24,21 @@ AMIDE implements the [Agent Skills standard](https://agentskills.io/specificatio
 
 > **Security:** Skills can instruct the model to perform any action and may include executable code the model invokes. Review skill content before use.
 
-AMIDE loads skills from:
+ACRYL loads skills from:
 
 - Global:
-  - `~/.amide/agent/skills/`
+  - `~/.acryl/agent/skills/`
   - `~/.agents/skills/`
 - Project:
-  - `.amide/agent/skills/`
+  - `.acryl/agent/skills/`
   - `.agents/skills/` in `cwd` and ancestor directories (up to git repo root, or filesystem root when not in a repo)
 - Packages: `skills/` directories or `pi.skills` entries in `package.json`
 - Settings: `skills` array with files or directories
 - CLI: `--skill <path>` (repeatable, additive even with `--no-skills`)
-- Built-in: `skills/` shipped with the amide package (lowest precedence)
+- Built-in: `skills/` shipped with the acryl package (lowest precedence)
 
 Discovery rules:
-- In `~/.amide/agent/skills/` and `.amide/agent/skills/`, direct root `.md` files are discovered as individual skills
+- In `~/.acryl/agent/skills/` and `.acryl/agent/skills/`, direct root `.md` files are discovered as individual skills
 - In all skill locations, directories containing `SKILL.md` are discovered recursively
 - In `~/.agents/skills/` and project `.agents/skills/`, root `.md` files are ignored
 
@@ -46,7 +46,7 @@ Disable discovery with `--no-skills` (explicit `--skill` paths still load).
 
 ## Built-in Skills
 
-AMIDE ships with built-in skills that load by default:
+ACRYL ships with built-in skills that load by default:
 
 - `prime-intellect` - Prime Intellect products and workflows via the prime CLI: verifiers environments and the Environments Hub, evaluations (local and hosted), Hosted Training and prime-rl, sandboxes, tunnels, Prime Inference, GPU compute, and storage. Reference docs for each area load on demand from the skill's `references/` directory.
 - `skill-creator` - teaches the agent to create new skills: markdown skill layout, frontmatter rules, placement and precedence, and the full Python-backed skill contract (package layout, `run()` convention, optional CLI, kernel venv behavior) with a working template in `references/python-skills.md`.
@@ -74,7 +74,7 @@ A `SERPER_API_KEY` in the environment, if set, takes precedence over the stored 
 Once loaded, the model can call it directly in the Python kernel by import name:
 
 ```python
-print(await websearch("latest AMIDE release"))
+print(await websearch("latest ACRYL release"))
 ```
 
 Until a key is configured, web search returns a clear message telling the agent
@@ -119,7 +119,7 @@ To use skills from Claude Code or OpenAI Codex, add their directories to setting
 }
 ```
 
-For project-level Claude Code skills, add to `.amide/agent/settings.json`:
+For project-level Claude Code skills, add to `.acryl/agent/settings.json`:
 
 ```json
 {
@@ -129,7 +129,7 @@ For project-level Claude Code skills, add to `.amide/agent/settings.json`:
 
 ## How Skills Work
 
-1. At startup, AMIDE scans skill locations and extracts names, descriptions, type, and file locations
+1. At startup, ACRYL scans skill locations and extracts names, descriptions, type, and file locations
 2. The system prompt includes visible skills in XML format per the [specification](https://agentskills.io/integrate-skills)
 3. When a task matches, the agent uses `ipython` to load the full `SKILL.md` (models don't always do this; use prompting or `/skill:name` to force it)
 4. The agent follows the instructions, using relative paths to reference scripts and assets
@@ -157,17 +157,17 @@ Detection rules:
 - the import name is the skill name with hyphens converted to underscores
 - `src/<import_name>/__init__.py` must exist
 
-For `web-search`, AMIDE exposes `web_search` in the Python REPL. If the module defines `run()`, the module is wrapped as an async callable:
+For `web-search`, ACRYL exposes `web_search` in the Python REPL. If the module defines `run()`, the module is wrapped as an async callable:
 
 ```python
-await web_search("amide skills")
-await web_search.run("amide skills")
+await web_search("acryl skills")
+await web_search.run("acryl skills")
 help(web_search)
 ```
 
-Python skills are installed editable into the kernel venv during kernel setup. By default this is `~/.amide/agent/kernel-venv`; set `AMIDE_KERNEL_VENV` to override it. If `pyproject.toml` changes, AMIDE rebuilds the kernel venv so dependency changes are picked up.
+Python skills are installed editable into the kernel venv during kernel setup. By default this is `~/.acryl/agent/kernel-venv`; set `ACRYL_KERNEL_VENV` to override it. If `pyproject.toml` changes, ACRYL rebuilds the kernel venv so dependency changes are picked up.
 
-If you set `AMIDE_KERNEL_PYTHON`, AMIDE does not install packages into that environment. The Python must already have a current `prime-agent-runtime` and the default runtime packages installed. Missing Python skill imports are disabled with a warning and calling the skill raises a `RuntimeError`.
+If you set `ACRYL_KERNEL_PYTHON`, ACRYL does not install packages into that environment. The Python must already have a current `prime-agent-runtime` and the default runtime packages installed. Missing Python skill imports are disabled with a warning and calling the skill raises a `RuntimeError`.
 
 ### Optional CLI Command
 
@@ -194,20 +194,20 @@ async def run(query: str, limit: int = 5) -> str:
 The model can then call the skill from normal Python or from shell mode:
 
 ```python
-await web_search("amide")
-!web_search "amide" --limit 3
+await web_search("acryl")
+!web_search "acryl" --limit 3
 ```
 
-## Creating Skills with AMIDE
+## Creating Skills with ACRYL
 
-AMIDE ships with a built-in `skill-creator` skill that teaches the agent both the Agent Skills format and the Python-backed package contract. You can ask for a skill in normal language:
+ACRYL ships with a built-in `skill-creator` skill that teaches the agent both the Agent Skills format and the Python-backed package contract. You can ask for a skill in normal language:
 
 ```text
 Create a project Python-backed skill named release-audit in
-.amide/agent/skills/release-audit. It should expose
+.acryl/agent/skills/release-audit. It should expose
 await release_audit(repository, target_version), include concise SKILL.md
 instructions, declare its dependencies, and verify the callable in a fresh
-AMIDE session.
+ACRYL session.
 ```
 
 To force the creation workflow explicitly, invoke the built-in skill command:
@@ -218,13 +218,13 @@ To force the creation workflow explicitly, invoke the built-in skill command:
 
 Tell the agent three things:
 
-1. **Scope:** use `.amide/agent/skills/<name>/` for a project skill committed with the repository, or `~/.amide/agent/skills/<name>/` for a personal skill.
+1. **Scope:** use `.acryl/agent/skills/<name>/` for a project skill committed with the repository, or `~/.acryl/agent/skills/<name>/` for a personal skill.
 2. **Kind:** ask for a markdown skill when the capability is primarily instructions; ask for a Python-backed skill when the agent should call reusable functionality from the Python REPL.
 3. **Contract:** describe the intended Python call, inputs, output, dependencies, credentials, and verification behavior.
 
 The agent should create `SKILL.md` in both cases. For a Python-backed skill it should also create `pyproject.toml` and `src/<import_name>/__init__.py`, expose a documented callable, and verify that the package imports in the kernel.
 
-Use `/reload` to rediscover new or edited skill metadata. Start a fresh AMIDE session after adding a Python-backed skill so kernel setup can install and import the package.
+Use `/reload` to rediscover new or edited skill metadata. Start a fresh ACRYL session after adding a Python-backed skill so kernel setup can install and import the package.
 
 ### Installed Skills and Continual Harness Skills
 
@@ -335,7 +335,7 @@ description: Helps with PDFs.
 
 ## Validation
 
-AMIDE validates skills against the Agent Skills standard. Most issues produce warnings but still load the skill:
+ACRYL validates skills against the Agent Skills standard. Most issues produce warnings but still load the skill:
 
 - Name doesn't match parent directory
 - Name exceeds 64 characters or contains invalid characters

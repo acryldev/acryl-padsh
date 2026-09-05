@@ -9501,7 +9501,7 @@ export class AgentSession {
 	private _addWebsearchKeyEnv(env: Record<string, string>): void {
 		if (this._agentDir) {
 			// prime-agent-runtime (vendored kernel-side Python package) reads this
-			// exact name; it is not renamed as part of AMIDE's own identity.
+			// exact name; it is not renamed as part of ACRYL's own identity.
 			env.PRIME_AGENT_CODING_AGENT_DIR = this._agentDir;
 		}
 
@@ -9560,7 +9560,7 @@ export class AgentSession {
 	}
 
 	private _createEphemeralRlmSessionDir(): string {
-		this._rlmSessionDir = mkdtempSync(join(tmpdir(), "amide-rlm-"));
+		this._rlmSessionDir = mkdtempSync(join(tmpdir(), "acryl-rlm-"));
 		return this._rlmSessionDir;
 	}
 

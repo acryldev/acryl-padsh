@@ -4,8 +4,8 @@ import type { DaemonRuntimeIdentity } from "./daemon-protocol.js";
 
 declare const __PI_BUILD_ID__: string | undefined;
 
-export const AMIDE_BUILD_ID_ENV = "AMIDE_BUILD_ID";
-export const AMIDE_LAUNCHER_PATH_ENV = "AMIDE_LAUNCHER_PATH";
+export const ACRYL_BUILD_ID_ENV = "ACRYL_BUILD_ID";
+export const ACRYL_LAUNCHER_PATH_ENV = "ACRYL_LAUNCHER_PATH";
 
 function bundledBuildId(): string | undefined {
 	return typeof __PI_BUILD_ID__ === "undefined" ? undefined : __PI_BUILD_ID__;
@@ -13,9 +13,9 @@ function bundledBuildId(): string | undefined {
 
 export function getDaemonRuntimeIdentity(environment: NodeJS.ProcessEnv = process.env): DaemonRuntimeIdentity {
 	const entrypoint = process.argv[1];
-	const launcher = environment[AMIDE_LAUNCHER_PATH_ENV];
+	const launcher = environment[ACRYL_LAUNCHER_PATH_ENV];
 	return {
-		buildId: environment[AMIDE_BUILD_ID_ENV] ?? bundledBuildId() ?? `release-${VERSION}`,
+		buildId: environment[ACRYL_BUILD_ID_ENV] ?? bundledBuildId() ?? `release-${VERSION}`,
 		executablePath: resolve(process.execPath),
 		...(entrypoint ? { entrypointPath: resolve(entrypoint) } : {}),
 		...(launcher ? { launcherPath: resolve(launcher) } : {}),

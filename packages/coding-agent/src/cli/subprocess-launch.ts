@@ -36,7 +36,7 @@ function quoteCommandArgument(value: string): string {
 }
 
 export function formatCurrentCliCommand(args: readonly string[], environment: NodeJS.ProcessEnv = process.env): string {
-	const launcherPath = environment.AMIDE_LAUNCHER_PATH;
+	const launcherPath = environment.ACRYL_LAUNCHER_PATH;
 	if (launcherPath) {
 		return [launcherPath, ...args].map(quoteCommandArgument).join(" ");
 	}

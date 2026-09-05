@@ -1,9 +1,9 @@
 name: Release npm package
 
-# Publishes the standalone `amide` CLI package (packages/coding-agent) to
+# Publishes the standalone `acryl` CLI package (packages/coding-agent) to
 # npm. This is deliberately separate from build-binaries.yml, which handles
 # the R2/S3 binary distribution channel - this workflow only needs to make
-# `npm i -g amide` work.
+# `npm i -g acryl` work.
 on:
   push:
     tags: ['v*']

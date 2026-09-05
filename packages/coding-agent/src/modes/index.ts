@@ -3,8 +3,8 @@
  */
 
 export {
+	ACRYL_META_NAMESPACE,
 	type AcpModeOptions,
-	AMIDE_META_NAMESPACE,
 	acpStopReason,
 	acpToolKind,
 	acpUpdatesForSessionEvent,

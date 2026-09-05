@@ -5,7 +5,7 @@
  */
 
 import { getModel } from "@earendil-works/pi-ai";
-import { AuthStorage, createAgentSession, ModelRegistry } from "amide";
+import { AuthStorage, createAgentSession, ModelRegistry } from "acryl";
 
 // Set up auth storage and model registry
 const authStorage = AuthStorage.create();

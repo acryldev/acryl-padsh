@@ -7,7 +7,7 @@
  * - Registers additional tools at runtime via /add-echo-tool <name>
  */
 
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 import { Type } from "typebox";
 
 const ECHO_PARAMS = Type.Object({

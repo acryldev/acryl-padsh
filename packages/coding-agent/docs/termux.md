@@ -1,6 +1,6 @@
 # Termux (Android) Setup
 
-AMIDE runs on Android via [Termux](https://termux.dev/), a terminal emulator and Linux environment for Android.
+ACRYL runs on Android via [Termux](https://termux.dev/), a terminal emulator and Linux environment for Android.
 
 ## Prerequisites
 
@@ -16,13 +16,13 @@ pkg update && pkg upgrade
 # Install dependencies
 pkg install nodejs termux-api git ripgrep
 
-# Clone and install AMIDE from source
+# Clone and install ACRYL from source
 git clone https://github.com/PrimeIntellect-ai/prime-agent.git
-cd amide
+cd acryl
 npm ci
 
-# Run AMIDE
-./amide.sh
+# Run ACRYL
+./acryl.sh
 ```
 
 ## Clipboard Support
@@ -33,7 +33,7 @@ Image clipboard is not supported on Termux (the `ctrl+v` image paste feature wil
 
 ## Example AGENTS.md for Termux
 
-Create `~/.amide/agent/AGENTS.md` to help the agent understand the Termux environment:
+Create `~/.acryl/agent/AGENTS.md` to help the agent understand the Termux environment:
 
 ```markdown
 # Agent Environment: Termux on Android

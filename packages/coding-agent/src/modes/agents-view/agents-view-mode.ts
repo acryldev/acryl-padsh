@@ -2396,7 +2396,7 @@ export class AgentsViewMode implements Component, Focusable {
 		}
 		this.daemonShutdownReceived = true;
 		this.reconnectTimedOut = false;
-		this.setStatusMessage(`AMIDE daemon shut down. Restart AMIDE to reconnect. ${error.message}`, {
+		this.setStatusMessage(`ACRYL daemon shut down. Restart ACRYL to reconnect. ${error.message}`, {
 			tone: "error",
 			sticky: true,
 		});

@@ -4,73 +4,73 @@ set -eu
 
 # Keep these sentinels split so release publishing only rewrites the configured
 # values below; local or unpublished copies still need unreplaced values to compare.
-amide_unconfigured_base_url="__AMIDE_DOWNLOAD_BASE""_URL__"
-amide_unconfigured_default_release_channel="__AMIDE_DEFAULT_RELEASE_""CHANNEL__"
-amide_base_url="${AMIDE_DOWNLOAD_BASE_URL:-__AMIDE_DOWNLOAD_BASE_URL__}"
-amide_base_url="${amide_base_url%/}"
-amide_default_release_channel="__AMIDE_DEFAULT_RELEASE_CHANNEL__"
-if [ "$amide_default_release_channel" = "$amide_unconfigured_default_release_channel" ]; then
-	amide_default_release_channel=stable
+acryl_unconfigured_base_url="__ACRYL_DOWNLOAD_BASE""_URL__"
+acryl_unconfigured_default_release_channel="__ACRYL_DEFAULT_RELEASE_""CHANNEL__"
+acryl_base_url="${ACRYL_DOWNLOAD_BASE_URL:-__ACRYL_DOWNLOAD_BASE_URL__}"
+acryl_base_url="${acryl_base_url%/}"
+acryl_default_release_channel="__ACRYL_DEFAULT_RELEASE_CHANNEL__"
+if [ "$acryl_default_release_channel" = "$acryl_unconfigured_default_release_channel" ]; then
+	acryl_default_release_channel=stable
 fi
-amide_release_channel="${AMIDE_RELEASE_CHANNEL:-$amide_default_release_channel}"
-amide_package="${AMIDE_PACKAGE:-amide}"
-amide_cmd="${AMIDE_CMD:-amide}"
-amide_esc=$(printf '\033')
-amide_original_path="${PATH:-}"
-amide_reset="${amide_esc}[0m"
-amide_bold="${amide_esc}[1m"
-amide_italic="${amide_esc}[3m"
-amide_hide_cursor="${amide_esc}[?25l"
-amide_show_cursor="${amide_esc}[?25h"
-amide_home_cursor="${amide_esc}[H"
-amide_clear_screen="${amide_esc}[2J${amide_esc}[H"
-amide_clear_line="${amide_esc}[K"
-amide_sync_start="${amide_esc}[?2026h"
-amide_sync_end="${amide_esc}[?2026l"
-amide_color_text="${amide_esc}[38;2;244;244;245m"
-amide_color_muted="${amide_esc}[38;2;161;161;170m"
-amide_color_dim="${amide_esc}[38;2;113;113;122m"
-amide_color_primary="${amide_esc}[38;2;127;91;213m"
-amide_color_scan="${amide_esc}[38;2;14;165;233m"
-amide_color_warning="${amide_esc}[38;2;245;158;11m"
-readonly amide_unconfigured_base_url amide_unconfigured_default_release_channel amide_base_url amide_default_release_channel amide_release_channel amide_package amide_cmd amide_esc amide_original_path
-readonly amide_reset amide_bold amide_italic amide_hide_cursor amide_show_cursor amide_home_cursor amide_clear_screen amide_clear_line
-readonly amide_sync_start amide_sync_end
-readonly amide_color_text amide_color_muted amide_color_dim amide_color_primary amide_color_scan amide_color_warning
+acryl_release_channel="${ACRYL_RELEASE_CHANNEL:-$acryl_default_release_channel}"
+acryl_package="${ACRYL_PACKAGE:-acryl}"
+acryl_cmd="${ACRYL_CMD:-acryl}"
+acryl_esc=$(printf '\033')
+acryl_original_path="${PATH:-}"
+acryl_reset="${acryl_esc}[0m"
+acryl_bold="${acryl_esc}[1m"
+acryl_italic="${acryl_esc}[3m"
+acryl_hide_cursor="${acryl_esc}[?25l"
+acryl_show_cursor="${acryl_esc}[?25h"
+acryl_home_cursor="${acryl_esc}[H"
+acryl_clear_screen="${acryl_esc}[2J${acryl_esc}[H"
+acryl_clear_line="${acryl_esc}[K"
+acryl_sync_start="${acryl_esc}[?2026h"
+acryl_sync_end="${acryl_esc}[?2026l"
+acryl_color_text="${acryl_esc}[38;2;244;244;245m"
+acryl_color_muted="${acryl_esc}[38;2;161;161;170m"
+acryl_color_dim="${acryl_esc}[38;2;113;113;122m"
+acryl_color_primary="${acryl_esc}[38;2;127;91;213m"
+acryl_color_scan="${acryl_esc}[38;2;14;165;233m"
+acryl_color_warning="${acryl_esc}[38;2;245;158;11m"
+readonly acryl_unconfigured_base_url acryl_unconfigured_default_release_channel acryl_base_url acryl_default_release_channel acryl_release_channel acryl_package acryl_cmd acryl_esc acryl_original_path
+readonly acryl_reset acryl_bold acryl_italic acryl_hide_cursor acryl_show_cursor acryl_home_cursor acryl_clear_screen acryl_clear_line
+readonly acryl_sync_start acryl_sync_end
+readonly acryl_color_text acryl_color_muted acryl_color_dim acryl_color_primary acryl_color_scan acryl_color_warning
 
-amide_screen_enabled=0
-amide_screen_frame=0
-amide_screen_cols=80
-amide_screen_rows=24
-amide_screen_drawn=0
-amide_screen_last_cols=0
-amide_screen_last_rows=0
-amide_screen_layout_ready=0
-amide_screen_layout_show_logo=0
-amide_screen_layout_lab_width=0
-amide_screen_render_lab_width=0
-amide_screen_compact=0
-amide_download_dir=
-amide_bootstrap_kernel_on_install=0
-amide_screen_title=
-amide_screen_status=
-amide_screen_detail=
-amide_screen_question=
-amide_animation_frame=0
+acryl_screen_enabled=0
+acryl_screen_frame=0
+acryl_screen_cols=80
+acryl_screen_rows=24
+acryl_screen_drawn=0
+acryl_screen_last_cols=0
+acryl_screen_last_rows=0
+acryl_screen_layout_ready=0
+acryl_screen_layout_show_logo=0
+acryl_screen_layout_lab_width=0
+acryl_screen_render_lab_width=0
+acryl_screen_compact=0
+acryl_download_dir=
+acryl_bootstrap_kernel_on_install=0
+acryl_screen_title=
+acryl_screen_status=
+acryl_screen_detail=
+acryl_screen_question=
+acryl_animation_frame=0
 
 main() {
-	if [ "$amide_base_url" = "$amide_unconfigured_base_url" ]; then
+	if [ "$acryl_base_url" = "$acryl_unconfigured_base_url" ]; then
 		printf 'error: installer download URL is not configured.\n' >&2
-		printf 'Set AMIDE_DOWNLOAD_BASE_URL or use the installer published by the release workflow.\n' >&2
+		printf 'Set ACRYL_DOWNLOAD_BASE_URL or use the installer published by the release workflow.\n' >&2
 		exit 1
 	fi
 
-	amide_install_traps
-	amide_init_screen
-	if [ "$amide_screen_enabled" = 1 ]; then
-		amide_screen "Installing AMIDE" "" "" ""
+	acryl_install_traps
+	acryl_init_screen
+	if [ "$acryl_screen_enabled" = 1 ]; then
+		acryl_screen "Installing ACRYL" "" "" ""
 	else
-		printf '\n\033[1m  Installing AMIDE\033[0m\n\033[2m  npm global install\033[0m\n\n'
+		printf '\n\033[1m  Installing ACRYL\033[0m\n\033[2m  npm global install\033[0m\n\n'
 	fi
 
 	start_preflight_checks
@@ -98,41 +98,41 @@ main() {
 		fi
 	fi
 
-	version="$(resolve_amide_version "$@")"
-	tarball_name="$amide_package-$version.tgz"
-	tarball_url="$amide_base_url/releases/v$version/$tarball_name"
+	version="$(resolve_acryl_version "$@")"
+	tarball_name="$acryl_package-$version.tgz"
+	tarball_url="$acryl_base_url/releases/v$version/$tarball_name"
 
 	confirm_install "$version" "$tarball_url"
 	confirm_kernel_runtime_setup
 
 	download_dir=$(create_temp_dir)
-	amide_download_dir="$download_dir"
+	acryl_download_dir="$download_dir"
 	tarball_path="$download_dir/$tarball_name"
 
-	download_amide_package "$version" "$tarball_url" "$tarball_path"
-	install_amide_package "$tarball_path"
+	download_acryl_package "$version" "$tarball_url" "$tarball_path"
+	install_acryl_package "$tarball_path"
 	rm -rf "$download_dir"
-	amide_download_dir=
+	acryl_download_dir=
 
-	if [ "${AMIDE_NODE_INSTALLED_STANDALONE:-0}" = 1 ]; then
-		amide_screen "AMIDE installed" "" "Checking your shell PATH." ""
+	if [ "${ACRYL_NODE_INSTALLED_STANDALONE:-0}" = 1 ]; then
+		acryl_screen "ACRYL installed" "" "Checking your shell PATH." ""
 		configure_standalone_node_path
-	elif command -v "$amide_cmd" >/dev/null 2>&1; then
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_screen "AMIDE installed" "" "Run it with: $amide_cmd" ""
+	elif command -v "$acryl_cmd" >/dev/null 2>&1; then
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_screen "ACRYL installed" "" "Run it with: $acryl_cmd" ""
 		else
-			printf '\nAMIDE was installed successfully.\n'
-			printf '\nRun it with: %s\n' "$amide_cmd"
+			printf '\nACRYL was installed successfully.\n'
+			printf '\nRun it with: %s\n' "$acryl_cmd"
 		fi
 	else
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_screen "AMIDE installed" "" "PATH update needed for $amide_cmd." ""
-			amide_restore_terminal
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_screen "ACRYL installed" "" "PATH update needed for $acryl_cmd." ""
+			acryl_restore_terminal
 		else
-			printf '\nAMIDE was installed successfully.\n'
+			printf '\nACRYL was installed successfully.\n'
 		fi
 		cat <<EOF
-The $amide_cmd command was installed, but it is not on your PATH yet.
+The $acryl_cmd command was installed, but it is not on your PATH yet.
 Check npm's global bin directory with:
 
   npm bin -g
@@ -144,7 +144,7 @@ EOF
 
 create_temp_dir() {
 	if command -v mktemp >/dev/null 2>&1; then
-		if tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/amide-install.XXXXXX" 2>/dev/null); then
+		if tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/acryl-install.XXXXXX" 2>/dev/null); then
 			printf '%s' "$tmp_dir"
 			return
 		fi
@@ -154,38 +154,38 @@ create_temp_dir() {
 	exit 1
 }
 
-amide_install_traps() {
-	trap 'amide_cleanup' EXIT
-	trap 'amide_signal_cleanup 130' INT
-	trap 'amide_signal_cleanup 143' TERM
+acryl_install_traps() {
+	trap 'acryl_cleanup' EXIT
+	trap 'acryl_signal_cleanup 130' INT
+	trap 'acryl_signal_cleanup 143' TERM
 }
 
-amide_cleanup() {
+acryl_cleanup() {
 	status=$?
-	if [ -n "${amide_download_dir:-}" ] && [ -d "$amide_download_dir" ]; then
-		rm -rf "$amide_download_dir"
+	if [ -n "${acryl_download_dir:-}" ] && [ -d "$acryl_download_dir" ]; then
+		rm -rf "$acryl_download_dir"
 	fi
-	amide_restore_terminal
+	acryl_restore_terminal
 	return "$status"
 }
 
-amide_signal_cleanup() {
-	amide_restore_terminal
+acryl_signal_cleanup() {
+	acryl_restore_terminal
 	exit "$1"
 }
 
-amide_restore_terminal() {
-	if [ "${amide_screen_enabled:-0}" = 1 ]; then
+acryl_restore_terminal() {
+	if [ "${acryl_screen_enabled:-0}" = 1 ]; then
 		if ( : <>/dev/tty ) 2>/dev/null; then
-			printf '%s%s' "$amide_reset" "$amide_show_cursor" >/dev/tty
+			printf '%s%s' "$acryl_reset" "$acryl_show_cursor" >/dev/tty
 		else
-			printf '%s%s' "$amide_reset" "$amide_show_cursor" >&2
+			printf '%s%s' "$acryl_reset" "$acryl_show_cursor" >&2
 		fi
 	fi
 }
 
-amide_init_screen() {
-	if [ "${AMIDE_INSTALLER_PLAIN:-0}" = 1 ]; then
+acryl_init_screen() {
+	if [ "${ACRYL_INSTALLER_PLAIN:-0}" = 1 ]; then
 		return
 	fi
 	if [ ! -t 1 ]; then
@@ -194,108 +194,108 @@ amide_init_screen() {
 	if [ "${TERM:-}" = dumb ]; then
 		return
 	fi
-	amide_screen_enabled=1
+	acryl_screen_enabled=1
 }
 
-amide_read_terminal_size() {
-	amide_screen_cols=80
-	amide_screen_rows=24
+acryl_read_terminal_size() {
+	acryl_screen_cols=80
+	acryl_screen_rows=24
 
 	if size=$(stty size 2>/dev/null </dev/tty); then
 		set -- $size
 		if [ "${1:-}" ] && [ "${2:-}" ]; then
-			case "$1" in *[!0-9]*|"") ;; *) amide_screen_rows="$1" ;; esac
-			case "$2" in *[!0-9]*|"") ;; *) amide_screen_cols="$2" ;; esac
+			case "$1" in *[!0-9]*|"") ;; *) acryl_screen_rows="$1" ;; esac
+			case "$2" in *[!0-9]*|"") ;; *) acryl_screen_cols="$2" ;; esac
 		fi
 	fi
 
-	if [ "$amide_screen_cols" -lt 1 ]; then
-		amide_screen_cols=80
+	if [ "$acryl_screen_cols" -lt 1 ]; then
+		acryl_screen_cols=80
 	fi
-	if [ "$amide_screen_rows" -lt 1 ]; then
-		amide_screen_rows=24
+	if [ "$acryl_screen_rows" -lt 1 ]; then
+		acryl_screen_rows=24
 	fi
 }
 
-amide_screen() {
-	if [ "$amide_screen_enabled" != 1 ]; then
+acryl_screen() {
+	if [ "$acryl_screen_enabled" != 1 ]; then
 		return
 	fi
 
-	amide_screen_title="${2:-$1}"
-	if [ -z "$amide_screen_title" ]; then
-		amide_screen_title="$1"
+	acryl_screen_title="${2:-$1}"
+	if [ -z "$acryl_screen_title" ]; then
+		acryl_screen_title="$1"
 	fi
-	amide_screen_status=
-	amide_screen_detail="${3:-}"
-	amide_screen_question="${4:-}"
-	amide_screen_frame=$((amide_screen_frame + 1))
-	amide_read_terminal_size
-	amide_init_screen_layout
-	amide_refresh_screen_layout_mode
+	acryl_screen_status=
+	acryl_screen_detail="${3:-}"
+	acryl_screen_question="${4:-}"
+	acryl_screen_frame=$((acryl_screen_frame + 1))
+	acryl_read_terminal_size
+	acryl_init_screen_layout
+	acryl_refresh_screen_layout_mode
 
-	if [ "$amide_screen_drawn" = 0 ] ||
-		[ "$amide_screen_cols" -ne "$amide_screen_last_cols" ] ||
-		[ "$amide_screen_rows" -ne "$amide_screen_last_rows" ]; then
-		amide_screen_prefix="${amide_reset}${amide_clear_screen}${amide_hide_cursor}"
-		amide_screen_drawn=1
-		amide_screen_last_cols="$amide_screen_cols"
-		amide_screen_last_rows="$amide_screen_rows"
+	if [ "$acryl_screen_drawn" = 0 ] ||
+		[ "$acryl_screen_cols" -ne "$acryl_screen_last_cols" ] ||
+		[ "$acryl_screen_rows" -ne "$acryl_screen_last_rows" ]; then
+		acryl_screen_prefix="${acryl_reset}${acryl_clear_screen}${acryl_hide_cursor}"
+		acryl_screen_drawn=1
+		acryl_screen_last_cols="$acryl_screen_cols"
+		acryl_screen_last_rows="$acryl_screen_rows"
 	else
-		amide_screen_prefix="${amide_reset}${amide_home_cursor}${amide_hide_cursor}"
+		acryl_screen_prefix="${acryl_reset}${acryl_home_cursor}${acryl_hide_cursor}"
 	fi
-	amide_screen_frame_text=$(amide_render_screen)
+	acryl_screen_frame_text=$(acryl_render_screen)
 
 	if ( : <>/dev/tty ) 2>/dev/null; then
-		printf '%s%s%s%s' "$amide_sync_start" "$amide_screen_prefix" "$amide_screen_frame_text" "$amide_sync_end" >/dev/tty
+		printf '%s%s%s%s' "$acryl_sync_start" "$acryl_screen_prefix" "$acryl_screen_frame_text" "$acryl_sync_end" >/dev/tty
 	else
-		printf '%s%s%s%s' "$amide_sync_start" "$amide_screen_prefix" "$amide_screen_frame_text" "$amide_sync_end" >&2
+		printf '%s%s%s%s' "$acryl_sync_start" "$acryl_screen_prefix" "$acryl_screen_frame_text" "$acryl_sync_end" >&2
 	fi
 }
 
-amide_init_screen_layout() {
-	if [ "$amide_screen_layout_ready" = 1 ]; then
+acryl_init_screen_layout() {
+	if [ "$acryl_screen_layout_ready" = 1 ]; then
 		return
 	fi
 
-	amide_screen_layout_ready=1
-	amide_screen_layout_show_logo=0
-	amide_screen_layout_lab_width=0
-	amide_screen_render_lab_width=0
-	if amide_terminal_size_supports_logo; then
-		amide_screen_layout_show_logo=1
-		amide_screen_layout_lab_width=$(amide_lab_width_for_cols "$amide_screen_cols")
+	acryl_screen_layout_ready=1
+	acryl_screen_layout_show_logo=0
+	acryl_screen_layout_lab_width=0
+	acryl_screen_render_lab_width=0
+	if acryl_terminal_size_supports_logo; then
+		acryl_screen_layout_show_logo=1
+		acryl_screen_layout_lab_width=$(acryl_lab_width_for_cols "$acryl_screen_cols")
 	fi
 }
 
-amide_refresh_screen_layout_mode() {
-	amide_screen_compact=0
-	amide_screen_render_lab_width=0
-	if [ "$amide_screen_layout_show_logo" != 1 ]; then
+acryl_refresh_screen_layout_mode() {
+	acryl_screen_compact=0
+	acryl_screen_render_lab_width=0
+	if [ "$acryl_screen_layout_show_logo" != 1 ]; then
 		return
 	fi
-	if [ "$amide_screen_rows" -lt 17 ]; then
-		amide_screen_compact=1
+	if [ "$acryl_screen_rows" -lt 17 ]; then
+		acryl_screen_compact=1
 		return
 	fi
 
-	max_safe_width=$((amide_screen_cols - 1))
+	max_safe_width=$((acryl_screen_cols - 1))
 	if [ "$max_safe_width" -lt 32 ]; then
-		amide_screen_compact=1
+		acryl_screen_compact=1
 		return
 	fi
 
-	amide_screen_render_lab_width="$amide_screen_layout_lab_width"
-	if [ "$amide_screen_render_lab_width" -gt "$max_safe_width" ]; then
-		amide_screen_render_lab_width="$max_safe_width"
+	acryl_screen_render_lab_width="$acryl_screen_layout_lab_width"
+	if [ "$acryl_screen_render_lab_width" -gt "$max_safe_width" ]; then
+		acryl_screen_render_lab_width="$max_safe_width"
 	fi
 }
 
-amide_terminal_size_supports_logo() {
-	[ "$amide_screen_rows" -ge 22 ] && [ "$amide_screen_cols" -ge 42 ]
+acryl_terminal_size_supports_logo() {
+	[ "$acryl_screen_rows" -ge 22 ] && [ "$acryl_screen_cols" -ge 42 ]
 }
 
-amide_lab_width_for_cols() {
+acryl_lab_width_for_cols() {
 	cols="$1"
 	width=$((cols - 6))
 	if [ "$width" -gt 78 ]; then
@@ -317,51 +317,51 @@ amide_lab_width_for_cols() {
 	printf '%s' "$width"
 }
 
-amide_render_screen() {
-	content_height=$(amide_content_height)
-	top=$(((amide_screen_rows - content_height) / 2))
+acryl_render_screen() {
+	content_height=$(acryl_content_height)
+	top=$(((acryl_screen_rows - content_height) / 2))
 	if [ "$top" -lt 0 ]; then
 		top=0
 	fi
 
 	y=0
-	while [ "$y" -lt "$amide_screen_rows" ]; do
+	while [ "$y" -lt "$acryl_screen_rows" ]; do
 		content_index=$((y - top))
-		amide_content_line "$content_index"
-		if [ "${amide_content_is_set:-0}" = 1 ]; then
-			amide_print_centered_line "$amide_content_text" "$amide_content_width" "$amide_content_style"
+		acryl_content_line "$content_index"
+		if [ "${acryl_content_is_set:-0}" = 1 ]; then
+			acryl_print_centered_line "$acryl_content_text" "$acryl_content_width" "$acryl_content_style"
 		else
-			amide_print_centered_line "" 0 ""
+			acryl_print_centered_line "" 0 ""
 		fi
 		y=$((y + 1))
 	done
 }
 
-amide_content_height() {
+acryl_content_height() {
 	height=2
-	if amide_show_logo; then
+	if acryl_show_logo; then
 		height=$((height + 15))
 	fi
 	printf '%s' "$height"
 }
 
-amide_show_logo() {
-	[ "$amide_screen_layout_show_logo" = 1 ] && [ "$amide_screen_compact" != 1 ] && [ "$amide_screen_render_lab_width" -ge 32 ]
+acryl_show_logo() {
+	[ "$acryl_screen_layout_show_logo" = 1 ] && [ "$acryl_screen_compact" != 1 ] && [ "$acryl_screen_render_lab_width" -ge 32 ]
 }
 
-amide_content_line() {
+acryl_content_line() {
 	index="$1"
-	amide_content_is_set=0
-	amide_content_text=
-	amide_content_width=0
-	amide_content_style=
+	acryl_content_is_set=0
+	acryl_content_text=
+	acryl_content_width=0
+	acryl_content_style=
 
-	if amide_show_logo; then
+	if acryl_show_logo; then
 		case "$index" in
-			0|1|2|3|4|5|6|7|8|9|10|11|12|13) amide_set_lab_line "$index" ;;
-			14) amide_set_blank_line ;;
+			0|1|2|3|4|5|6|7|8|9|10|11|12|13) acryl_set_lab_line "$index" ;;
+			14) acryl_set_blank_line ;;
 		esac
-		if [ "$amide_content_is_set" = 1 ]; then
+		if [ "$acryl_content_is_set" = 1 ]; then
 			return
 		fi
 		index=$((index - 15))
@@ -372,60 +372,60 @@ amide_content_line() {
 	fi
 
 	if [ "$index" -eq 0 ]; then
-		if [ -n "$amide_screen_question" ]; then
-			amide_set_text_line "$(amide_screen_primary_text)" "$amide_bold$amide_color_text"
+		if [ -n "$acryl_screen_question" ]; then
+			acryl_set_text_line "$(acryl_screen_primary_text)" "$acryl_bold$acryl_color_text"
 		else
-			amide_set_title_line "$amide_screen_title"
+			acryl_set_title_line "$acryl_screen_title"
 		fi
 		return
 	fi
 
 	if [ "$index" -eq 1 ]; then
-		if [ -n "$amide_screen_question" ]; then
-			amide_set_text_line "Press Enter to continue; type n to cancel." "$amide_color_muted"
-		elif [ -n "$amide_screen_detail" ]; then
-			amide_set_text_line "$amide_screen_detail" "$amide_color_muted"
+		if [ -n "$acryl_screen_question" ]; then
+			acryl_set_text_line "Press Enter to continue; type n to cancel." "$acryl_color_muted"
+		elif [ -n "$acryl_screen_detail" ]; then
+			acryl_set_text_line "$acryl_screen_detail" "$acryl_color_muted"
 		else
-			amide_set_blank_line
+			acryl_set_blank_line
 		fi
 		return
 	fi
 }
 
-amide_screen_primary_text() {
-	if [ -z "$amide_screen_question" ]; then
-		printf '%s' "$amide_screen_title"
+acryl_screen_primary_text() {
+	if [ -z "$acryl_screen_question" ]; then
+		printf '%s' "$acryl_screen_title"
 		return
 	fi
 
-	case "$amide_screen_question" in
-		*'[Y/n]'*) printf '%s [Y/n] >' "$amide_screen_title" ;;
-		*) printf '%s %s' "$amide_screen_title" "$amide_screen_question" ;;
+	case "$acryl_screen_question" in
+		*'[Y/n]'*) printf '%s [Y/n] >' "$acryl_screen_title" ;;
+		*) printf '%s %s' "$acryl_screen_title" "$acryl_screen_question" ;;
 	esac
 }
 
-amide_set_lab_line() {
+acryl_set_lab_line() {
 	lab_row="$1"
-	amide_lab_width="$amide_screen_render_lab_width"
+	acryl_lab_width="$acryl_screen_render_lab_width"
 
-	logo_line=$(amide_logo_line "$lab_row")
+	logo_line=$(acryl_logo_line "$lab_row")
 	if [ -n "$logo_line" ]; then
-		logo_start=$(((amide_lab_width - 32) / 2))
+		logo_start=$(((acryl_lab_width - 32) / 2))
 		logo_end=$((logo_start + 32))
-		left=$(amide_lab_background_range "$lab_row" 0 "$logo_start")
-		right=$(amide_lab_background_range "$lab_row" "$logo_end" "$amide_lab_width")
-		trace="${left}${amide_color_text}${logo_line}${amide_reset}${right}"
+		left=$(acryl_lab_background_range "$lab_row" 0 "$logo_start")
+		right=$(acryl_lab_background_range "$lab_row" "$logo_end" "$acryl_lab_width")
+		trace="${left}${acryl_color_text}${logo_line}${acryl_reset}${right}"
 	else
-		trace=$(amide_lab_background_range "$lab_row" 0 "$amide_lab_width")
+		trace=$(acryl_lab_background_range "$lab_row" 0 "$acryl_lab_width")
 	fi
 
-	amide_content_is_set=1
-	amide_content_text="$trace"
-	amide_content_width="$amide_lab_width"
-	amide_content_style=
+	acryl_content_is_set=1
+	acryl_content_text="$trace"
+	acryl_content_width="$acryl_lab_width"
+	acryl_content_style=
 }
 
-amide_logo_line() {
+acryl_logo_line() {
 	case "$1" in
 		2) printf '                          ▄▄███▀' ;;
 		3) printf '    ▄▄▄▄▄              ▄█████▀' ;;
@@ -440,7 +440,7 @@ amide_logo_line() {
 	esac
 }
 
-amide_lab_background_range() {
+acryl_lab_background_range() {
 	lab_row="$1"
 	range_start="$2"
 	range_end="$3"
@@ -448,38 +448,38 @@ amide_lab_background_range() {
 	line=
 	x="$range_start"
 	while [ "$x" -lt "$range_end" ]; do
-		amide_lab_cell "$x" "$lab_row"
-		if [ "$amide_lab_cell_style" != "$active_style" ]; then
+		acryl_lab_cell "$x" "$lab_row"
+		if [ "$acryl_lab_cell_style" != "$active_style" ]; then
 			if [ -n "$active_style" ]; then
-				line="${line}${amide_reset}"
+				line="${line}${acryl_reset}"
 			fi
-			if [ -n "$amide_lab_cell_style" ]; then
-				line="${line}${amide_lab_cell_style}"
+			if [ -n "$acryl_lab_cell_style" ]; then
+				line="${line}${acryl_lab_cell_style}"
 			fi
-			active_style="$amide_lab_cell_style"
+			active_style="$acryl_lab_cell_style"
 		fi
-		line="${line}${amide_lab_cell_char}"
+		line="${line}${acryl_lab_cell_char}"
 		x=$((x + 1))
 	done
 	if [ -n "$active_style" ]; then
-		line="${line}${amide_reset}"
+		line="${line}${acryl_reset}"
 	fi
 	printf '%s' "$line"
 }
 
-amide_lab_cell() {
+acryl_lab_cell() {
 	x="$1"
 	y="$2"
-	width="$amide_lab_width"
+	width="$acryl_lab_width"
 	height=14
-	frame="$amide_screen_frame"
-	amide_lab_cell_char=" "
-	amide_lab_cell_style=
+	frame="$acryl_screen_frame"
+	acryl_lab_cell_char=" "
+	acryl_lab_cell_style=
 
 	hash=$(((x * 37 + y * 53 + frame * 11 + x * y * 3) % 101))
 	if [ "$hash" -lt 3 ]; then
-		amide_lab_cell_char="·"
-		amide_lab_cell_style="$amide_color_dim"
+		acryl_lab_cell_char="·"
+		acryl_lab_cell_style="$acryl_color_dim"
 	fi
 
 	center_x=$((width * 36 / 100))
@@ -495,20 +495,20 @@ amide_lab_cell() {
 	contour=$((dx + dy * 4 + x / 6 - frame))
 	if [ "$x" -lt $((width * 82 / 100)) ] && [ $(((contour % 24 + 24) % 24)) -eq 12 ]; then
 		if [ $(((x + y) % 5)) -eq 0 ]; then
-			amide_lab_cell_char="╌"
+			acryl_lab_cell_char="╌"
 		else
-			amide_lab_cell_char="·"
+			acryl_lab_cell_char="·"
 		fi
-		amide_lab_cell_style="$amide_color_dim"
+		acryl_lab_cell_style="$acryl_color_dim"
 	fi
 
 	horizon_y=$((height * 58 / 100))
 	if [ "$y" -eq "$horizon_y" ] && [ $((x % 2)) -eq 0 ] && [ $(((x + frame) % 13)) -lt 2 ]; then
-		amide_lab_cell_char="─"
+		acryl_lab_cell_char="─"
 		if [ "$x" -gt $((width * 60 / 100)) ]; then
-			amide_lab_cell_style="$amide_color_primary"
+			acryl_lab_cell_style="$acryl_color_primary"
 		else
-			amide_lab_cell_style="$amide_color_dim"
+			acryl_lab_cell_style="$acryl_color_dim"
 		fi
 	fi
 
@@ -521,11 +521,11 @@ amide_lab_cell() {
 			scan_bottom=$((height - 2 - (scan_index * 2 + frame / 4) % 3))
 			if [ "$y" -ge "$scan_top" ] && [ "$y" -le "$scan_bottom" ] && [ $(((y + scan_index + frame) % 6)) -ne 0 ]; then
 				if [ $(((scan_index + y) % 4)) -eq 0 ]; then
-					amide_lab_cell_char="┃"
+					acryl_lab_cell_char="┃"
 				else
-					amide_lab_cell_char="╎"
+					acryl_lab_cell_char="╎"
 				fi
-				amide_lab_cell_style="$amide_color_scan"
+				acryl_lab_cell_style="$acryl_color_scan"
 			fi
 		fi
 	fi
@@ -544,71 +544,71 @@ amide_lab_cell() {
 		trace_y=$((base + (wave - 3) / 2))
 		if [ "$y" -eq "$trace_y" ]; then
 			if [ $(((x + frame + trace_index * 13) % 41)) -eq 0 ]; then
-				amide_lab_cell_char="◆"
-				amide_lab_cell_style="$amide_color_warning"
+				acryl_lab_cell_char="◆"
+				acryl_lab_cell_style="$acryl_color_warning"
 			elif [ $(((x + frame) % 12)) -eq 0 ]; then
-				amide_lab_cell_char="•"
-				amide_lab_cell_style="$amide_color_primary"
+				acryl_lab_cell_char="•"
+				acryl_lab_cell_style="$acryl_color_primary"
 			else
-				amide_lab_cell_char="·"
-				amide_lab_cell_style="$amide_color_primary"
+				acryl_lab_cell_char="·"
+				acryl_lab_cell_style="$acryl_color_primary"
 			fi
 		fi
 		trace_index=$((trace_index + 1))
 	done
 }
 
-amide_set_blank_line() {
-	amide_content_is_set=1
-	amide_content_text=
-	amide_content_width=0
-	amide_content_style=
+acryl_set_blank_line() {
+	acryl_content_is_set=1
+	acryl_content_text=
+	acryl_content_width=0
+	acryl_content_style=
 }
 
-amide_set_text_line() {
-	max_width=$((amide_screen_cols - 4))
+acryl_set_text_line() {
+	max_width=$((acryl_screen_cols - 4))
 	if [ "$max_width" -lt 1 ]; then
 		max_width=1
 	fi
-	amide_content_text=$(amide_fit_ascii "$1" "$max_width")
-	amide_content_width=${#amide_content_text}
-	amide_content_style="$2"
-	amide_content_is_set=1
+	acryl_content_text=$(acryl_fit_ascii "$1" "$max_width")
+	acryl_content_width=${#acryl_content_text}
+	acryl_content_style="$2"
+	acryl_content_is_set=1
 }
 
-amide_set_title_line() {
-	max_width=$((amide_screen_cols - 4))
+acryl_set_title_line() {
+	max_width=$((acryl_screen_cols - 4))
 	if [ "$max_width" -lt 1 ]; then
 		max_width=1
 	fi
-	amide_content_text=$(amide_fit_ascii "$1" "$max_width")
-	amide_content_width=${#amide_content_text}
-	case "$amide_content_text" in
-		*"AMIDE"*)
-			amide_content_text=$(amide_style_amide_title "$amide_content_text")
-			amide_content_style=
+	acryl_content_text=$(acryl_fit_ascii "$1" "$max_width")
+	acryl_content_width=${#acryl_content_text}
+	case "$acryl_content_text" in
+		*"ACRYL"*)
+			acryl_content_text=$(acryl_style_acryl_title "$acryl_content_text")
+			acryl_content_style=
 			;;
 		*)
-			amide_content_style="$amide_bold$amide_color_primary"
+			acryl_content_style="$acryl_bold$acryl_color_primary"
 			;;
 	esac
-	amide_content_is_set=1
+	acryl_content_is_set=1
 }
 
-amide_style_amide_title() {
+acryl_style_acryl_title() {
 	text="$1"
 	styled=
 	while :; do
 		case "$text" in
-			*"AMIDE"*)
-				before=${text%%AMIDE*}
-				rest=${text#*AMIDE}
-				styled="${styled}${amide_bold}${amide_color_primary}${before}"
-				styled="${styled}${amide_bold}${amide_color_primary}AMIDE${amide_reset}"
+			*"ACRYL"*)
+				before=${text%%ACRYL*}
+				rest=${text#*ACRYL}
+				styled="${styled}${acryl_bold}${acryl_color_primary}${before}"
+				styled="${styled}${acryl_bold}${acryl_color_primary}ACRYL${acryl_reset}"
 				text="$rest"
 				;;
 			*)
-				styled="${styled}${amide_bold}${amide_color_primary}${text}${amide_reset}"
+				styled="${styled}${acryl_bold}${acryl_color_primary}${text}${acryl_reset}"
 				printf '%s' "$styled"
 				return
 				;;
@@ -616,7 +616,7 @@ amide_style_amide_title() {
 	done
 }
 
-amide_fit_ascii() {
+acryl_fit_ascii() {
 	text="$1"
 	max_width="$2"
 	if [ "${#text}" -le "$max_width" ]; then
@@ -631,54 +631,54 @@ amide_fit_ascii() {
 	printf '%s...' "$(printf '%s' "$text" | cut -c 1-"$cut_width")"
 }
 
-amide_print_centered_line() {
+acryl_print_centered_line() {
 	text="$1"
 	width="$2"
 	style="$3"
-	left=$(((amide_screen_cols - width) / 2))
+	left=$(((acryl_screen_cols - width) / 2))
 	if [ "$left" -lt 0 ]; then
 		left=0
 	fi
 	if [ -n "$style" ]; then
-		printf '%*s%s%s%s%s\n' "$left" "" "$style" "$text" "$amide_reset" "$amide_clear_line"
+		printf '%*s%s%s%s%s\n' "$left" "" "$style" "$text" "$acryl_reset" "$acryl_clear_line"
 	else
-		printf '%*s%s%s\n' "$left" "" "$text" "$amide_clear_line"
+		printf '%*s%s%s\n' "$left" "" "$text" "$acryl_clear_line"
 	fi
 }
 
-amide_place_prompt_cursor() {
-	max_width=$((amide_screen_cols - 4))
+acryl_place_prompt_cursor() {
+	max_width=$((acryl_screen_cols - 4))
 	if [ "$max_width" -lt 1 ]; then
 		max_width=1
 	fi
-	prompt_text=$(amide_fit_ascii "$(amide_screen_primary_text)" "$max_width")
+	prompt_text=$(acryl_fit_ascii "$(acryl_screen_primary_text)" "$max_width")
 	prompt_width=${#prompt_text}
-	content_height=$(amide_content_height)
-	top=$(((amide_screen_rows - content_height) / 2))
+	content_height=$(acryl_content_height)
+	top=$(((acryl_screen_rows - content_height) / 2))
 	if [ "$top" -lt 0 ]; then
 		top=0
 	fi
 	prompt_index=0
-	if amide_show_logo; then
+	if acryl_show_logo; then
 		prompt_index=$((prompt_index + 15))
 	fi
 	row=$((top + prompt_index + 1))
-	col=$(((amide_screen_cols - prompt_width) / 2 + prompt_width + 2))
+	col=$(((acryl_screen_cols - prompt_width) / 2 + prompt_width + 2))
 	if [ "$col" -lt 1 ]; then
 		col=1
 	fi
-	if [ "$col" -gt "$amide_screen_cols" ]; then
-		col="$amide_screen_cols"
+	if [ "$col" -gt "$acryl_screen_cols" ]; then
+		col="$acryl_screen_cols"
 	fi
 	if ( : <>/dev/tty ) 2>/dev/null; then
-		printf '%s%s%s[%s;%sH' "$amide_reset" "$amide_show_cursor" "$amide_esc" "$row" "$col" >/dev/tty
+		printf '%s%s%s[%s;%sH' "$acryl_reset" "$acryl_show_cursor" "$acryl_esc" "$row" "$col" >/dev/tty
 	else
-		printf '%s%s%s[%s;%sH' "$amide_reset" "$amide_show_cursor" "$amide_esc" "$row" "$col" >&2
+		printf '%s%s%s[%s;%sH' "$acryl_reset" "$acryl_show_cursor" "$acryl_esc" "$row" "$col" >&2
 	fi
 }
 
-amide_pulse() {
-	case $((amide_screen_frame % 4)) in
+acryl_pulse() {
+	case $((acryl_screen_frame % 4)) in
 		0) printf '.' ;;
 		1) printf '..' ;;
 		2) printf '...' ;;
@@ -686,7 +686,7 @@ amide_pulse() {
 	esac
 }
 
-amide_animation_detail_count() {
+acryl_animation_detail_count() {
 	details="$1"
 	case "$details" in
 		*'
@@ -695,8 +695,8 @@ amide_animation_detail_count() {
 	esac
 }
 
-amide_animation_current_frame() {
-	frame="${amide_animation_frame:-1}"
+acryl_animation_current_frame() {
+	frame="${acryl_animation_frame:-1}"
 	case "$frame" in
 		""|*[!0-9]*) frame=1 ;;
 	esac
@@ -706,10 +706,10 @@ amide_animation_current_frame() {
 	printf '%s' "$frame"
 }
 
-amide_animation_step_index() {
+acryl_animation_step_index() {
 	details="$1"
-	detail_count=$(amide_animation_detail_count "$details")
-	frame=$(amide_animation_current_frame)
+	detail_count=$(acryl_animation_detail_count "$details")
+	frame=$(acryl_animation_current_frame)
 	detail_index=$(((frame - 1) / 24 + 1))
 	if [ "$detail_index" -gt "$detail_count" ]; then
 		detail_index="$detail_count"
@@ -717,61 +717,61 @@ amide_animation_step_index() {
 	printf '%s' "$detail_index"
 }
 
-amide_static_progress_title() {
+acryl_static_progress_title() {
 	case "$1" in
 		*...) printf '%s' "$1" ;;
 		*) printf '%s...' "$1" ;;
 	esac
 }
 
-amide_animation_status() {
+acryl_animation_status() {
 	status="$1"
 	details="$2"
 	status_mode="$3"
 	case "$status_mode" in
-		static) amide_static_progress_title "$status" ;;
-		*) printf '%s%s' "$status" "$(amide_pulse)" ;;
+		static) acryl_static_progress_title "$status" ;;
+		*) printf '%s%s' "$status" "$(acryl_pulse)" ;;
 	esac
 }
 
-amide_animation_detail() {
+acryl_animation_detail() {
 	details="$1"
 	case "$details" in
 		*'
 '*)
-			detail_index=$(amide_animation_step_index "$details")
+			detail_index=$(acryl_animation_step_index "$details")
 			printf '%s\n' "$details" | sed -n "${detail_index}p"
 			;;
 		*) printf '%s' "$details" ;;
 	esac
 }
 
-amide_run_quiet_with_animation() {
+acryl_run_quiet_with_animation() {
 	title="$1"
 	status="$2"
 	detail="$3"
 	shift 3
 
-	amide_run_quiet_with_animation_command "$title" "$status" "$detail" pulse "$@"
+	acryl_run_quiet_with_animation_command "$title" "$status" "$detail" pulse "$@"
 }
 
-amide_run_quiet_with_animation_steps() {
+acryl_run_quiet_with_animation_steps() {
 	title="$1"
 	status="$2"
 	details="$3"
 	shift 3
 
-	amide_run_quiet_with_animation_command "$title" "$status" "$details" static "$@"
+	acryl_run_quiet_with_animation_command "$title" "$status" "$details" static "$@"
 }
 
-amide_run_quiet_with_animation_command() {
+acryl_run_quiet_with_animation_command() {
 	title="$1"
 	status="$2"
 	details="$3"
 	status_mode="$4"
 	shift 4
 
-	if [ "$amide_screen_enabled" != 1 ]; then
+	if [ "$acryl_screen_enabled" != 1 ]; then
 		printf '%s\n' "$status" >&2
 		"$@"
 		return
@@ -781,12 +781,12 @@ amide_run_quiet_with_animation_command() {
 	output_file="$output_dir/output"
 	"$@" >"$output_file" 2>&1 &
 	command_pid=$!
-	amide_animation_frame=0
+	acryl_animation_frame=0
 
 	while kill -0 "$command_pid" 2>/dev/null; do
-		amide_animation_frame=$((amide_animation_frame + 1))
-		status_display=$(amide_animation_status "$status" "$details" "$status_mode")
-		amide_screen "$title" "$status_display" "$(amide_animation_detail "$details")" ""
+		acryl_animation_frame=$((acryl_animation_frame + 1))
+		status_display=$(acryl_animation_status "$status" "$details" "$status_mode")
+		acryl_screen "$title" "$status_display" "$(acryl_animation_detail "$details")" ""
 		sleep 0.18
 	done
 
@@ -797,7 +797,7 @@ amide_run_quiet_with_animation_command() {
 	fi
 
 	if [ "$command_status" -ne 0 ] && [ -s "$output_file" ]; then
-		amide_restore_terminal
+		acryl_restore_terminal
 		printf '\n' >&2
 		cat "$output_file" >&2
 	fi
@@ -805,7 +805,7 @@ amide_run_quiet_with_animation_command() {
 	return "$command_status"
 }
 
-amide_prompt_yes_no() {
+acryl_prompt_yes_no() {
 	question="$1"
 	detail="$2"
 	input_prompt="$3"
@@ -819,9 +819,9 @@ amide_prompt_yes_no() {
 		return 2
 	fi
 
-	if [ "$amide_screen_enabled" = 1 ]; then
-		amide_screen "$question" "" "$detail" "$input_prompt"
-		amide_place_prompt_cursor "$input_prompt"
+	if [ "$acryl_screen_enabled" = 1 ]; then
+		acryl_screen "$question" "" "$detail" "$input_prompt"
+		acryl_place_prompt_cursor "$input_prompt"
 	else
 		printf '%s\n' "$detail"
 		if [ "$prompt_input" = tty ]; then
@@ -858,9 +858,9 @@ start_preflight_checks() {
 }
 
 finish_preflight_checks() {
-	if [ "$amide_screen_enabled" = 1 ]; then
+	if [ "$acryl_screen_enabled" = 1 ]; then
 		while kill -0 "$preflight_pid" 2>/dev/null; do
-			amide_screen "Checking Node.js and npm$(amide_pulse)" "" "" ""
+			acryl_screen "Checking Node.js and npm$(acryl_pulse)" "" "" ""
 			sleep 0.18
 		done
 	fi
@@ -871,14 +871,14 @@ finish_preflight_checks() {
 		preflight_status=$?
 	fi
 
-	if [ "$amide_screen_enabled" = 1 ]; then
+	if [ "$acryl_screen_enabled" = 1 ]; then
 		if [ "$preflight_status" -ne 0 ]; then
 			preflight_summary=$(sed -n '1p' "$preflight_file")
-			amide_screen "Node.js 20.6.0 or newer is required" "" "$preflight_summary" ""
+			acryl_screen "Node.js 20.6.0 or newer is required" "" "$preflight_summary" ""
 			sleep 0.4
 		elif [ -s "$preflight_file" ]; then
-			preflight_summary="Existing $amide_cmd command found on PATH."
-			amide_screen "Environment ready" "" "$preflight_summary" ""
+			preflight_summary="Existing $acryl_cmd command found on PATH."
+			acryl_screen "Environment ready" "" "$preflight_summary" ""
 			sleep 0.4
 		fi
 	else
@@ -890,22 +890,22 @@ finish_preflight_checks() {
 
 run_preflight_checks() {
 	status=0
-	yellow="${amide_esc}[33m"
-	reset="${amide_esc}[0m"
+	yellow="${acryl_esc}[33m"
+	reset="${acryl_esc}[0m"
 
 	if command -v node >/dev/null 2>&1; then
 		node_version=$(node --version)
 		if ! node -e 'const [major, minor, patch] = process.versions.node.split(".").map(Number); process.exit(major > 20 || (major === 20 && (minor > 6 || (minor === 6 && patch >= 0))) ? 0 : 1)' >/dev/null; then
-			printf 'error: AMIDE requires Node.js 20.6.0 or newer. Found %s.\n' "$node_version"
+			printf 'error: ACRYL requires Node.js 20.6.0 or newer. Found %s.\n' "$node_version"
 			status=1
 		fi
 	else
-		printf 'error: Node.js 20.6.0 or newer is required to install AMIDE.\n'
+		printf 'error: Node.js 20.6.0 or newer is required to install ACRYL.\n'
 		status=1
 	fi
 
 	if ! command -v npm >/dev/null 2>&1; then
-		printf 'error: npm is required to install AMIDE.\n'
+		printf 'error: npm is required to install ACRYL.\n'
 		status=1
 	fi
 
@@ -913,15 +913,15 @@ run_preflight_checks() {
 		printf '\n'
 	fi
 
-	if amide_path=$(command -v "$amide_cmd" 2>/dev/null); then
-		printf '%sExisting %s found at: %s%s\n' "$yellow" "$amide_cmd" "$amide_path" "$reset"
+	if acryl_path=$(command -v "$acryl_cmd" 2>/dev/null); then
+		printf '%sExisting %s found at: %s%s\n' "$yellow" "$acryl_cmd" "$acryl_path" "$reset"
 		printf '\n'
 	fi
 
 	return "$status"
 }
 
-resolve_amide_version() {
+resolve_acryl_version() {
 	if [ "${1:-}" ]; then
 		case "$1" in
 			stable|beta) release_channel="$1" ;;
@@ -931,42 +931,42 @@ resolve_amide_version() {
 				;;
 		esac
 	else
-		release_channel="$amide_release_channel"
+		release_channel="$acryl_release_channel"
 	fi
 
-	if [ "${AMIDE_VERSION:-}" ]; then
-		normalize_version "$AMIDE_VERSION"
+	if [ "${ACRYL_VERSION:-}" ]; then
+		normalize_version "$ACRYL_VERSION"
 		return
 	fi
 
 	if ! command -v curl >/dev/null 2>&1; then
-		printf 'error: curl is required to resolve the latest AMIDE version.\n' >&2
+		printf 'error: curl is required to resolve the latest ACRYL version.\n' >&2
 		exit 1
 	fi
 
 	case "$release_channel" in
 		stable|beta) ;;
 		*)
-			printf 'error: invalid AMIDE release channel: %s\n' "$release_channel" >&2
+			printf 'error: invalid ACRYL release channel: %s\n' "$release_channel" >&2
 			exit 1
 			;;
 	esac
 
 	channel_dir=$(create_temp_dir)
 	channel_path="$channel_dir/$release_channel"
-	if ! amide_run_quiet_with_animation \
+	if ! acryl_run_quiet_with_animation \
 		"Resolving latest release" \
 		"Resolving latest release" \
 		"Checking the $release_channel release channel." \
-		curl -fsSL "$amide_base_url/$release_channel" -o "$channel_path"; then
+		curl -fsSL "$acryl_base_url/$release_channel" -o "$channel_path"; then
 		rm -rf "$channel_dir"
-		printf 'error: could not resolve latest AMIDE version from %s/%s\n' "$amide_base_url" "$release_channel" >&2
+		printf 'error: could not resolve latest ACRYL version from %s/%s\n' "$acryl_base_url" "$release_channel" >&2
 		exit 1
 	fi
 	channel_version="$(tr -d '[:space:]' <"$channel_path")"
 	rm -rf "$channel_dir"
 	if [ -z "$channel_version" ]; then
-		printf 'error: could not resolve latest AMIDE version from %s/%s\n' "$amide_base_url" "$release_channel" >&2
+		printf 'error: could not resolve latest ACRYL version from %s/%s\n' "$acryl_base_url" "$release_channel" >&2
 		exit 1
 	fi
 	normalize_version "$channel_version"
@@ -976,11 +976,11 @@ normalize_version() {
 	version="${1#v}"
 	case "$version" in
 		"")
-			printf 'error: empty AMIDE version.\n' >&2
+			printf 'error: empty ACRYL version.\n' >&2
 			exit 1
 			;;
 		*[!0-9A-Za-z.-]*)
-			printf 'error: invalid AMIDE version: %s\n' "$1" >&2
+			printf 'error: invalid ACRYL version: %s\n' "$1" >&2
 			exit 1
 			;;
 	esac
@@ -1000,9 +1000,9 @@ install_node_npm_interactive() {
 			;;
 	esac
 
-	if amide_prompt_yes_no \
+	if acryl_prompt_yes_no \
 		"Install Node.js and npm with $label?" \
-		"Required before AMIDE can be installed." \
+		"Required before ACRYL can be installed." \
 		"Install? [Y/n]"; then
 		install_node_npm "$method" "$label"
 		return
@@ -1079,7 +1079,7 @@ install_node_npm() {
 	method="$1"
 	label="$2"
 
-	if [ "$amide_screen_enabled" != 1 ]; then
+	if [ "$acryl_screen_enabled" != 1 ]; then
 		printf '\nInstalling Node.js and npm with %s...\n\n' "$label"
 		run_node_install_method "$method"
 	else
@@ -1088,8 +1088,8 @@ install_node_npm() {
 Resolving Node.js packages.
 Downloading Node.js runtime.
 Installing npm.
-Preparing AMIDE setup."
-		amide_run_quiet_with_animation_steps \
+Preparing ACRYL setup."
+		acryl_run_quiet_with_animation_steps \
 			"Installing Node.js and npm" \
 			"Installing Node.js and npm" \
 			"$node_install_details" \
@@ -1098,11 +1098,11 @@ Preparing AMIDE setup."
 
 	if [ "$method" = standalone ]; then
 		load_standalone_node
-		AMIDE_NODE_INSTALLED_STANDALONE=1
+		ACRYL_NODE_INSTALLED_STANDALONE=1
 	fi
 	hash -r
-	if [ "$amide_screen_enabled" = 1 ]; then
-		amide_screen "Node.js and npm installed" "" "Continuing AMIDE setup." ""
+	if [ "$acryl_screen_enabled" = 1 ]; then
+		acryl_screen "Node.js and npm installed" "" "Continuing ACRYL setup." ""
 	else
 		printf '\nNode.js and npm are installed.\n\n'
 	fi
@@ -1134,8 +1134,8 @@ prepare_sudo_for_node_install() {
 		return 0
 	fi
 
-	amide_screen "Preparing Node.js install" "" "This may ask for your sudo password." ""
-	amide_restore_terminal
+	acryl_screen "Preparing Node.js install" "" "This may ask for your sudo password." ""
+	acryl_restore_terminal
 	printf '\n'
 	sudo -v
 }
@@ -1262,16 +1262,16 @@ ensure_node_standalone_extract_tools() {
 }
 
 load_standalone_node() {
-	AMIDE_STANDALONE_NODE_BIN="$(node_standalone_base_dir)/current/bin"
-	PATH="$AMIDE_STANDALONE_NODE_BIN:$PATH"
-	export AMIDE_STANDALONE_NODE_BIN PATH
+	ACRYL_STANDALONE_NODE_BIN="$(node_standalone_base_dir)/current/bin"
+	PATH="$ACRYL_STANDALONE_NODE_BIN:$PATH"
+	export ACRYL_STANDALONE_NODE_BIN PATH
 }
 
 node_standalone_base_dir() {
 	if [ -n "${XDG_DATA_HOME:-}" ]; then
-		printf '%s/amide-node' "$XDG_DATA_HOME"
+		printf '%s/acryl-node' "$XDG_DATA_HOME"
 	else
-		printf '%s/.local/share/amide-node' "$HOME"
+		printf '%s/.local/share/acryl-node' "$HOME"
 	fi
 }
 
@@ -1309,34 +1309,34 @@ run_with_sudo() {
 }
 
 configure_standalone_node_path() {
-	if original_amide_path=$(resolve_amide_with_original_path); then
-		case "$original_amide_path" in
-			"$AMIDE_STANDALONE_NODE_BIN/"*)
-				if [ "$amide_screen_enabled" = 1 ]; then
-					amide_screen "AMIDE installed" "" "Run it with: $amide_cmd" ""
+	if original_acryl_path=$(resolve_acryl_with_original_path); then
+		case "$original_acryl_path" in
+			"$ACRYL_STANDALONE_NODE_BIN/"*)
+				if [ "$acryl_screen_enabled" = 1 ]; then
+					acryl_screen "ACRYL installed" "" "Run it with: $acryl_cmd" ""
 				else
-					printf '\nRun it with: %s\n' "$amide_cmd"
+					printf '\nRun it with: %s\n' "$acryl_cmd"
 				fi
 				return 0
 				;;
 		esac
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_screen "AMIDE installed" "" "PATH update needed for $amide_cmd." ""
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_screen "ACRYL installed" "" "PATH update needed for $acryl_cmd." ""
 		else
-			printf '%s was installed, but your shell is not using that install yet.\n' "$amide_cmd"
-			printf 'Your shell currently resolves %s to: %s\n' "$amide_cmd" "$original_amide_path"
+			printf '%s was installed, but your shell is not using that install yet.\n' "$acryl_cmd"
+			printf 'Your shell currently resolves %s to: %s\n' "$acryl_cmd" "$original_acryl_path"
 		fi
 	else
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_screen "AMIDE installed" "" "PATH update needed for $amide_cmd." ""
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_screen "ACRYL installed" "" "PATH update needed for $acryl_cmd." ""
 		else
-			printf '%s was installed, but your shell is not using that install yet.\n' "$amide_cmd"
+			printf '%s was installed, but your shell is not using that install yet.\n' "$acryl_cmd"
 		fi
 	fi
 
 	profile=$(detect_shell_profile) || {
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_restore_terminal
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_restore_terminal
 			printf '\n'
 		fi
 		print_standalone_path_manual_instructions
@@ -1344,11 +1344,11 @@ configure_standalone_node_path() {
 	}
 
 	if shell_profile_has_standalone_node_path "$profile"; then
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_screen "AMIDE installed" "" "Run: $(amide_source_profile_command "$profile")" ""
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_screen "ACRYL installed" "" "Run: $(acryl_source_profile_command "$profile")" ""
 		else
-			printf '%s already contains %s.\n' "$profile" "$AMIDE_STANDALONE_NODE_BIN"
-			printf 'Restart your shell or run: %s\n' "$(amide_source_profile_command "$profile")"
+			printf '%s already contains %s.\n' "$profile" "$ACRYL_STANDALONE_NODE_BIN"
+			printf 'Restart your shell or run: %s\n' "$(acryl_source_profile_command "$profile")"
 		fi
 		return 0
 	fi
@@ -1356,10 +1356,10 @@ configure_standalone_node_path() {
 	prompt_add_standalone_node_path "$profile"
 }
 
-resolve_amide_with_original_path() {
+resolve_acryl_with_original_path() {
 	saved_path=$PATH
-	PATH=$amide_original_path
-	if command -v "$amide_cmd" 2>/dev/null; then
+	PATH=$acryl_original_path
+	if command -v "$acryl_cmd" 2>/dev/null; then
 		status=0
 	else
 		status=$?
@@ -1369,8 +1369,8 @@ resolve_amide_with_original_path() {
 }
 
 detect_shell_profile() {
-	if [ -n "${AMIDE_SHELL_PROFILE:-}" ]; then
-		printf '%s' "$AMIDE_SHELL_PROFILE"
+	if [ -n "${ACRYL_SHELL_PROFILE:-}" ]; then
+		printf '%s' "$ACRYL_SHELL_PROFILE"
 		return 0
 	fi
 	if [ -z "${HOME:-}" ]; then
@@ -1400,19 +1400,19 @@ detect_shell_profile() {
 
 shell_profile_has_standalone_node_path() {
 	profile="$1"
-	[ -f "$profile" ] && grep -F "$AMIDE_STANDALONE_NODE_BIN" "$profile" >/dev/null 2>&1
+	[ -f "$profile" ] && grep -F "$ACRYL_STANDALONE_NODE_BIN" "$profile" >/dev/null 2>&1
 }
 
 prompt_add_standalone_node_path() {
 	profile="$1"
 	path_line=$(standalone_node_path_line)
 
-	if ! amide_prompt_yes_no \
+	if ! acryl_prompt_yes_no \
 		"Add standalone Node.js to your PATH?" \
-		"Updates $profile so future shells can run $amide_cmd." \
+		"Updates $profile so future shells can run $acryl_cmd." \
 		"Update PATH? [Y/n]"; then
-		if [ "$amide_screen_enabled" = 1 ]; then
-			amide_restore_terminal
+		if [ "$acryl_screen_enabled" = 1 ]; then
+			acryl_restore_terminal
 			printf '\n'
 		fi
 		print_standalone_path_manual_instructions
@@ -1421,66 +1421,66 @@ prompt_add_standalone_node_path() {
 
 	mkdir -p "$(dirname "$profile")"
 	{
-		printf '\n# AMIDE standalone Node.js\n'
+		printf '\n# ACRYL standalone Node.js\n'
 		printf '%s\n' "$path_line"
 	} >>"$profile"
-	if [ "$amide_screen_enabled" = 1 ]; then
-		amide_screen "AMIDE installed" "" "Run: $(amide_source_profile_command "$profile")" ""
+	if [ "$acryl_screen_enabled" = 1 ]; then
+		acryl_screen "ACRYL installed" "" "Run: $(acryl_source_profile_command "$profile")" ""
 	else
-		printf 'Added %s to %s.\n' "$AMIDE_STANDALONE_NODE_BIN" "$profile"
-		printf 'Restart your shell or run: %s\n' "$(amide_source_profile_command "$profile")"
+		printf 'Added %s to %s.\n' "$ACRYL_STANDALONE_NODE_BIN" "$profile"
+		printf 'Restart your shell or run: %s\n' "$(acryl_source_profile_command "$profile")"
 	fi
 }
 
 print_standalone_path_manual_instructions() {
-	printf 'Add this to your shell profile to use %s from new shells:\n\n' "$amide_cmd"
+	printf 'Add this to your shell profile to use %s from new shells:\n\n' "$acryl_cmd"
 	printf '  %s\n' "$(standalone_node_path_line)"
-	printf '\nThen restart your shell and run: %s\n' "$amide_cmd"
+	printf '\nThen restart your shell and run: %s\n' "$acryl_cmd"
 }
 
 standalone_node_path_line() {
-	printf 'export PATH="%s:$PATH"' "$AMIDE_STANDALONE_NODE_BIN"
+	printf 'export PATH="%s:$PATH"' "$ACRYL_STANDALONE_NODE_BIN"
 }
 
-amide_shell_quote() {
+acryl_shell_quote() {
 	quoted=$(printf '%s' "$1" | sed "s/'/'\\\\''/g")
 	printf "'%s'" "$quoted"
 }
 
-amide_source_profile_command() {
-	printf '. %s && %s' "$(amide_shell_quote "$1")" "$amide_cmd"
+acryl_source_profile_command() {
+	printf '. %s && %s' "$(acryl_shell_quote "$1")" "$acryl_cmd"
 }
 
-download_amide_package() {
+download_acryl_package() {
 	version="$1"
 	tarball_url="$2"
 	tarball_path="$3"
 	download_dir=$(dirname "$tarball_path")
 	tarball_name=$(basename "$tarball_path")
-	checksums_url="$amide_base_url/releases/v$version/SHA256SUMS"
+	checksums_url="$acryl_base_url/releases/v$version/SHA256SUMS"
 	checksums_path="$download_dir/SHA256SUMS"
 
 	if ! command -v curl >/dev/null 2>&1; then
-		printf 'error: curl is required to download AMIDE.\n' >&2
+		printf 'error: curl is required to download ACRYL.\n' >&2
 		exit 1
 	fi
 
-	amide_run_quiet_with_animation \
+	acryl_run_quiet_with_animation \
 		"Downloading checksums" \
 		"Downloading release checksums" \
-		"AMIDE v$version" \
+		"ACRYL v$version" \
 		curl -fsSL "$checksums_url" -o "$checksums_path"
 
-	amide_run_quiet_with_animation \
-		"Downloading AMIDE" \
-		"Downloading AMIDE v$version" \
+	acryl_run_quiet_with_animation \
+		"Downloading ACRYL" \
+		"Downloading ACRYL v$version" \
 		"Fetching the verified package." \
 		curl -fsSL "$tarball_url" -o "$tarball_path"
 
-	verify_amide_package_checksum "$checksums_path" "$tarball_path"
+	verify_acryl_package_checksum "$checksums_path" "$tarball_path"
 }
 
-verify_amide_package_checksum() {
+verify_acryl_package_checksum() {
 	checksums_path="$1"
 	tarball_path="$2"
 	checksum_dir=$(dirname "$tarball_path")
@@ -1494,24 +1494,24 @@ verify_amide_package_checksum() {
 	fi
 
 	if command -v sha256sum >/dev/null 2>&1; then
-		amide_run_quiet_with_animation \
+		acryl_run_quiet_with_animation \
 			"Verifying download" \
-			"Verifying AMIDE download" \
+			"Verifying ACRYL download" \
 			"Checking SHA-256." \
-			amide_run_checksum_check "$checksum_dir" "$(basename "$selected_checksums_path")" sha256sum
+			acryl_run_checksum_check "$checksum_dir" "$(basename "$selected_checksums_path")" sha256sum
 	elif command -v shasum >/dev/null 2>&1; then
-		amide_run_quiet_with_animation \
+		acryl_run_quiet_with_animation \
 			"Verifying download" \
-			"Verifying AMIDE download" \
+			"Verifying ACRYL download" \
 			"Checking SHA-256." \
-			amide_run_checksum_check "$checksum_dir" "$(basename "$selected_checksums_path")" shasum
+			acryl_run_checksum_check "$checksum_dir" "$(basename "$selected_checksums_path")" shasum
 	else
-		printf 'error: sha256sum or shasum is required to verify the AMIDE download.\n' >&2
+		printf 'error: sha256sum or shasum is required to verify the ACRYL download.\n' >&2
 		exit 1
 	fi
 }
 
-amide_run_checksum_check() {
+acryl_run_checksum_check() {
 	checksum_dir="$1"
 	selected_checksums_name="$2"
 	checker="$3"
@@ -1529,8 +1529,8 @@ confirm_install() {
 	version="$1"
 	tarball_url="$2"
 
-	if amide_prompt_yes_no \
-		"Install AMIDE v$version globally with npm?" \
+	if acryl_prompt_yes_no \
+		"Install ACRYL v$version globally with npm?" \
 		"Downloads the verified release and runs npm install -g." \
 		"Install? [Y/n]"; then
 		return 0
@@ -1544,8 +1544,8 @@ confirm_install() {
 		return 0
 	fi
 
-	if [ "$amide_screen_enabled" = 1 ]; then
-		amide_screen "Installation cancelled" "" "No changes were made." ""
+	if [ "$acryl_screen_enabled" = 1 ]; then
+		acryl_screen "Installation cancelled" "" "No changes were made." ""
 		exit 0
 	fi
 	printf '\nInstallation cancelled.\n'
@@ -1553,22 +1553,22 @@ confirm_install() {
 }
 
 confirm_kernel_runtime_setup() {
-	case "${AMIDE_BOOTSTRAP_KERNEL_ON_INSTALL:-}" in
+	case "${ACRYL_BOOTSTRAP_KERNEL_ON_INSTALL:-}" in
 		1)
-			amide_bootstrap_kernel_on_install=1
+			acryl_bootstrap_kernel_on_install=1
 			return
 			;;
 		0)
-			amide_bootstrap_kernel_on_install=0
+			acryl_bootstrap_kernel_on_install=0
 			return
 			;;
 	esac
 
-	if amide_prompt_yes_no \
+	if acryl_prompt_yes_no \
 		"Prepare Python runtime now?" \
-		"Installs uv, Python 3.11, and the AMIDE runtime." \
+		"Installs uv, Python 3.11, and the ACRYL runtime." \
 		"Prepare? [Y/n]"; then
-		amide_bootstrap_kernel_on_install=1
+		acryl_bootstrap_kernel_on_install=1
 		return
 	else
 		prompt_status=$?
@@ -1576,20 +1576,20 @@ confirm_kernel_runtime_setup() {
 
 	if [ "$prompt_status" -eq 2 ]; then
 		printf 'No terminal detected; preparing the Python runtime during install.\n'
-		amide_bootstrap_kernel_on_install=1
+		acryl_bootstrap_kernel_on_install=1
 		return
 	fi
 
-	amide_bootstrap_kernel_on_install=0
-	if [ "$amide_screen_enabled" = 1 ]; then
-		amide_screen "Python setup skipped" "" "The runtime can be prepared on first ipython use." ""
+	acryl_bootstrap_kernel_on_install=0
+	if [ "$acryl_screen_enabled" = 1 ]; then
+		acryl_screen "Python setup skipped" "" "The runtime can be prepared on first ipython use." ""
 		sleep 0.4
 	else
 		printf '\nSkipping Python runtime setup.\n'
 	fi
 }
 
-amide_npm_requires_remote_policy() {
+acryl_npm_requires_remote_policy() {
 	npm_version=$(npm --version 2>/dev/null) || return 1
 	npm_major=${npm_version%%.*}
 	case "$npm_major" in
@@ -1598,10 +1598,10 @@ amide_npm_requires_remote_policy() {
 	[ "$npm_major" -ge 12 ]
 }
 
-amide_npm_install() {
+acryl_npm_install() {
 	tarball_path="$1"
 	shift
-	if amide_npm_requires_remote_policy; then
+	if acryl_npm_requires_remote_policy; then
 		# Limit npm 12's required policy overrides to the verified root package.
 		env "$@" npm install -g --no-fund --no-audit --loglevel=error --progress=false \
 			--allow-remote=all --allow-scripts="$tarball_path" "$tarball_path"
@@ -1610,31 +1610,31 @@ amide_npm_install() {
 	fi
 }
 
-install_amide_package() {
+install_acryl_package() {
 	tarball_path="$1"
-	if [ "$amide_bootstrap_kernel_on_install" = 1 ]; then
+	if [ "$acryl_bootstrap_kernel_on_install" = 1 ]; then
 		npm_install_details="Preparing global install.
 Linking command binaries.
 Installing runtime packages.
 Preloading search tools.
 Preparing Python kernel.
 Finalizing npm install."
-		amide_run_quiet_with_animation_steps \
-			"Installing AMIDE" \
-			"Installing AMIDE" \
+		acryl_run_quiet_with_animation_steps \
+			"Installing ACRYL" \
+			"Installing ACRYL" \
 			"$npm_install_details" \
-			amide_npm_install "$tarball_path" AMIDE_BOOTSTRAP_TOOLS_ON_INSTALL=1 AMIDE_BOOTSTRAP_KERNEL_ON_INSTALL=1 AMIDE_INSTALL_UV=1
+			acryl_npm_install "$tarball_path" ACRYL_BOOTSTRAP_TOOLS_ON_INSTALL=1 ACRYL_BOOTSTRAP_KERNEL_ON_INSTALL=1 ACRYL_INSTALL_UV=1
 	else
 		npm_install_details="Preparing global install.
 Linking command binaries.
 Installing runtime packages.
 Preloading search tools.
 Finalizing npm install."
-		amide_run_quiet_with_animation_steps \
-			"Installing AMIDE" \
-			"Installing AMIDE" \
+		acryl_run_quiet_with_animation_steps \
+			"Installing ACRYL" \
+			"Installing ACRYL" \
 			"$npm_install_details" \
-			amide_npm_install "$tarball_path" AMIDE_BOOTSTRAP_TOOLS_ON_INSTALL=1
+			acryl_npm_install "$tarball_path" ACRYL_BOOTSTRAP_TOOLS_ON_INSTALL=1
 	fi
 }
 

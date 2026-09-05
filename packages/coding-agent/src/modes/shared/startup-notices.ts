@@ -14,7 +14,7 @@ import { checkForNewPiVersion } from "../../utils/version-check.js";
 import { theme } from "../interactive/theme/theme.js";
 
 export interface StartupNotices {
-	/** Newer AMIDE version available, if any. */
+	/** Newer ACRYL version available, if any. */
 	newVersion?: string;
 	/** Display names of extensions with available updates. */
 	packageUpdates: string[];

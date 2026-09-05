@@ -1,8 +1,8 @@
-> AMIDE can help you use the SDK. Ask it to build an integration for your use case.
+> ACRYL can help you use the SDK. Ask it to build an integration for your use case.
 
 # SDK
 
-The SDK provides programmatic access to AMIDE's capabilities. Use it to embed AMIDE in other applications, build custom interfaces, or integrate with automated workflows.
+The SDK provides programmatic access to ACRYL's capabilities. Use it to embed ACRYL in other applications, build custom interfaces, or integrate with automated workflows.
 
 **Example use cases:**
 - Build a custom UI (web, desktop, mobile)
@@ -338,23 +338,23 @@ const { session } = await createAgentSession({
   cwd: process.cwd(), // default
   
   // Global config directory
-  agentDir: "~/.amide/agent", // default (expands ~)
+  agentDir: "~/.acryl/agent", // default (expands ~)
 });
 ```
 
 `cwd` is used by `DefaultResourceLoader` for:
-- Project extensions (`.amide/agent/extensions/`)
+- Project extensions (`.acryl/agent/extensions/`)
 - Project skills:
-  - `.amide/agent/skills/`
+  - `.acryl/agent/skills/`
   - `.agents/skills/` in `cwd` and ancestor directories (up to git repo root, or filesystem root when not in a repo)
-- Project prompts (`.amide/agent/prompts/`)
+- Project prompts (`.acryl/agent/prompts/`)
 - Context files (`AGENTS.md` walking up from cwd)
 - Session storage resolution
 
 `agentDir` is used by `DefaultResourceLoader` for:
 - Global extensions (`extensions/`)
 - Global skills:
-  - `skills/` under `agentDir` (for example `~/.amide/agent/skills/`)
+  - `skills/` under `agentDir` (for example `~/.acryl/agent/skills/`)
   - `~/.agents/skills/`
 - Global prompts (`prompts/`)
 - Global context file (`AGENTS.md`)
@@ -418,7 +418,7 @@ API key resolution priority (handled by AuthStorage):
 ```typescript
 import { AuthStorage, ModelRegistry } from "@earendil-works/pi-coding-agent";
 
-// Default: uses ~/.amide/agent/auth.json and ~/.amide/agent/models.json
+// Default: uses ~/.acryl/agent/auth.json and ~/.acryl/agent/models.json
 const authStorage = AuthStorage.create();
 const modelRegistry = ModelRegistry.create(authStorage);
 
@@ -502,7 +502,7 @@ const { session } = await createAgentSession({
 ```
 
 **When you don't need factories:**
-- If you omit `tools`, AMIDE automatically creates them with the correct `cwd`
+- If you omit `tools`, ACRYL automatically creates them with the correct `cwd`
 - If you use `process.cwd()` as your `cwd`, the pre-built instances work fine
 
 **When you must use factories:**
@@ -544,7 +544,7 @@ Custom tools passed via `customTools` are combined with extension-registered too
 
 ### Extensions
 
-Extensions are loaded by the `ResourceLoader`. `DefaultResourceLoader` discovers extensions from `~/.amide/agent/extensions/`, `.amide/agent/extensions/`, and `settings.json` extension sources.
+Extensions are loaded by the `ResourceLoader`. `DefaultResourceLoader` discovers extensions from `~/.acryl/agent/extensions/`, `.acryl/agent/extensions/`, and `settings.json` extension sources.
 
 ```typescript
 import { createAgentSession, DefaultResourceLoader } from "@earendil-works/pi-coding-agent";
@@ -802,8 +802,8 @@ const { session } = await createAgentSession({
 **Project-specific settings:**
 
 Settings load from two locations and merge:
-1. Global: `~/.amide/agent/settings.json`
-2. Project: `<cwd>/.amide/agent/settings.json`
+1. Global: `~/.acryl/agent/settings.json`
+2. Project: `<cwd>/.acryl/agent/settings.json`
 
 Project overrides global. Nested objects merge keys. Setters modify global settings by default.
 
@@ -1063,7 +1063,7 @@ See [RPC documentation](rpc.md) for the JSON protocol.
 For subprocess-based integration without building with the SDK, use the CLI directly:
 
 ```bash
-amide --mode rpc --no-session
+acryl --mode rpc --no-session
 ```
 
 See [RPC documentation](rpc.md) for the JSON protocol.

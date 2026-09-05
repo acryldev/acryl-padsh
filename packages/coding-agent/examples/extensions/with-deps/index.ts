@@ -5,7 +5,7 @@
  * Requires: npm install in this directory
  */
 
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 import ms from "ms";
 import { Type } from "typebox";
 

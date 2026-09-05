@@ -257,7 +257,7 @@ export class ReplKernelManager {
 				...process.env,
 				...this.options.env,
 				// prime-agent-runtime (vendored kernel-side Python package) reads
-				// this exact name; it is not renamed as part of AMIDE's own identity.
+				// this exact name; it is not renamed as part of ACRYL's own identity.
 				PRIME_AGENT_KERNEL_OWNER_PID: String(process.pid),
 			},
 			stdio: ["pipe", "pipe", "pipe"],
@@ -278,7 +278,7 @@ export class ReplKernelManager {
 			if (protocol !== REPL_PROTOCOL_VERSION) {
 				throw new Error(
 					`Kernel runtime speaks protocol ${protocol}, expected ${REPL_PROTOCOL_VERSION}. ` +
-						"Update prime-agent-runtime in the kernel Python (AMIDE_KERNEL_PYTHON) to match this prime-agent.",
+						"Update prime-agent-runtime in the kernel Python (ACRYL_KERNEL_PYTHON) to match this prime-agent.",
 				);
 			}
 		} catch (e) {

@@ -24,11 +24,11 @@ describe("owned session worker CLI routing", () => {
 	});
 
 	it("does not recursively route an owned worker", () => {
-		expect(isOwnedSessionWorkerProcess({ AMIDE_INTERNAL_OWNED_WORKER: "1" })).toBe(true);
+		expect(isOwnedSessionWorkerProcess({ ACRYL_INTERNAL_OWNED_WORKER: "1" })).toBe(true);
 		expect(isOwnedSessionWorkerProcess({})).toBe(false);
 		expect(
 			classifyOwnedSessionWorkerInvocation(["--mode", "rpc"], true, {
-				AMIDE_INTERNAL_OWNED_WORKER: "1",
+				ACRYL_INTERNAL_OWNED_WORKER: "1",
 			}),
 		).toBeUndefined();
 	});

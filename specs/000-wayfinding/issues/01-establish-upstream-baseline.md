@@ -6,7 +6,7 @@ Status: done
 ## Question
 
 Nothing to decide — this is Milestone 0 from
-`docs/AMIDE Implementation Specification.md` §70, and it is the
+`docs/ACRYL Implementation Specification.md` §70, and it is the
 required first slice before any Cordis or MPA work begins.
 
 Do:
@@ -73,10 +73,10 @@ All six acceptance items confirmed by the user in a real TTY:
   `RLM: callable (_RLMCallable)`.
 - `rlm()` available (same self-test).
 - `/reload` round-trips without error.
-- Daemon attach works: a second terminal's `./amide.sh agents` (the
+- Daemon attach works: a second terminal's `./acryl.sh agents` (the
   session-manager view) correctly showed sessions started from a first
   terminal — running/idle/inactive states, token/cost stats, all accurate
-  and shared across terminals against the isolated `~/.amide/agent`
+  and shared across terminals against the isolated `~/.acryl/agent`
   daemon.
 
 **Milestone 0 acceptance criteria fully met.** Closing this ticket.
@@ -91,7 +91,7 @@ was previously masked because, before the isolation fix, this fork shared
 a socket with any real Prime Agent daemon already running on the machine,
 so a fresh spawn was never actually exercised. Confirmed as a narrower
 bug, not a blocker: if any daemon already exists (e.g. from a normal
-interactive `./amide.sh` session, which starts one as a side
+interactive `./acryl.sh` session, which starts one as a side
 effect), `agents`/`list`/`attach` all work correctly and share state
 across terminals as expected. Worth its own ticket before Milestone 0's
 work is considered fully polished, but does not block Milestone 1.

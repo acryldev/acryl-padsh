@@ -1,7 +1,7 @@
 import { complete, getModel } from "@earendil-works/pi-ai";
 import { Container, Markdown, matchesKey, Text } from "@earendil-works/pi-tui";
-import type { ExtensionAPI, ExtensionCommandContext } from "amide";
-import { DynamicBorder, getMarkdownTheme } from "amide";
+import type { ExtensionAPI, ExtensionCommandContext } from "acryl";
+import { DynamicBorder, getMarkdownTheme } from "acryl";
 
 type ContentBlock = {
 	type?: string;

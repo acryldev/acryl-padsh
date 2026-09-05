@@ -1,11 +1,11 @@
-# Wayfinder map: AMIDE — Prime × Cordis × MPA architectural PoC
+# Wayfinder map: ACRYL — Prime × Cordis × MPA architectural PoC
 
 Labels: `wayfinder:map`
 
 ## Destination
 
-Prove the AMIDE success criteria in
-`docs/AMIDE Implementation Specification.md` §101: Prime's existing
+Prove the ACRYL success criteria in
+`docs/ACRYL Implementation Specification.md` §101: Prime's existing
 capabilities remain fully intact, Cordis works as the runtime composition
 substrate (services, `inject`, fibers, effects, typed events, waterfalls,
 scope, hot replacement, diagnostics), the Monotonic Prompt Architecture (MPA)
@@ -23,15 +23,15 @@ disposable and nothing here is load-bearing for the shipped product.
   architectural ideas from DeepSeek Harness / Cordis (via `acryldev/acryl`)
   without embedding DSH as a sub-runtime. See constitution Principle I.
 - Always read: `.specify/memory/constitution.md`,
-  `docs/AMIDE Implementation Specification.md`,
-  `docs/MonotonicPromptArchitecture_quick_overview_in_relation_to_DSH_and_AMIDE_project.md`,
-  `docs/AMIDE-ROADMAP.md`,
+  `docs/ACRYL Implementation Specification.md`,
+  `docs/MonotonicPromptArchitecture_quick_overview_in_relation_to_DSH_and_ACRYL_project.md`,
+  `docs/ACRYL-PADSH-ROADMAP.md`,
   `docs/workmethodology/acryl-hybrid-engineering-methodology.md`.
 - Skills: `/speckit-constitution`, `/speckit-specify`, `/speckit-plan`,
   `/speckit-tasks`, `/speckit-clarify`, `/speckit-analyze`, `/speckit-implement`,
   `/speckit-converge`.
 - The two docs above are the detailed architectural spec and the tighter MPA
-  technical spec, respectively. `docs/AMIDE-ROADMAP.md` is the
+  technical spec, respectively. `docs/ACRYL-PADSH-ROADMAP.md` is the
   navigator built from both; treat it as the milestone-sequencing source of
   truth and the two spec docs as the reference for implementation detail.
 - This repo's `docs/ACRYL-ROADMAP.md` describes the current, still-active
@@ -41,7 +41,7 @@ disposable and nothing here is load-bearing for the shipped product.
 
 ## Decisions so far
 
-- [Bootstrap this Wayfinder map, constitution, and roadmap](../../docs/AMIDE-ROADMAP.md) —
+- [Bootstrap this Wayfinder map, constitution, and roadmap](../../docs/ACRYL-PADSH-ROADMAP.md) —
   user directive 2026-09-04: initialize the same Spec Kit + Wayfinder +
   Ponytail methodology already used in `acryldev/acryl`, before any
   Milestone-0-and-beyond implementation work starts.
@@ -57,13 +57,13 @@ disposable and nothing here is load-bearing for the shipped product.
   `THIRD_PARTY_NOTICES.md`, TUI startup banner) becomes ACRYL-branded
   immediately. The deep internal rename (the ~15+ literal "Prime Agent"
   strings inside `packages/coding-agent/src/**` business logic,
-  `PRIME_AGENT_*` env vars, `amide.sh`, `install.sh`) is explicitly
+  `PRIME_AGENT_*` env vars, `acryl.sh`, `install.sh`) is explicitly
   deferred to later, gradual work — it is not part of Milestone 0's "no
   functional changes" acceptance bar and must not be conflated with it.
 
 ## Not yet specified
 
-- The exact upstream commit `7b72016` ("init amide") was imported
+- The exact upstream commit `7b72016` ("init acryl") was imported
   from. Verified `7b72016` is close to, but not identical to, upstream tag
   `v0.9.1` (real diffs in `agent-session.ts`, `event-log.ts`,
   `semantic-edges.ts`, and others) — see `UPSTREAMS.md`. Not bisected to an
@@ -100,30 +100,30 @@ disposable and nothing here is load-bearing for the shipped product.
   and MPA are stable (Implementation Spec §35, §60, §82 — Milestones 12/14
   come after 3–11).
 
-## 2026-09-04 update: moved to amidedev/amide, full rebrand done
+## 2026-09-04 update: moved to acryldev/acryl-padsh, full rebrand done
 
 The project moved from the disposable `acryldev/acryl-padsh` PoC repo to
-its permanent home at `amidedev/amide`, under the name AMIDE (Adaptive
+its permanent home at `acryldev/acryl-padsh`, under the name ACRYL (Adaptive
 Machine Intelligence Development Engine). Unlike the ACRYL-PADSH pass
 (surface-only, deep rename deliberately deferred — see the now-superseded
 "Decisions so far" entry above), the user explicitly chose a **full**
 rename this time: piConfig, the coding-agent package's own name/bin,
 ~50 internal `PRIME_AGENT_*` env vars (excluding `PRIME_AGENT_TRACES_*`,
 a genuine external Prime Intellect product, same as `PRIME_INFERENCE_*`),
-the launcher (`amide.sh`), `install.sh`, hardcoded "Prime Agent" display
+the launcher (`acryl.sh`), `install.sh`, hardcoded "Prime Agent" display
 text, the splash wordmark, README/LICENSE, and CI (stripped the
 Prime-specific blocking Linear-ticket PR gate; kept the generic vouch
 trust gate). The vendored Pi upstream libraries (`pi-tui`, `pi-ai`,
 `pi-agent-core`) were deliberately left unrenamed — third-party
-dependency, not AMIDE's own branding.
+dependency, not ACRYL's own branding.
 
 Remaining known gaps, not blockers:
-- `linear.app/amidedev` → GitHub native integration needs the user's own
+- `linear.app/acryldev` → GitHub native integration needs the user's own
   OAuth click; not scriptable from an agent session.
 - `build-binaries.yml`'s R2/S3 publish steps need real cloud credentials
-  AMIDE doesn't have configured yet — renamed for correctness, not
+  ACRYL doesn't have configured yet — renamed for correctness, not
   exercised end to end.
-- npm publish (`npm i -g amide`) explicitly deferred until after
+- npm publish (`npm i -g acryl`) explicitly deferred until after
   rebrand + CI/CD are settled, per the user's own stated sequencing.
 - Milestone 1 (Cordis mount) research from the ACRYL-PADSH pass carries
   forward unchanged — same source files (`daemon-supervisor.ts`,

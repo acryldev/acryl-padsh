@@ -40,7 +40,7 @@ export const FEATURE_HINTS: readonly FeatureHintDefinition[] = [
 	},
 	{
 		id: "subagents",
-		getText: () => "AMIDE can delegate tasks to subagents and run them in parallel.",
+		getText: () => "ACRYL can delegate tasks to subagents and run them in parallel.",
 	},
 	{
 		id: "agents-view",
@@ -92,11 +92,11 @@ export const FEATURE_HINTS: readonly FeatureHintDefinition[] = [
 	},
 	{
 		id: "auto-compaction",
-		getText: () => "AMIDE automatically compacts long sessions before context fills up.",
+		getText: () => "ACRYL automatically compacts long sessions before context fills up.",
 	},
 	{
 		id: "auto-refine",
-		getText: () => "AMIDE self-improves by refining skills, memories, prompts, and subagents.",
+		getText: () => "ACRYL self-improves by refining skills, memories, prompts, and subagents.",
 	},
 	{
 		id: "background-running",

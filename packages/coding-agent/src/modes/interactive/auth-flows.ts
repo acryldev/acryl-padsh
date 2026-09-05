@@ -4,7 +4,7 @@ import type { OverlayHandle, TUI } from "@earendil-works/pi-tui";
 import { getAuthPath, getDocsPath } from "../../config.js";
 import type { ModelRegistry } from "../../core/model-registry.js";
 import {
-	AMIDE_AGENT_TRACES_PROVIDER_NAME,
+	ACRYL_AGENT_TRACES_PROVIDER_NAME,
 	checkPrimeAgentTracesAccess,
 	loginPrimeAgentTraces,
 	PRIME_AGENT_TRACES_PROVIDER_ID,
@@ -371,7 +371,7 @@ export class ProviderAuthFlows {
 		closeDialog();
 		return await this.completeProviderAuthentication(
 			PRIME_AGENT_TRACES_PROVIDER_ID,
-			AMIDE_AGENT_TRACES_PROVIDER_NAME,
+			ACRYL_AGENT_TRACES_PROVIDER_NAME,
 			"api_key",
 		);
 	}
@@ -381,7 +381,7 @@ export class ProviderAuthFlows {
 			this.host.ui,
 			PRIME_AGENT_TRACES_PROVIDER_ID,
 			(_success, _message) => {},
-			AMIDE_AGENT_TRACES_PROVIDER_NAME,
+			ACRYL_AGENT_TRACES_PROVIDER_NAME,
 		);
 
 		const handle = showFullPaneOverlay(this.host.ui, dialog, {
@@ -452,7 +452,7 @@ export class ProviderAuthFlows {
 
 			if (result.source === "manual") {
 				browserAbort.abort();
-				dialog.showProgress("Checking AMIDE trace access...");
+				dialog.showProgress("Checking ACRYL trace access...");
 				const access = await checkPrimeAgentTracesAccess(result.apiKey, resolvePrimeAgentTracesBaseUrl(), {
 					signal: dialog.signal,
 				});
@@ -462,7 +462,7 @@ export class ProviderAuthFlows {
 				}
 				if (!access.ok) {
 					const status = access.status === undefined ? "" : `HTTP ${access.status}: `;
-					throw new Error(`Prime API key does not have AMIDE trace access (${status}${access.message})`);
+					throw new Error(`Prime API key does not have ACRYL trace access (${status}${access.message})`);
 				}
 			}
 
@@ -471,7 +471,7 @@ export class ProviderAuthFlows {
 			closeDialog();
 			const errorMsg = error instanceof Error ? error.message : String(error);
 			if (!dialog.signal.aborted && errorMsg !== "Login cancelled") {
-				this.host.showError(`Failed to login to ${AMIDE_AGENT_TRACES_PROVIDER_NAME}: ${errorMsg}`);
+				this.host.showError(`Failed to login to ${ACRYL_AGENT_TRACES_PROVIDER_NAME}: ${errorMsg}`);
 				return { status: "failed" };
 			}
 			return { status: "cancelled" };

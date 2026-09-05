@@ -7,7 +7,7 @@ import { fauxAssistantMessage, fauxToolCall } from "@earendil-works/pi-ai";
 import { describe, expect, it, vi } from "vitest";
 import { ENV_AGENT_DIR } from "../../src/config.js";
 import type { AgentSessionRuntime } from "../../src/core/agent-session-runtime.js";
-import { AMIDE_META_NAMESPACE } from "../../src/modes/acp/acp-meta.js";
+import { ACRYL_META_NAMESPACE } from "../../src/modes/acp/acp-meta.js";
 import { runAcpModeWithConnection } from "../../src/modes/acp/index.js";
 import { InProcessAgentConnection } from "../../src/modes/agent-connection/in-process-agent-connection.js";
 import { createHarness, type Harness } from "./harness.js";
@@ -77,7 +77,7 @@ async function connectAcp(harness: Harness, existing?: InProcessAgentConnection)
 		updates,
 		sessionId: session.sessionId,
 		metaOf: (key: string) =>
-			updates.map((u) => u.update?._meta?.[AMIDE_META_NAMESPACE]?.[key]).filter((value) => value !== undefined),
+			updates.map((u) => u.update?._meta?.[ACRYL_META_NAMESPACE]?.[key]).filter((value) => value !== undefined),
 	};
 }
 
@@ -244,7 +244,7 @@ describe("ACP mode preserves prime-agent features", () => {
 		await (connection as any).emit({ type: "heartbeats_changed" });
 		const flags = () =>
 			updates
-				.map((u) => u.update?._meta?.[AMIDE_META_NAMESPACE]?.heartbeatsChanged)
+				.map((u) => u.update?._meta?.[ACRYL_META_NAMESPACE]?.heartbeatsChanged)
 				.filter((value) => value !== undefined);
 		await waitFor(() => flags().includes(true));
 		expect(flags(), "heartbeat changes must reach the ACP client").toContain(true);
@@ -298,7 +298,7 @@ describe("ACP mode preserves prime-agent features", () => {
 			mcpServers: [],
 		});
 		expect(created.sessionId).toBeTruthy();
-		const cwdMeta = (created._meta?.[AMIDE_META_NAMESPACE] as { cwd?: unknown } | undefined)?.cwd;
+		const cwdMeta = (created._meta?.[ACRYL_META_NAMESPACE] as { cwd?: unknown } | undefined)?.cwd;
 		expect(cwdMeta).toMatchObject({ requested: "/definitely/not/the/agent/cwd" });
 		harness.cleanup();
 	}, 30_000);
@@ -763,7 +763,7 @@ describe("ACP mode preserves prime-agent features", () => {
 		expect(init.agentInfo).toMatchObject({ name: "prime-agent" });
 		expect(typeof init.agentInfo?.version).toBe("string");
 		// Namespaced only: unknown root keys are reserved for future ACP fields.
-		expect(init._meta).toHaveProperty(AMIDE_META_NAMESPACE);
+		expect(init._meta).toHaveProperty(ACRYL_META_NAMESPACE);
 		expect(Object.keys(init.agentCapabilities ?? {})).not.toContain("subagents");
 		// close is advertised, so a client knows it may release the session slot.
 		expect(init.agentCapabilities?.sessionCapabilities?.close).toBeDefined();

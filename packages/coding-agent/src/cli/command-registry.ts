@@ -149,7 +149,7 @@ export const COMMAND_SPECS: readonly CommandSpec[] = [
 	{
 		path: ["update"],
 		usage: "update [--force]",
-		summary: "Update AMIDE",
+		summary: "Update ACRYL",
 	},
 	{
 		path: ["model"],

@@ -650,7 +650,7 @@ export function idleEvictionSweepIntervalMs(idleEvictionMinutes: IdleEvictionMin
 function workerSocketPath(supervisorSocketPath: string, workerId: string): string {
 	const key = descriptorKey(supervisorSocketPath);
 	if (process.platform === "win32") {
-		return `\\\\.\\pipe\\amide-worker-${key}-${workerId.slice(0, 12)}`;
+		return `\\\\.\\pipe\\acryl-worker-${key}-${workerId.slice(0, 12)}`;
 	}
 	return join(defaultDaemonSocketDir(), `worker-${key}-${workerId.slice(0, 12)}.sock`);
 }
@@ -844,7 +844,7 @@ export class DaemonSupervisor {
 			await this.ownership.updatePhase("owner");
 			this.assertSocketLeaseHeld();
 			this.startupComplete = true;
-			this.log(`AMIDE daemon supervisor ${this.generation} listening on ${this.socketPath}`);
+			this.log(`ACRYL daemon supervisor ${this.generation} listening on ${this.socketPath}`);
 			this.markReady();
 		} catch (error) {
 			const startupError = error instanceof Error ? error : new Error(String(error));

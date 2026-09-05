@@ -15,7 +15,7 @@
  */
 
 import { complete } from "@earendil-works/pi-ai";
-import type { ExtensionAPI, RefinementProposal } from "amide";
+import type { ExtensionAPI, RefinementProposal } from "acryl";
 
 export default function (pi: ExtensionAPI) {
 	pi.on("session_before_refine", async (event, ctx) => {

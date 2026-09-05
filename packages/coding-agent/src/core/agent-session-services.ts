@@ -189,7 +189,7 @@ export async function createAgentSessionServices(
 		diagnostics.push({
 			type: "info",
 			message:
-				"AMIDE sends pseudonymous usage and performance metrics without prompts, responses, tool content, file paths, or repository data. Disable this with telemetry.enabled=false, AMIDE_TELEMETRY=0, DO_NOT_TRACK=1, or offline mode.",
+				"ACRYL sends pseudonymous usage and performance metrics without prompts, responses, tool content, file paths, or repository data. Disable this with telemetry.enabled=false, ACRYL_TELEMETRY=0, DO_NOT_TRACK=1, or offline mode.",
 		});
 		settingsManager.setTelemetryNoticeShown(true);
 	}

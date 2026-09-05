@@ -7,7 +7,7 @@ import {
 	type AutocompleteSuggestions,
 	fuzzyFilter,
 } from "@earendil-works/pi-tui";
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 
 type GitHubIssue = {
 	number: number;

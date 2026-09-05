@@ -421,7 +421,7 @@ export function createMcpOAuthProvider(config: McpOAuthConfig): OAuthProviderInt
 				);
 			}
 			callbacks.onProgress?.("Registering OAuth client…");
-			clientId = await registerClient(meta.registration_endpoint, `AMIDE (${label})`);
+			clientId = await registerClient(meta.registration_endpoint, `ACRYL (${label})`);
 		}
 
 		const { verifier, challenge } = await generatePKCE();

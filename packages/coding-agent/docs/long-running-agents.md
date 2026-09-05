@@ -1,6 +1,6 @@
 # Long-Running and Background Agents
 
-AMIDE combines daemon-backed session workers with persistent state, scheduled prompts, direct agent messaging, goals, and bounded autonomous continuations. These features serve different purposes but share the same session and worker runtime.
+ACRYL combines daemon-backed session workers with persistent state, scheduled prompts, direct agent messaging, goals, and bounded autonomous continuations. These features serve different purposes but share the same session and worker runtime.
 
 ## Runtime Flow
 
@@ -49,19 +49,19 @@ Normal interactive sessions run in resident worker processes managed by a local 
 Closing the terminal UI detaches the client; it does not stop the worker. List and reconnect to active agents with:
 
 ```bash
-amide list
-amide attach <agent>
+acryl list
+acryl attach <agent>
 ```
 
 Other lifecycle commands are:
 
 ```bash
-amide agents                  # Open the agents view
-amide rename <agent> <name>   # Give an agent a stable readable name
-amide stop <agent>            # Stop one agent
-amide status                  # Inspect background services
-amide doctor [--fix]          # Diagnose or repair service state
-amide shutdown [--force]      # Stop all agents and services
+acryl agents                  # Open the agents view
+acryl rename <agent> <name>   # Give an agent a stable readable name
+acryl stop <agent>            # Stop one agent
+acryl status                  # Inspect background services
+acryl doctor [--fix]          # Diagnose or repair service state
+acryl shutdown [--force]      # Stop all agents and services
 ```
 
 Workers persist transcripts as JSONL and store feature-specific state under the session artifact directory. A worker or supervisor restart can recover session state and schedules and rehydrate retained completed RLM children without treating a terminal client as the owner of the work.
@@ -73,7 +73,7 @@ Daemon workers are process-isolated for lifecycle and failure containment, not s
 The daemon routes direct messages between active sessions and retained daemon-backed subagents. From a shell:
 
 ```bash
-amide send <agent> "Please verify the latest migration"
+acryl send <agent> "Please verify the latest migration"
 ```
 
 From the Python kernel, use the preloaded `agent_message` Python skill:
@@ -111,13 +111,13 @@ A receipt is `delivered` when it reached an idle target's context or `queued` wh
 
 ## Heartbeats and Scheduled Prompts
 
-AMIDE has three related scheduling surfaces:
+ACRYL has three related scheduling surfaces:
 
 | Surface | Owner | Purpose |
 |---|---|---|
 | `/heartbeat` | User | One visible recurring instruction for the current session. |
 | `rlm_heartbeat` | Agent | Multiple programmatically managed recurring instructions internal to the current session. |
-| `amide schedule` | User or automation | General one-time or cron prompts targeted at an agent. |
+| `acryl schedule` | User or automation | General one-time or cron prompts targeted at an agent. |
 
 ### User heartbeat
 
@@ -161,10 +161,10 @@ RLM heartbeats are distinct from the user's `/heartbeat`; the Python skill canno
 Schedule a one-time or recurring prompt for an addressable agent:
 
 ```bash
-amide schedule add worker "in 30m" -- "Check the benchmark result"
-amide schedule add worker "0 9 * * 1-5" -- "Review open work"
-amide schedule list --all
-amide schedule cancel <job-id>
+acryl schedule add worker "in 30m" -- "Check the benchmark result"
+acryl schedule add worker "0 9 * * 1-5" -- "Review open work"
+acryl schedule list --all
+acryl schedule cancel <job-id>
 ```
 
 Scheduled jobs are persisted per session and continue while the UI is detached. Due ticks are claimed before delivery so a crash does not replay an uncertain prompt, and missed ticks are coalesced rather than accumulated into an unbounded backlog.
@@ -198,7 +198,7 @@ Goal state records token usage, elapsed time, continuation count, and an optiona
 
 ## Autonomous Mode
 
-Autonomous mode is a bounded host policy for runs where no human input is expected. AMIDE adds follow-up continuations until configured quality gates pass or a continuation, turn, token, or wall-clock limit is reached.
+Autonomous mode is a bounded host policy for runs where no human input is expected. ACRYL adds follow-up continuations until configured quality gates pass or a continuation, turn, token, or wall-clock limit is reached.
 
 Enable it in an interactive session:
 
@@ -211,14 +211,14 @@ Enable it in an interactive session:
 Or configure a run from the CLI:
 
 ```bash
-amide \
+acryl \
   --autonomous \
   --autonomous-gate "npm run check" \
   --autonomous-max-turns 20 \
   "Implement and verify the requested change"
 ```
 
-Autonomous mode supports limits for continuations, assistant turns, tokens, and wall-clock duration. Gate commands run before the session may finish; a failed gate returns its bounded output to the agent for another attempt. AMIDE avoids rerunning the same failed gate when the workspace has not changed.
+Autonomous mode supports limits for continuations, assistant turns, tokens, and wall-clock duration. Gate commands run before the session may finish; a failed gate returns its bounded output to the agent for another attempt. ACRYL avoids rerunning the same failed gate when the workspace has not changed.
 
 Goals and autonomous mode are complementary but different:
 
@@ -227,7 +227,7 @@ Goals and autonomous mode are complementary but different:
 
 ## Compaction and Continuity
 
-Automatic compaction handles context growth during long tasks. On overflow or near the configured threshold, AMIDE summarizes older messages, retains recent context, and continues. The Python kernel persists through compaction, so variables, imports, helper functions, and task state remain available.
+Automatic compaction handles context growth during long tasks. On overflow or near the configured threshold, ACRYL summarizes older messages, retains recent context, and continues. The Python kernel persists through compaction, so variables, imports, helper functions, and task state remain available.
 
 The agent can inspect or request compaction programmatically:
 

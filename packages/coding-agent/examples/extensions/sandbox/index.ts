@@ -45,8 +45,8 @@ import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { SandboxManager, type SandboxRuntimeConfig } from "@anthropic-ai/sandbox-runtime";
-import type { ExtensionAPI } from "amide";
-import { type BashOperations, createBashTool, getAgentDir } from "amide";
+import type { ExtensionAPI } from "acryl";
+import { type BashOperations, createBashTool, getAgentDir } from "acryl";
 
 interface SandboxConfig extends SandboxRuntimeConfig {
 	enabled?: boolean;

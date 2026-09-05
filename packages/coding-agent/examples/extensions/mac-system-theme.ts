@@ -7,7 +7,7 @@
 
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 
 const execAsync = promisify(exec);
 

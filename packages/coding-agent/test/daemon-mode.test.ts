@@ -2081,7 +2081,7 @@ describe("daemon mode helpers", () => {
 			).sendRemoteAgentSessionMessage.bind(daemon);
 
 			await expect(sendRemoteAgentSessionMessage(makeState("source"), "remote", "continue")).rejects.toThrow(
-				"Connection to the AMIDE daemon closed",
+				"Connection to the ACRYL daemon closed",
 			);
 			expect(requestCount).toBe(1);
 		} finally {

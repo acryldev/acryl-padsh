@@ -35,15 +35,15 @@ try:
     bash = _prime_agent_rlm_module.bash
     import rlm.mcp as mcp
 except Exception as _prime_agent_rlm_error:
-    _AMIDE_RLM_IMPORT_ERROR = str(_prime_agent_rlm_error)
+    _ACRYL_RLM_IMPORT_ERROR = str(_prime_agent_rlm_error)
 
     class _PrimeAgentMissingRlm:
         def _raise_missing(self):
             raise RuntimeError(
                 "prime-agent-runtime is not installed in this kernel. "
-                "Remove ~/.amide/agent/kernel-venv so amide can rebuild it, or set "
-                "AMIDE_KERNEL_PYTHON to a kernel environment with prime-agent-runtime installed. "
-                f"Import error: {_AMIDE_RLM_IMPORT_ERROR}"
+                "Remove ~/.acryl/agent/kernel-venv so acryl can rebuild it, or set "
+                "ACRYL_KERNEL_PYTHON to a kernel environment with prime-agent-runtime installed. "
+                f"Import error: {_ACRYL_RLM_IMPORT_ERROR}"
             )
 
         async def run(self, prompt, **kwargs):
@@ -125,7 +125,7 @@ def _prime_agent_wrap_skill_module(module):
     _prime_agent_sys.modules[module.__name__] = wrapped
     return wrapped
 
-_AMIDE_SKILL_IMPORT_ERRORS = {}
+_ACRYL_SKILL_IMPORT_ERRORS = {}
 
 for _prime_agent_skill_name in ${JSON.stringify(importNames)}:
     try:
@@ -133,7 +133,7 @@ for _prime_agent_skill_name in ${JSON.stringify(importNames)}:
             _prime_agent_importlib.import_module(_prime_agent_skill_name)
         )
     except Exception as _prime_agent_skill_error:
-        _AMIDE_SKILL_IMPORT_ERRORS[_prime_agent_skill_name] = str(_prime_agent_skill_error)
+        _ACRYL_SKILL_IMPORT_ERRORS[_prime_agent_skill_name] = str(_prime_agent_skill_error)
         globals()[_prime_agent_skill_name] = _PrimeAgentUnavailableSkill(
             _prime_agent_skill_name,
             str(_prime_agent_skill_error),
@@ -466,8 +466,8 @@ export class IpythonKernelProvisioner {
 					...this.options?.env,
 					// prime-agent-runtime (the vendored kernel-side Python package under
 					// prime-agent-runtime/) reads these two exact names — it is not
-					// renamed as part of AMIDE's own identity, so these must match its
-					// contract, not AMIDE's env var prefix.
+					// renamed as part of ACRYL's own identity, so these must match its
+					// contract, not ACRYL's env var prefix.
 					...(shellPath ? { PRIME_AGENT_BASH_SHELL: shellPath } : {}),
 					...(commandPrefix ? { PRIME_AGENT_BASH_COMMAND_PREFIX: commandPrefix } : {}),
 				},

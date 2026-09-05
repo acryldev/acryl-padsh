@@ -199,7 +199,7 @@ export function isClientOwnedDaemonSession(appMode: AppMode, noSession?: boolean
 	return appMode !== "acp" || noSession === true;
 }
 
-// `amide agents` opens the agents view directly.
+// `acryl agents` opens the agents view directly.
 export function parseAgentsViewCommand(args: string[]): { explicitAgentsView: boolean; args: string[] } {
 	if (args[0] === "agents") {
 		return { explicitAgentsView: true, args: args.slice(1) };
@@ -362,12 +362,12 @@ async function promptConfirm(message: string): Promise<boolean> {
 const STARTUP_SESSION_LOSS_COPY: DaemonSessionLossCopy = {
 	busyDetail(count) {
 		const { noun, pronoun } = pluralizeSessions(count);
-		return `A background service from a different AMIDE version is running with ${count} busy ${noun}. Stopping it will terminate ${pronoun}.`;
+		return `A background service from a different ACRYL version is running with ${count} busy ${noun}. Stopping it will terminate ${pronoun}.`;
 	},
 	unlistableDetail:
-		"A background service from a different AMIDE version is running and its sessions could not be listed. Stopping it may terminate active sessions.",
+		"A background service from a different ACRYL version is running and its sessions could not be listed. Stopping it may terminate active sessions.",
 	question: "Stop it and continue?",
-	nonTtyHint: 'Run "amide shutdown" to stop it, then retry.',
+	nonTtyHint: 'Run "acryl shutdown" to stop it, then retry.',
 };
 
 // The promise to keep after awaiting readiness. Wrapped in an object so it
@@ -389,7 +389,7 @@ async function takeOverStaleDaemonOrExit(socketPath: string): Promise<DaemonRead
 	}
 	if (!(await shutdownDaemonAndWait(socketPath))) {
 		console.error(
-			chalk.red(`Could not stop the background service on ${socketPath}. Run "amide shutdown" and retry.`),
+			chalk.red(`Could not stop the background service on ${socketPath}. Run "acryl shutdown" and retry.`),
 		);
 		process.exit(1);
 	}

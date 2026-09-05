@@ -4,7 +4,7 @@
  * Shows how to replace or modify the default system prompt.
  */
 
-import { createAgentSession, DefaultResourceLoader, getAgentDir, SessionManager } from "amide";
+import { createAgentSession, DefaultResourceLoader, getAgentDir, SessionManager } from "acryl";
 
 const cwd = process.cwd();
 const agentDir = getAgentDir();

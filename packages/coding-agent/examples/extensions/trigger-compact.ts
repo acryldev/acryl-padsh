@@ -1,4 +1,4 @@
-import type { ExtensionAPI, ExtensionContext } from "amide";
+import type { ExtensionAPI, ExtensionContext } from "acryl";
 
 const COMPACT_THRESHOLD_TOKENS = 100_000;
 

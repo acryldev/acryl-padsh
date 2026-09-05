@@ -1,6 +1,6 @@
 import type { Component, EditorTheme, TUI } from "@earendil-works/pi-tui";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { CustomEditor, type ExtensionAPI, type ExtensionContext, type KeybindingsManager } from "amide";
+import { CustomEditor, type ExtensionAPI, type ExtensionContext, type KeybindingsManager } from "acryl";
 
 function fitBorder(
 	left: string,

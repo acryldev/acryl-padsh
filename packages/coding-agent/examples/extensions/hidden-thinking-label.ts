@@ -18,7 +18,7 @@
  *   /thinking-label          Reset to the default label
  */
 
-import type { ExtensionAPI, ExtensionContext } from "amide";
+import type { ExtensionAPI, ExtensionContext } from "acryl";
 
 const DEFAULT_LABEL = "Pondering...";
 

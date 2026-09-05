@@ -9,7 +9,7 @@
  */
 
 import { CURSOR_MARKER, type Focusable, matchesKey, visibleWidth } from "@earendil-works/pi-tui";
-import type { ExtensionAPI, ExtensionCommandContext, Theme } from "amide";
+import type { ExtensionAPI, ExtensionCommandContext, Theme } from "acryl";
 
 export default function (pi: ExtensionAPI) {
 	pi.registerCommand("overlay-test", {

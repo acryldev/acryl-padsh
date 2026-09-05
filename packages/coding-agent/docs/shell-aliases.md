@@ -1,8 +1,8 @@
 # Shell Aliases
 
-AMIDE runs bash in non-interactive mode (`bash -c`), which doesn't expand aliases by default.
+ACRYL runs bash in non-interactive mode (`bash -c`), which doesn't expand aliases by default.
 
-To enable your shell aliases, add to `~/.amide/agent/settings.json`:
+To enable your shell aliases, add to `~/.acryl/agent/settings.json`:
 
 ```json
 {

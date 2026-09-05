@@ -12,7 +12,7 @@ import {
 	getAgentDir,
 	SessionManager,
 	type Skill,
-} from "amide";
+} from "acryl";
 
 // Or define custom skills inline
 const customSkill: Skill = {

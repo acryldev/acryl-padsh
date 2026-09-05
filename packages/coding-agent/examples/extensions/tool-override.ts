@@ -17,7 +17,7 @@
  */
 
 import type { TextContent } from "@earendil-works/pi-ai";
-import { type ExtensionAPI, getAgentDir, withFileMutationQueue } from "amide";
+import { type ExtensionAPI, getAgentDir, withFileMutationQueue } from "acryl";
 import { constants, readFileSync } from "fs";
 import { access, appendFile, readFile } from "fs/promises";
 import { join, resolve } from "path";

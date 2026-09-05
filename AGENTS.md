@@ -75,29 +75,29 @@ When closing issues via commit:
 - If the user approves: create a feature branch, pull PR, rebase on main, apply adjustments, commit, merge into main, push, close PR, and leave a comment in the user's tone
 - We work in feature branches until everything is according to the user's requirements. Never merge PRs by yourself.
 
-## Testing AMIDE Interactive Mode with tmux
+## Testing ACRYL Interactive Mode with tmux
 
-To test AMIDE's TUI in a controlled terminal environment:
+To test ACRYL's TUI in a controlled terminal environment:
 
 ```bash
 # Create tmux session with specific dimensions
-tmux new-session -d -s amide-test -x 80 -y 24
+tmux new-session -d -s acryl-test -x 80 -y 24
 
-# Start AMIDE from source
-tmux send-keys -t amide-test "cd /Users/kevin/pi/amide && ./amide.sh" Enter
+# Start ACRYL from source
+tmux send-keys -t acryl-test "cd /Users/kevin/pi/acryl && ./acryl.sh" Enter
 
 # Wait for startup, then capture output
-sleep 3 && tmux capture-pane -t amide-test -p
+sleep 3 && tmux capture-pane -t acryl-test -p
 
 # Send input
-tmux send-keys -t amide-test "your prompt here" Enter
+tmux send-keys -t acryl-test "your prompt here" Enter
 
 # Send special keys
-tmux send-keys -t amide-test Escape
-tmux send-keys -t amide-test C-o  # ctrl+o
+tmux send-keys -t acryl-test Escape
+tmux send-keys -t acryl-test C-o  # ctrl+o
 
 # Cleanup
-tmux kill-session -t amide-test
+tmux kill-session -t acryl-test
 ```
 
 You, yourself, are often running into a tmux session, so be careful when killing tmux sessions. Lots of other processes can be running on different tmux sessions/
@@ -124,8 +124,8 @@ Example fragment (`packages/coding-agent/.changes/eng-1234-effort-command.md`):
 
 ### Attribution
 
-- **Internal changes (from issues)**: `Fixed foo bar ([#123](https://github.com/PrimeIntellect-ai/amide/issues/123))`
-- **External contributions**: `Added feature X ([#456](https://github.com/PrimeIntellect-ai/amide/pull/456) by [@username](https://github.com/username))`
+- **Internal changes (from issues)**: `Fixed foo bar ([#123](https://github.com/PrimeIntellect-ai/acryl/issues/123))`
+- **External contributions**: `Added feature X ([#456](https://github.com/PrimeIntellect-ai/acryl/pull/456) by [@username](https://github.com/username))`
 
 ## Adding a New LLM Provider (packages/ai)
 

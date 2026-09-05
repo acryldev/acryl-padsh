@@ -1,17 +1,10 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/amide_logo_v4.1_white_transparent_bg.png">
-    <img alt="AMIDE" src="../../assets/brand/amide_logo_v4.1_black_transparent_bg.png" width="96">
-  </picture>
-</p>
-
-<h1 align="center">AMIDE CLI</h1>
+<h1 align="center">ACRYL CLI</h1>
 
 <p align="center">
   RLM-native terminal coding and research harness.
 </p>
 
-AMIDE runs on a persistent iPython/RLM session, composed through a Cordis Metaframework runtime, and disciplined by a Monotonic Prompt Architecture that keeps token spend flat and prompt-cache hit rate high as sessions grow. One agent, one tool (`ipython`), a Python REPL the model uses to read files, run commands, edit code, and inspect data - self-extensible via TypeScript extensions, on-demand skills, and MCP integrations. See [Upstream](#upstream) for provenance.
+ACRYL runs on a persistent iPython/RLM session, composed through a Cordis Metaframework runtime, and disciplined by a Monotonic Prompt Architecture that keeps token spend flat and prompt-cache hit rate high as sessions grow. One agent, one tool (`ipython`), a Python REPL the model uses to read files, run commands, edit code, and inspect data - self-extensible via TypeScript extensions, on-demand skills, and MCP integrations. See [Upstream](#upstream) for provenance.
 
 ## Table of Contents
 
@@ -33,50 +26,50 @@ AMIDE runs on a persistent iPython/RLM session, composed through a Cordis Metafr
   - [MCP Integrations](#mcp-integrations)
   - [Extensions](#extensions)
   - [Themes](#themes)
-  - [AMIDE Packages](#amide-packages)
+  - [ACRYL Packages](#acryl-packages)
 - [Programmatic Usage](#programmatic-usage)
 - [Upstream](#upstream)
 - [CLI Reference](#cli-reference)
 
 ## Quick Start
 
-AMIDE isn't published with a hosted installer yet - run it from source (Node.js 22.8.0+):
+ACRYL isn't published with a hosted installer yet - run it from source (Node.js 22.8.0+):
 
 ```bash
-git clone git@github.com:amidedev/amide.git
-cd amide
+git clone git@github.com:acryldev/acryl-padsh.git
+cd acryl-padsh
 npm ci
 ```
 
 Start it from the repository or directory you want it to work in:
 
 ```bash
-/path/to/amide/amide.sh
+/path/to/acryl/acryl.sh
 ```
 
 Authenticate with an API key:
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
-amide
+acryl
 ```
 
 Or use your existing subscription:
 
 ```bash
-amide
+acryl
 /login  # Then select provider
 ```
 
-Then just talk to AMIDE. By default, AMIDE gives the model one tool: `ipython`. The model uses the persistent kernel to read files, run commands, edit code, and inspect data. Add capabilities via [skills](#skills), [prompt templates](#prompt-templates), [extensions](#extensions), or [AMIDE packages](#amide-packages).
+Then just talk to ACRYL. By default, ACRYL gives the model one tool: `ipython`. The model uses the persistent kernel to read files, run commands, edit code, and inspect data. Add capabilities via [skills](#skills), [prompt templates](#prompt-templates), [extensions](#extensions), or [ACRYL packages](#acryl-packages).
 
-The Python kernel runtime is set up automatically on first invocation. Set `AMIDE_KERNEL_PYTHON` to use an existing Python environment with `prime-agent-runtime`.
+The Python kernel runtime is set up automatically on first invocation. Set `ACRYL_KERNEL_PYTHON` to use an existing Python environment with `prime-agent-runtime`.
 
 **Platform notes:** [Windows](docs/windows.md) | [Termux (Android)](docs/termux.md) | [tmux](docs/tmux.md) | [Terminal setup](docs/terminal-setup.md) | [Shell aliases](docs/shell-aliases.md)
 
 ## Providers & Models
 
-For each built-in provider, AMIDE maintains a list of tool-capable models, updated with every release. Authenticate via subscription (`/login`) or API key, then select any model from that provider via `/model` (or Ctrl+L).
+For each built-in provider, ACRYL maintains a list of tool-capable models, updated with every release. Authenticate via subscription (`/login`) or API key, then select any model from that provider via `/model` (or Ctrl+L).
 
 **Subscriptions:**
 - Anthropic Claude Pro/Max
@@ -113,7 +106,7 @@ For each built-in provider, AMIDE maintains a list of tool-capable models, updat
 
 See [docs/providers.md](docs/providers.md) for detailed setup instructions.
 
-**Custom providers & models:** Add providers via `~/.amide/agent/models.json` if they speak a supported API (OpenAI, Anthropic, Google). For custom APIs or OAuth, use extensions. See [docs/models.md](docs/models.md) and [docs/custom-provider.md](docs/custom-provider.md).
+**Custom providers & models:** Add providers via `~/.acryl/agent/models.json` if they speak a supported API (OpenAI, Anthropic, Google). For custom APIs or OAuth, use extensions. See [docs/models.md](docs/models.md) and [docs/custom-provider.md](docs/custom-provider.md).
 
 ## Interactive Mode
 
@@ -168,11 +161,11 @@ Type `/` in the editor to trigger commands. [Extensions](#extensions) can regist
 | `/reload` | Reload keybindings, extensions, skills, prompts, and context files (themes hot-reload automatically) |
 | `/hotkeys` | Show all keyboard shortcuts |
 | `/changelog` | Display version history |
-| `/quit` | Quit AMIDE |
+| `/quit` | Quit ACRYL |
 
 ### Keyboard Shortcuts
 
-See `/hotkeys` for the full list. Customize via `~/.amide/agent/keybindings.json`. See [docs/keybindings.md](docs/keybindings.md).
+See `/hotkeys` for the full list. Customize via `~/.acryl/agent/keybindings.json`. See [docs/keybindings.md](docs/keybindings.md).
 
 **Commonly used:**
 
@@ -199,7 +192,7 @@ Submit messages while the agent is working:
 - While browsing, **Enter** applies the edit as steering input and **Alt+Enter** applies it as a follow-up; submitting an empty edit deletes the item
 - **Ctrl+Alt+Up / Ctrl+Alt+Down** move the selected item earlier or later within its queue
 
-On Windows Terminal, `Alt+Enter` is fullscreen by default. Remap it in [docs/terminal-setup.md](docs/terminal-setup.md) so AMIDE can receive the follow-up shortcut.
+On Windows Terminal, `Alt+Enter` is fullscreen by default. Remap it in [docs/terminal-setup.md](docs/terminal-setup.md) so ACRYL can receive the follow-up shortcut.
 
 Configure delivery in [settings](docs/settings.md): `steeringMode` and `followUpMode` can be `"one-at-a-time"` (default, waits for response) or `"all"` (delivers all queued at once). `transport` selects provider transport preference (`"sse"`, `"websocket"`, or `"auto"`) for providers that support multiple transports.
 
@@ -209,13 +202,13 @@ Sessions are stored as JSONL files with a tree structure. Each entry has an `id`
 
 ### Management
 
-Sessions auto-save as flat JSONL files under `~/.amide/agent/sessions/`. Each session header records its working directory, which the searchable session view uses to identify and open saved sessions.
+Sessions auto-save as flat JSONL files under `~/.acryl/agent/sessions/`. Each session header records its working directory, which the searchable session view uses to identify and open saved sessions.
 
 ```bash
-amide -c                  # Continue most recent session
-amide -r [path|id]        # Browse past sessions or resume one directly
-amide --no-session        # Ephemeral mode (don't save)
-amide --fork <path|id>    # Fork specific session file or ID into a new session
+acryl -c                  # Continue most recent session
+acryl -r [path|id]        # Browse past sessions or resume one directly
+acryl --no-session        # Ephemeral mode (don't save)
+acryl --fork <path|id>    # Fork specific session file or ID into a new session
 ```
 
 Use `/session` in interactive mode to see the current session ID before reusing it with `--resume <id>` or `--fork <id>`.
@@ -252,21 +245,21 @@ Use `/settings` to modify common options, or edit JSON files directly:
 
 | Location | Scope |
 |----------|-------|
-| `~/.amide/agent/settings.json` | Global (all projects) |
-| `.amide/agent/settings.json` | Project (overrides global) |
+| `~/.acryl/agent/settings.json` | Global (all projects) |
+| `.acryl/agent/settings.json` | Project (overrides global) |
 
 See [docs/settings.md](docs/settings.md) for all options.
 
 ### Update checks
 
-AMIDE stable builds fetch `https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/latest.json` to check whether a newer version exists. Beta builds fetch `beta.json` and remain on the beta channel. Override the base URL with `AMIDE_DOWNLOAD_BASE_URL`. Disable version checks with `PI_SKIP_VERSION_CHECK=1`.
+ACRYL stable builds fetch `https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/latest.json` to check whether a newer version exists. Beta builds fetch `beta.json` and remain on the beta channel. Override the base URL with `ACRYL_DOWNLOAD_BASE_URL`. Disable version checks with `PI_SKIP_VERSION_CHECK=1`.
 
 Use `--offline` or `PI_OFFLINE=1` to disable startup network operations, including update checks and package update checks.
 
 ## Context Files
 
-AMIDE loads `AGENTS.md` (or `CLAUDE.md`) at startup from:
-- `~/.amide/agent/AGENTS.md` (global)
+ACRYL loads `AGENTS.md` (or `CLAUDE.md`) at startup from:
+- `~/.acryl/agent/AGENTS.md` (global)
 - Parent directories (walking up from cwd)
 - Current directory
 
@@ -276,7 +269,7 @@ Disable context file loading with `--no-context-files` (or `-nc`).
 
 ### System Prompt
 
-Replace the default system prompt with `.amide/agent/SYSTEM.md` (project) or `~/.amide/agent/SYSTEM.md` (global). Append without replacing via `APPEND_SYSTEM.md`.
+Replace the default system prompt with `.acryl/agent/SYSTEM.md` (project) or `~/.acryl/agent/SYSTEM.md` (global). Append without replacing via `APPEND_SYSTEM.md`.
 
 ## Customization
 
@@ -285,19 +278,19 @@ Replace the default system prompt with `.amide/agent/SYSTEM.md` (project) or `~/
 Reusable prompts as Markdown files. Type `/name` to expand.
 
 ```markdown
-<!-- ~/.amide/agent/prompts/review.md -->
+<!-- ~/.acryl/agent/prompts/review.md -->
 Review this code for bugs, security issues, and performance problems.
 Focus on: {{focus}}
 ```
 
-Place in `~/.amide/agent/prompts/`, `.amide/agent/prompts/`, or an [AMIDE package](#amide-packages) to share with others. See [docs/prompt-templates.md](docs/prompt-templates.md).
+Place in `~/.acryl/agent/prompts/`, `.acryl/agent/prompts/`, or an [ACRYL package](#acryl-packages) to share with others. See [docs/prompt-templates.md](docs/prompt-templates.md).
 
 ### Skills
 
-On-demand capability packages following the [Agent Skills standard](https://agentskills.io). At startup, AMIDE gives the model each visible skill's name, type, description, and location. The full `SKILL.md` stays out of context until the model inspects it with `ipython` or you explicitly invoke `/skill:name`.
+On-demand capability packages following the [Agent Skills standard](https://agentskills.io). At startup, ACRYL gives the model each visible skill's name, type, description, and location. The full `SKILL.md` stays out of context until the model inspects it with `ipython` or you explicitly invoke `/skill:name`.
 
 ```markdown
-<!-- ~/.amide/agent/skills/my-skill/SKILL.md -->
+<!-- ~/.acryl/agent/skills/my-skill/SKILL.md -->
 ---
 name: my-skill
 description: Use this skill when the user asks about X.
@@ -310,11 +303,11 @@ description: Use this skill when the user asks about X.
 2. Then that
 ```
 
-Skills can also be Python-backed. A Python skill is a normal skill directory with `SKILL.md` plus a Python package at `src/<import_name>/`. AMIDE installs it into the persistent Python kernel and exposes it by import name, so the model can call it directly, inspect it with `help()`, or use any console scripts the skill declares.
+Skills can also be Python-backed. A Python skill is a normal skill directory with `SKILL.md` plus a Python package at `src/<import_name>/`. ACRYL installs it into the persistent Python kernel and exposes it by import name, so the model can call it directly, inspect it with `help()`, or use any console scripts the skill declares.
 
-Place in `~/.amide/agent/skills/`, `~/.agents/skills/`, `.amide/agent/skills/`, or `.agents/skills/` (from `cwd` up through parent directories) or an [AMIDE package](#amide-packages) to share with others. See [docs/skills.md](docs/skills.md).
+Place in `~/.acryl/agent/skills/`, `~/.agents/skills/`, `.acryl/agent/skills/`, or `.agents/skills/` (from `cwd` up through parent directories) or an [ACRYL package](#acryl-packages) to share with others. See [docs/skills.md](docs/skills.md).
 
-AMIDE ships with a built-in `websearch` skill (Google search via the [Serper](https://serper.dev) API). It loads by default; run `/login`, switch to **MCP Connections**, and choose "Serper (web search)" to add your key. Disable it with `bundledSkills.websearch: false`, or override it with your own `websearch` skill in any location above. See [docs/skills.md#built-in-skills](docs/skills.md#built-in-skills).
+ACRYL ships with a built-in `websearch` skill (Google search via the [Serper](https://serper.dev) API). It loads by default; run `/login`, switch to **MCP Connections**, and choose "Serper (web search)" to add your key. Disable it with `bundledSkills.websearch: false`, or override it with your own `websearch` skill in any location above. See [docs/skills.md#built-in-skills](docs/skills.md#built-in-skills).
 
 ### MCP Integrations
 
@@ -334,12 +327,12 @@ Built-in integrations for Linear and Notion ship disabled. **Logging in enables 
 /mcp logout <name>   disconnect
 ```
 
-Credentials are stored once in `~/.amide/agent/auth.json` (under `mcp:<name>`); the kernel reads them directly and the host refreshes expired tokens. Enablement is derived from whether valid credentials exist, so there is no separate on/off switch.
+Credentials are stored once in `~/.acryl/agent/auth.json` (under `mcp:<name>`); the kernel reads them directly and the host refreshes expired tokens. Enablement is derived from whether valid credentials exist, so there is no separate on/off switch.
 
 **Add your own server.** Declare it under `mcpServers` in settings, then ship a tiny Python skill package that subclasses `McpIntegration`:
 
 ```jsonc
-// ~/.amide/agent/settings.json
+// ~/.acryl/agent/settings.json
 {
   "mcpServers": {
     "acme": { "type": "http", "url": "https://mcp.acme.com/mcp", "oauth": true }
@@ -348,7 +341,7 @@ Credentials are stored once in `~/.amide/agent/auth.json` (under `mcp:<name>`); 
 ```
 
 ```python
-# ~/.amide/agent/skills/acme/src/acme/__init__.py
+# ~/.acryl/agent/skills/acme/src/acme/__init__.py
 from rlm import McpIntegration
 
 class Acme(McpIntegration):
@@ -369,7 +362,7 @@ See [docs/mcp-integrations.md](docs/mcp-integrations.md) for the full authoring 
 
 <p align="center"><img src="docs/images/doom-extension.png" alt="Doom Extension" width="600"></p>
 
-TypeScript modules that extend AMIDE with custom tools, commands, keyboard shortcuts, event handlers, and UI components.
+TypeScript modules that extend ACRYL with custom tools, commands, keyboard shortcuts, event handlers, and UI components.
 
 ```typescript
 export default function (pi: ExtensionAPI) {
@@ -379,7 +372,7 @@ export default function (pi: ExtensionAPI) {
 }
 ```
 
-The default export can also be `async`. AMIDE waits for async extension factories before startup continues, which is useful for one-time initialization such as fetching remote model lists before calling `pi.registerProvider()`.
+The default export can also be `async`. ACRYL waits for async extension factories before startup continues, which is useful for one-time initialization such as fetching remote model lists before calling `pi.registerProvider()`.
 
 **What's possible:**
 - Custom tools (or replace built-in tools entirely)
@@ -394,45 +387,45 @@ The default export can also be `async`. AMIDE waits for async extension factorie
 - Games while waiting (yes, Doom runs)
 - ...anything you can dream up
 
-Place in `~/.amide/agent/extensions/`, `.amide/agent/extensions/`, or an [AMIDE package](#amide-packages) to share with others. See [docs/extensions.md](docs/extensions.md) and [examples/extensions/](examples/extensions/).
+Place in `~/.acryl/agent/extensions/`, `.acryl/agent/extensions/`, or an [ACRYL package](#acryl-packages) to share with others. See [docs/extensions.md](docs/extensions.md) and [examples/extensions/](examples/extensions/).
 
 ### Themes
 
-Built-in: `dark`, `light`. Themes hot-reload: modify the active theme file and AMIDE immediately applies changes.
+Built-in: `dark`, `light`. Themes hot-reload: modify the active theme file and ACRYL immediately applies changes.
 
-Place in `~/.amide/agent/themes/`, `.amide/agent/themes/`, or an [AMIDE package](#amide-packages) to share with others. See [docs/themes.md](docs/themes.md).
+Place in `~/.acryl/agent/themes/`, `.acryl/agent/themes/`, or an [ACRYL package](#acryl-packages) to share with others. See [docs/themes.md](docs/themes.md).
 
-### AMIDE Packages
+### ACRYL Packages
 
 Bundle and share extensions, skills, prompts, and themes via npm or git.
 
-> **Security:** AMIDE packages run with full system access. Extensions execute arbitrary code, and skills can instruct the model to perform any action including running executables. Review source code before installing third-party packages.
+> **Security:** ACRYL packages run with full system access. Extensions execute arbitrary code, and skills can instruct the model to perform any action including running executables. Review source code before installing third-party packages.
 
 ```bash
-amide package install npm:@foo/amide-tools
-amide package install npm:@foo/amide-tools@1.2.3  # pinned version
-amide package install git:github.com/user/repo
-amide package install git:github.com/user/repo@v1       # tag or commit
-amide package install git:git@github.com:user/repo
-amide package install https://github.com/user/repo
-amide package install ssh://git@github.com/user/repo
-amide package remove npm:@foo/amide-tools
-amide package list
-amide package update                                  # update packages, except pinned versions
-amide package update npm:@foo/amide-tools       # update one package
-amide update                                          # update AMIDE
-amide update --force                                  # reinstall AMIDE even if current
-amide config                                          # enable/disable package resources
+acryl package install npm:@foo/acryl-tools
+acryl package install npm:@foo/acryl-tools@1.2.3  # pinned version
+acryl package install git:github.com/user/repo
+acryl package install git:github.com/user/repo@v1       # tag or commit
+acryl package install git:git@github.com:user/repo
+acryl package install https://github.com/user/repo
+acryl package install ssh://git@github.com/user/repo
+acryl package remove npm:@foo/acryl-tools
+acryl package list
+acryl package update                                  # update packages, except pinned versions
+acryl package update npm:@foo/acryl-tools       # update one package
+acryl update                                          # update ACRYL
+acryl update --force                                  # reinstall ACRYL even if current
+acryl config                                          # enable/disable package resources
 ```
 
-Packages install to `~/.amide/agent/git/` (git) or global npm. Use `--local` for project-local installs (`.amide/agent/git/`, `.amide/agent/npm/`). Git packages install dependencies with `npm install --omit=dev` by default, so runtime deps must be listed under `dependencies`; when `npmCommand` is configured, git packages use plain `install` for compatibility with wrappers. If you use a Node version manager and want package installs to reuse a stable npm context, set `npmCommand` in `settings.json`, for example `["mise", "exec", "node@20", "--", "npm"]`.
+Packages install to `~/.acryl/agent/git/` (git) or global npm. Use `--local` for project-local installs (`.acryl/agent/git/`, `.acryl/agent/npm/`). Git packages install dependencies with `npm install --omit=dev` by default, so runtime deps must be listed under `dependencies`; when `npmCommand` is configured, git packages use plain `install` for compatibility with wrappers. If you use a Node version manager and want package installs to reuse a stable npm context, set `npmCommand` in `settings.json`, for example `["mise", "exec", "node@20", "--", "npm"]`.
 
 Create a package by adding the inherited `pi` manifest key to `package.json`:
 
 ```json
 {
-  "name": "my-amide-package",
-  "keywords": ["amide-package"],
+  "name": "my-acryl-package",
+  "keywords": ["acryl-package"],
   "pi": {
     "extensions": ["./extensions"],
     "skills": ["./skills"],
@@ -442,7 +435,7 @@ Create a package by adding the inherited `pi` manifest key to `package.json`:
 }
 ```
 
-Without a `pi` manifest, AMIDE auto-discovers from conventional directories (`extensions/`, `skills/`, `prompts/`, `themes/`).
+Without a `pi` manifest, ACRYL auto-discovers from conventional directories (`extensions/`, `skills/`, `prompts/`, `themes/`).
 
 See [docs/packages.md](docs/packages.md).
 
@@ -451,7 +444,7 @@ See [docs/packages.md](docs/packages.md).
 ### SDK
 
 ```typescript
-import { AuthStorage, createAgentSession, ModelRegistry, SessionManager } from "@webboxes/amide";
+import { AuthStorage, createAgentSession, ModelRegistry, SessionManager } from "@webboxes/acryl";
 
 const authStorage = AuthStorage.create();
 const modelRegistry = ModelRegistry.create(authStorage);
@@ -475,7 +468,7 @@ See [docs/sdk.md](docs/sdk.md) and [examples/sdk/](examples/sdk/).
 For non-Node.js integrations, use RPC mode over stdin/stdout:
 
 ```bash
-amide --mode rpc
+acryl --mode rpc
 ```
 
 RPC mode uses strict LF-delimited JSONL framing. Clients must split records on `\n` only. Do not use generic line readers like Node `readline`, which also split on Unicode separators inside JSON payloads.
@@ -484,30 +477,30 @@ See [docs/rpc.md](docs/rpc.md) for the protocol.
 
 ## Upstream
 
-AMIDE is a fork of [Prime Agent](https://github.com/PrimeIntellect-ai/prime-agent), which is itself forked from [pi-mono](https://github.com/badlogic/pi-mono) by Mario Zechner and keeps MIT attribution in the root license.
+ACRYL is a fork of [Prime Agent](https://github.com/PrimeIntellect-ai/prime-agent), which is itself forked from [pi-mono](https://github.com/badlogic/pi-mono) by Mario Zechner and keeps MIT attribution in the root license.
 
-The package architecture, extension model, and source package names still reflect that upstream lineage while the distributed command and release artifacts are branded for AMIDE. See [UPSTREAMS.md](https://github.com/amidedev/amide/blob/main/UPSTREAMS.md) for exact commits.
+The package architecture, extension model, and source package names still reflect that upstream lineage while the distributed command and release artifacts are branded for ACRYL. See [UPSTREAMS.md](https://github.com/acryldev/acryl-padsh/blob/main/UPSTREAMS.md) for exact commits.
 
 ## CLI Reference
 
 ```bash
-amide [options] [@files...] [messages...]
+acryl [options] [@files...] [messages...]
 ```
 
-Run `amide help` for the command list and `amide help <command>` for details.
+Run `acryl help` for the command list and `acryl help <command>` for details.
 
 ### Agent Commands
 
 ```bash
-amide agents                         # Search running, idle, and inactive sessions
-amide list [--all]                   # List active or saved agents
-amide attach <agent>                 # Attach the interactive UI
-amide stop <agent>                   # Stop one agent
-amide rename <agent> <name>          # Rename an agent
-amide send <agent> <message>         # Send an agent-to-agent message
-amide status                         # Show background service status
-amide doctor [--fix]                 # Inspect or safely clean up background services
-amide shutdown [--force]             # Stop every agent, worker, and background service
+acryl agents                         # Search running, idle, and inactive sessions
+acryl list [--all]                   # List active or saved agents
+acryl attach <agent>                 # Attach the interactive UI
+acryl stop <agent>                   # Stop one agent
+acryl rename <agent> <name>          # Rename an agent
+acryl send <agent> <message>         # Send an agent-to-agent message
+acryl status                         # Show background service status
+acryl doctor [--fix]                 # Inspect or safely clean up background services
+acryl shutdown [--force]             # Stop every agent, worker, and background service
 ```
 
 `shutdown` asks for confirmation. `shutdown --force` skips confirmation and kills unresponsive workers and their tracked child processes.
@@ -515,9 +508,9 @@ amide shutdown [--force]             # Stop every agent, worker, and background 
 ### Scheduled Prompts
 
 ```bash
-amide schedule list [--all] [agent]
-amide schedule add <agent> <schedule> -- <message>
-amide schedule cancel <job-id>
+acryl schedule list [--all] [agent]
+acryl schedule add <agent> <schedule> -- <message>
+acryl schedule cancel <job-id>
 ```
 
 Schedules run prompts later or repeatedly. A schedule can be a supported one-time expression such as `in 5m` or a cron expression.
@@ -527,12 +520,12 @@ Schedules run prompts later or repeatedly. A schedule can be a supported one-tim
 Packages bundle capabilities such as extensions, skills, prompts, and themes.
 
 ```bash
-amide package install <source> [--local]
-amide package remove <source> [--local]
-amide package list
-amide package update [source]
-amide update [--force]                   # Update AMIDE itself
-amide config                             # Enable/disable package resources
+acryl package install <source> [--local]
+acryl package remove <source> [--local]
+acryl package list
+acryl package update [source]
+acryl update [--force]                   # Update ACRYL itself
+acryl config                             # Enable/disable package resources
 ```
 
 ### Modes
@@ -544,10 +537,10 @@ amide config                             # Enable/disable package resources
 | `--mode json` | Output all events as JSON lines (see [docs/json.md](docs/json.md)) |
 | `--mode rpc` | RPC mode for process integration (see [docs/rpc.md](docs/rpc.md)) |
 
-In print mode, AMIDE also reads piped stdin and merges it into the initial prompt:
+In print mode, ACRYL also reads piped stdin and merges it into the initial prompt:
 
 ```bash
-cat README.md | amide -p "Summarize this text"
+cat README.md | acryl -p "Summarize this text"
 ```
 
 ### Model Options
@@ -560,7 +553,7 @@ cat README.md | amide -p "Summarize this text"
 | `--thinking <level>` | `off`, `minimal`, `low`, `medium`, `high`, `xhigh` |
 | `--models <patterns>` | Comma-separated patterns for Ctrl+P cycling |
 
-Use `amide model list [search]` to list available models.
+Use `acryl model list [search]` to list available models.
 
 ### Session Options
 
@@ -572,7 +565,7 @@ Use `amide model list [search]` to list available models.
 | `--session-dir <dir>` | Custom session storage directory |
 | `--no-session` | Ephemeral mode (don't save) |
 
-Use `amide session export <file> [output]` to export a saved session to HTML.
+Use `acryl session export <file> [output]` to export a saved session to HTML.
 
 ### Tool Options
 
@@ -632,64 +625,64 @@ Gates run before the continuation, turn, token, and wall-clock limits are evalua
 Prefix files with `@` to include in the message:
 
 ```bash
-amide @prompt.md "Answer this"
-amide -p @screenshot.png "What's in this image?"
-amide @code.ts @test.ts "Review these files"
+acryl @prompt.md "Answer this"
+acryl -p @screenshot.png "What's in this image?"
+acryl @code.ts @test.ts "Review these files"
 ```
 
 ### Examples
 
 ```bash
 # Interactive with initial prompt
-amide "List all .ts files in src/"
+acryl "List all .ts files in src/"
 
 # Non-interactive
-amide -p "Summarize this codebase"
+acryl -p "Summarize this codebase"
 
 # Non-interactive with piped stdin
-cat README.md | amide -p "Summarize this text"
+cat README.md | acryl -p "Summarize this text"
 
 # Different model
-amide --provider openai --model gpt-4o "Help me refactor"
+acryl --provider openai --model gpt-4o "Help me refactor"
 
 # Model with provider prefix (no --provider needed)
-amide --model openai/gpt-4o "Help me refactor"
+acryl --model openai/gpt-4o "Help me refactor"
 
 # Model with thinking level shorthand
-amide --model sonnet:high "Solve this complex problem"
+acryl --model sonnet:high "Solve this complex problem"
 
 # Limit model cycling
-amide --models "claude-*,gpt-4o"
+acryl --models "claude-*,gpt-4o"
 
 # Restrict to the built-in Python REPL tool
-amide --tools ipython -p "Review the code"
+acryl --tools ipython -p "Review the code"
 
 # High thinking level
-amide --thinking high "Solve this complex problem"
+acryl --thinking high "Solve this complex problem"
 ```
 
 ### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `AMIDE_CODING_AGENT_DIR` | Override config directory (default: `~/.amide/agent`) |
-| `AMIDE_SESSION_DIR` | Override session storage directory (overridden by `--session-dir`) |
-| `AMIDE_CODING_AGENT_SESSION_DIR` | Legacy alias for `AMIDE_SESSION_DIR` |
+| `ACRYL_CODING_AGENT_DIR` | Override config directory (default: `~/.acryl/agent`) |
+| `ACRYL_SESSION_DIR` | Override session storage directory (overridden by `--session-dir`) |
+| `ACRYL_CODING_AGENT_SESSION_DIR` | Legacy alias for `ACRYL_SESSION_DIR` |
 | `PI_PACKAGE_DIR` | Override package directory (useful for Nix/Guix where store paths tokenize poorly) |
 | `PI_OFFLINE` | Disable startup network operations, including update checks and package update checks |
-| `PI_SKIP_VERSION_CHECK` | Skip the AMIDE version update check at startup. This prevents the release manifest request |
-| `AMIDE_TELEMETRY` | Override pseudonymous aggregate usage analytics with `1`/`true`/`yes` or `0`/`false`/`no` |
-| `AMIDE_TELEMETRY_ENDPOINT` | Override the aggregate analytics ingestion endpoint |
+| `PI_SKIP_VERSION_CHECK` | Skip the ACRYL version update check at startup. This prevents the release manifest request |
+| `ACRYL_TELEMETRY` | Override pseudonymous aggregate usage analytics with `1`/`true`/`yes` or `0`/`false`/`no` |
+| `ACRYL_TELEMETRY_ENDPOINT` | Override the aggregate analytics ingestion endpoint |
 | `DO_NOT_TRACK` | Disable aggregate usage analytics when set to `1`/`true`/`yes` |
-| `AMIDE_DOWNLOAD_BASE_URL` | Override the AMIDE release manifest and tarball base URL |
+| `ACRYL_DOWNLOAD_BASE_URL` | Override the ACRYL release manifest and tarball base URL |
 | `PI_CACHE_RETENTION` | Set to `long` for extended prompt cache (Anthropic: 1h, OpenAI: 24h) |
 | `PRIME_API_KEY` | Prime Inference API key; also used for trace sharing if it has `agent_traces` scope |
 | `PRIME_AGENT_TRACES_API_KEY` | Prime API key used only for opt-in trace sharing |
 | `PRIME_AGENT_TRACES_BASE_URL` | Override the trace upload API base URL |
-| `AMIDE_KERNEL_PYTHON` | Use an existing Python environment with `prime-agent-runtime` instead of auto-bootstrapping `~/.amide/agent/kernel-venv` |
+| `ACRYL_KERNEL_PYTHON` | Use an existing Python environment with `prime-agent-runtime` instead of auto-bootstrapping `~/.acryl/agent/kernel-venv` |
 | `VISUAL`, `EDITOR` | External editor for Ctrl+G |
 
-The remaining `PI_*` variables in this table are compatibility names inherited from the Pi lineage. They do not change the application name, command, or default `~/.amide/agent` configuration path. `PRIME_API_KEY` and `PRIME_AGENT_TRACES_*` identify real external Prime Intellect services and are unrelated to AMIDE's own branding.
+The remaining `PI_*` variables in this table are compatibility names inherited from the Pi lineage. They do not change the application name, command, or default `~/.acryl/agent` configuration path. `PRIME_API_KEY` and `PRIME_AGENT_TRACES_*` identify real external Prime Intellect services and are unrelated to ACRYL's own branding.
 
 ## Contributing & Development
 
@@ -701,6 +694,6 @@ MIT
 
 ## See Also
 
-- [AMIDE AI](../ai): Core LLM toolkit
-- [AMIDE Core](../agent): Agent framework
-- [AMIDE TUI](../tui): Terminal UI components
+- [ACRYL AI](../ai): Core LLM toolkit
+- [ACRYL Core](../agent): Agent framework
+- [ACRYL TUI](../tui): Terminal UI components

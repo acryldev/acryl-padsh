@@ -244,7 +244,7 @@ function createStreamingEvent(text: string, delta: string, sequence: number): ob
 		},
 		meta: {
 			id: `${activeSessionId}:${sequence}`,
-			protocol: { name: "amide.daemon", version: 1 },
+			protocol: { name: "acryl.daemon", version: 1 },
 			activeSessionId,
 			sequence,
 			emittedAt: "2026-01-01T00:00:00.000Z",
@@ -256,7 +256,7 @@ function repeatedText(length: number, seed: string): string {
 	return seed.repeat(Math.ceil(length / seed.length)).slice(0, length);
 }
 
-const streamCorpus = repeatedText(STREAM_CHARS, "AMIDE daemon multi-client streaming benchmark. ");
+const streamCorpus = repeatedText(STREAM_CHARS, "ACRYL daemon multi-client streaming benchmark. ");
 const attachMessages = Array.from({ length: ATTACH_HISTORY_MESSAGES }, (_, index) => {
 	const text = repeatedText(ATTACH_MESSAGE_CHARS, `history-message-${index} `);
 	return index % 2 === 0
@@ -312,7 +312,7 @@ function createAttachResponseForMessages(
 		command: "attach",
 		success: true,
 		data: {
-			protocol: { name: "amide.daemon", version: 1 },
+			protocol: { name: "acryl.daemon", version: 1 },
 			activeSessionId,
 			snapshot: {
 				activeSessionId,
@@ -433,7 +433,7 @@ async function runFanoutV2(clientCount: number): Promise<BenchmarkResult> {
 				},
 				meta: {
 					id: `active-benchmark:${sequence}`,
-					protocol: { name: "amide.daemon", version: 2 },
+					protocol: { name: "acryl.daemon", version: 2 },
 					activeSessionId: "active-benchmark",
 					sequence,
 					cursor: { generation: "benchmark-generation", sequence },
@@ -619,7 +619,7 @@ function printResults(
 	results: BenchmarkResult[],
 	details = `stream=${STREAM_CHARS} chars/${STREAM_CHUNK_CHARS}-char chunks; attach=${ATTACH_HISTORY_MESSAGES} messages x ${ATTACH_MESSAGE_CHARS} chars`,
 ): void {
-	console.log("AMIDE daemon multi-client benchmark");
+	console.log("ACRYL daemon multi-client benchmark");
 	console.log(details);
 	console.table(
 		results.map((result) => ({
@@ -641,7 +641,7 @@ function printResults(
 }
 
 function printSessionLoad(sessionFile: string, result: SessionLoadResult): void {
-	console.log("AMIDE real-session benchmark");
+	console.log("ACRYL real-session benchmark");
 	console.log(`fixture: ${basename(sessionFile)} (${(result.fileBytes / MEBIBYTE).toFixed(2)} MiB)`);
 	console.table([
 		{

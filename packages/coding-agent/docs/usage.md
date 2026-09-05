@@ -1,8 +1,8 @@
-# Using AMIDE
+# Using ACRYL
 
 This page collects day-to-day usage details that do not fit on the quickstart page.
 
-AMIDE is built around one model-facing tool: a persistent Python REPL kernel. The kernel retains Python state across turns and acts as a control environment for file operations, project commands, installed Python skills, MCP-backed skills, and recursive subagents. The TypeScript host remains responsible for provider calls, session state, tool execution, scheduling, and child-agent lifecycles.
+ACRYL is built around one model-facing tool: a persistent Python REPL kernel. The kernel retains Python state across turns and acts as a control environment for file operations, project commands, installed Python skills, MCP-backed skills, and recursive subagents. The TypeScript host remains responsible for provider calls, session state, tool execution, scheduling, and child-agent lifecycles.
 
 ## Interactive Mode
 
@@ -60,7 +60,7 @@ Type `/` in the editor to open command completion. Extensions can register custo
 | `/reload` | Reload keybindings, extensions, skills, prompts, and context files |
 | `/hotkeys` | Show all keyboard shortcuts |
 | `/changelog` | Display version history |
-| `/quit` | Quit AMIDE |
+| `/quit` | Quit ACRYL |
 
 ## Message Queue
 
@@ -74,19 +74,19 @@ You can submit messages while the agent is still working:
 - While browsing, **Enter** applies the edit as steering input and **Alt+Enter** applies it as a follow-up; submitting an empty edit deletes the item.
 - **Ctrl+Option+Up / Ctrl+Option+Down** move the selected item earlier or later within its queue.
 
-On Windows Terminal, Alt+Enter is fullscreen by default. Remap it as described in [Terminal setup](terminal-setup.md) if you want AMIDE to receive the shortcut.
+On Windows Terminal, Alt+Enter is fullscreen by default. Remap it as described in [Terminal setup](terminal-setup.md) if you want ACRYL to receive the shortcut.
 
 Configure delivery in [Settings](settings.md) with `steeringMode` and `followUpMode`.
 
 ## Sessions
 
-Sessions are saved automatically as flat JSONL files under `~/.amide/agent/sessions/`. Each session header records its working directory, which the session picker uses for project-scoped views.
+Sessions are saved automatically as flat JSONL files under `~/.acryl/agent/sessions/`. Each session header records its working directory, which the session picker uses for project-scoped views.
 
 ```bash
-amide -c                  # Continue most recent session
-amide -r [path|id]        # Browse sessions or resume one directly
-amide --no-session        # Ephemeral mode; do not save
-amide --fork <path|id>    # Fork a session into a new session file
+acryl -c                  # Continue most recent session
+acryl -r [path|id]        # Browse sessions or resume one directly
+acryl --no-session        # Ephemeral mode; do not save
+acryl --fork <path|id>    # Fork a session into a new session file
 ```
 
 Useful session commands:
@@ -102,7 +102,7 @@ See [Sessions](sessions.md) and [Compaction](compaction.md) for details.
 
 ## Agents and Recursive Subagents
 
-Normal interactive sessions are persistent agents backed by isolated worker processes. Closing the TUI detaches the client; use `amide agents`, `amide list`, or `amide attach <agent>` to find and reattach to running work. `amide stop <agent>` stops one root agent, while `amide shutdown` stops all workers and the local supervisor.
+Normal interactive sessions are persistent agents backed by isolated worker processes. Closing the TUI detaches the client; use `acryl agents`, `acryl list`, or `acryl attach <agent>` to find and reattach to running work. `acryl stop <agent>` stops one root agent, while `acryl shutdown` stops all workers and the local supervisor.
 
 Within a session, the model can delegate through the `rlm` callable already available in the Python REPL:
 
@@ -133,9 +133,9 @@ Children inherit the parent model unless the user requests another model. They r
 
 ## Context Files
 
-AMIDE loads `AGENTS.md` or `CLAUDE.md` at startup from:
+ACRYL loads `AGENTS.md` or `CLAUDE.md` at startup from:
 
-- `~/.amide/agent/AGENTS.md` for global instructions
+- `~/.acryl/agent/AGENTS.md` for global instructions
 - parent directories, walking up from the current working directory
 - the current directory
 
@@ -145,8 +145,8 @@ Use context files for project conventions, commands, safety rules, and preferenc
 
 Replace the default system prompt with:
 
-- `.amide/agent/SYSTEM.md` for a project
-- `~/.amide/agent/SYSTEM.md` globally
+- `.acryl/agent/SYSTEM.md` for a project
+- `~/.acryl/agent/SYSTEM.md` globally
 
 Append to the default prompt without replacing it with `APPEND_SYSTEM.md` in either location.
 
@@ -159,32 +159,32 @@ Use `/share` to upload a private GitHub gist with a shareable HTML link.
 ## CLI Reference
 
 ```bash
-amide [options] [@files...] [messages...]
+acryl [options] [@files...] [messages...]
 ```
 
 ### Shell Commands
 
 ```bash
-amide agents
-amide list [--all]
-amide attach <agent>
-amide stop <agent>
-amide rename <agent> <name>
-amide send <agent> <message>
-amide schedule <list|add|cancel>
-amide status
-amide doctor [--fix]
-amide shutdown [--force]
+acryl agents
+acryl list [--all]
+acryl attach <agent>
+acryl stop <agent>
+acryl rename <agent> <name>
+acryl send <agent> <message>
+acryl schedule <list|add|cancel>
+acryl status
+acryl doctor [--fix]
+acryl shutdown [--force]
 
-amide package install <source> [--local]
-amide package remove <source> [--local]
-amide package list
-amide package update [source]
-amide update [--force]
-amide config
+acryl package install <source> [--local]
+acryl package remove <source> [--local]
+acryl package list
+acryl package update [source]
+acryl update [--force]
+acryl config
 ```
 
-See [AMIDE Packages](packages.md) for package sources and security notes.
+See [ACRYL Packages](packages.md) for package sources and security notes.
 
 ### Modes
 
@@ -195,10 +195,10 @@ See [AMIDE Packages](packages.md) for package sources and security notes.
 | `--mode json` | Output all events as JSON lines; see [JSON mode](json.md) |
 | `--mode rpc` | RPC mode over stdin/stdout; see [RPC mode](rpc.md) |
 
-In print mode, AMIDE also reads piped stdin and merges it into the initial prompt:
+In print mode, ACRYL also reads piped stdin and merges it into the initial prompt:
 
 ```bash
-cat README.md | amide -p "Summarize this text"
+cat README.md | acryl -p "Summarize this text"
 ```
 
 ### Model Options
@@ -211,7 +211,7 @@ cat README.md | amide -p "Summarize this text"
 | `--thinking <level>` | `off`, `minimal`, `low`, `medium`, `high`, `xhigh`, or `max` |
 | `--models <patterns>` | Comma-separated patterns for Ctrl+P cycling |
 
-Use `amide model list [search]` to list available models.
+Use `acryl model list [search]` to list available models.
 
 ### Session Options
 
@@ -223,7 +223,7 @@ Use `amide model list [search]` to list available models.
 | `--session-dir <dir>` | Custom session storage directory |
 | `--no-session` | Ephemeral mode; do not save |
 
-Use `amide session export <file> [output]` to export a session to HTML.
+Use `acryl session export <file> [output]` to export a session to HTML.
 
 ### Tool Options
 
@@ -252,7 +252,7 @@ Built-in tools: `ipython`.
 Combine `--no-*` with explicit flags to load exactly what you need, ignoring settings. Example:
 
 ```bash
-amide --no-extensions -e ./my-extension.ts
+acryl --no-extensions -e ./my-extension.ts
 ```
 
 ### Autonomous Options
@@ -272,12 +272,12 @@ Autonomous mode is a host policy for unattended work. It starts disabled. `--aut
 
 All `<n>` values must be positive integers: zero, negative, fractional, and non-numeric values are rejected. Value-taking autonomous flags require a separate argument, not `--flag=value`. A missing value is rejected, and a following long option is not consumed as a value. Repeating a numeric flag uses its last value; repeating `--autonomous-gate` appends another gate.
 
-After each assistant response, configured gates run before the ordinary continuation limits are evaluated. All gates must pass for the run to finish. A failed gate supplies bounded command output to the next continuation so the agent can repair it; AMIDE avoids rerunning an unchanged failed gate and advances its attempt count instead. A passing gate permits completion even if a continuation, turn, token, or time limit has otherwise been reached. If a gate does not pass, or if there are no gates, the host can inject another continuation only while all four limits remain below their configured values. Limits are checked in this order: continuations, turns, tokens, then elapsed time. Reaching one prevents another automatic continuation; it does not imply task success.
+After each assistant response, configured gates run before the ordinary continuation limits are evaluated. All gates must pass for the run to finish. A failed gate supplies bounded command output to the next continuation so the agent can repair it; ACRYL avoids rerunning an unchanged failed gate and advances its attempt count instead. A passing gate permits completion even if a continuation, turn, token, or time limit has otherwise been reached. If a gate does not pass, or if there are no gates, the host can inject another continuation only while all four limits remain below their configured values. Limits are checked in this order: continuations, turns, tokens, then elapsed time. Reaching one prevents another automatic continuation; it does not imply task success.
 
 For example, this noninteractive run uses a locally available model configuration, skips startup network operations, and bounds every autonomous budget while requiring the project check to pass:
 
 ```bash
-amide -p \
+acryl -p \
   --autonomous \
   --autonomous-gate "npm run check" \
   --autonomous-gate-retries 2 \
@@ -314,65 +314,65 @@ Goals are separate from autonomous mode: `--goal <objective>` starts a persisten
 Prefix files with `@` to include them in the message:
 
 ```bash
-amide @prompt.md "Answer this"
-amide -p @screenshot.png "What's in this image?"
-amide @code.ts @test.ts "Review these files"
+acryl @prompt.md "Answer this"
+acryl -p @screenshot.png "What's in this image?"
+acryl @code.ts @test.ts "Review these files"
 ```
 
 ### Examples
 
 ```bash
 # Interactive with initial prompt
-amide "List all .ts files in src/"
+acryl "List all .ts files in src/"
 
 # Non-interactive
-amide -p "Summarize this codebase"
+acryl -p "Summarize this codebase"
 
 # Non-interactive with piped stdin
-cat README.md | amide -p "Summarize this text"
+cat README.md | acryl -p "Summarize this text"
 
 # Different model
-amide --provider openai --model gpt-4o "Help me refactor"
+acryl --provider openai --model gpt-4o "Help me refactor"
 
 # Model with provider prefix
-amide --model openai/gpt-4o "Help me refactor"
+acryl --model openai/gpt-4o "Help me refactor"
 
 # Model with thinking level shorthand
-amide --model sonnet:high "Solve this complex problem"
+acryl --model sonnet:high "Solve this complex problem"
 
 # Limit model cycling
-amide --models "claude-*,gpt-4o"
+acryl --models "claude-*,gpt-4o"
 
 # Restrict to the built-in Python REPL tool
-amide --tools ipython -p "Review the code"
+acryl --tools ipython -p "Review the code"
 ```
 
 ### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `AMIDE_CODING_AGENT_DIR` | Override config directory; default is `~/.amide/agent` |
-| `AMIDE_SESSION_DIR` | Override session storage directory; overridden by `--session-dir` |
-| `AMIDE_CODING_AGENT_SESSION_DIR` | Legacy alias for `AMIDE_SESSION_DIR` |
+| `ACRYL_CODING_AGENT_DIR` | Override config directory; default is `~/.acryl/agent` |
+| `ACRYL_SESSION_DIR` | Override session storage directory; overridden by `--session-dir` |
+| `ACRYL_CODING_AGENT_SESSION_DIR` | Legacy alias for `ACRYL_SESSION_DIR` |
 | `PI_PACKAGE_DIR` | Override package directory, useful for Nix/Guix store paths |
 | `PI_OFFLINE` | Disable startup network operations, including update checks and package update checks |
-| `PI_SKIP_VERSION_CHECK` | Skip the AMIDE version update check at startup. This prevents the release manifest request |
-| `AMIDE_DOWNLOAD_BASE_URL` | Override the AMIDE release manifest and tarball base URL |
+| `PI_SKIP_VERSION_CHECK` | Skip the ACRYL version update check at startup. This prevents the release manifest request |
+| `ACRYL_DOWNLOAD_BASE_URL` | Override the ACRYL release manifest and tarball base URL |
 | `PI_CACHE_RETENTION` | Set to `long` for extended prompt cache where supported |
 | `PRIME_API_KEY` | Prime Inference API key; also used for trace sharing when it has `agent_traces` scope |
 | `PRIME_AGENT_TRACES_API_KEY` | Prime API key used only for opt-in trace sharing |
-| `PRIME_AGENT_TRACES_BASE_URL` | Override the AMIDE trace upload API base URL |
-| `AMIDE_KERNEL_PYTHON` | Use an existing Python environment with `prime-agent-runtime` instead of bootstrapping `~/.amide/agent/kernel-venv` |
+| `PRIME_AGENT_TRACES_BASE_URL` | Override the ACRYL trace upload API base URL |
+| `ACRYL_KERNEL_PYTHON` | Use an existing Python environment with `prime-agent-runtime` instead of bootstrapping `~/.acryl/agent/kernel-venv` |
 | `VISUAL`, `EDITOR` | External editor for Ctrl+G |
 
-The remaining `PI_*` variables are compatibility names still read by the current runtime. They do not change the application name, command, or default `~/.amide/agent` configuration path.
+The remaining `PI_*` variables are compatibility names still read by the current runtime. They do not change the application name, command, or default `~/.acryl/agent` configuration path.
 
 ## Design Principles
 
-AMIDE keeps the model-facing tool surface small while making the Python REPL runtime powerful and composable. The built-in `ipython` tool provides durable state, project command execution, Python skills, MCP-backed integrations, and the native `rlm` delegation API without presenting each capability as a separate model tool.
+ACRYL keeps the model-facing tool surface small while making the Python REPL runtime powerful and composable. The built-in `ipython` tool provides durable state, project command execution, Python skills, MCP-backed integrations, and the native `rlm` delegation API without presenting each capability as a separate model tool.
 
 Recursive subagents are a core capability, not an optional extension. The TypeScript host owns every parent and child agent loop so recursion uses the same provider, session, tool, skill, scheduling, usage-accounting, and recovery infrastructure. The Python `rlm` package is a thin host bridge rather than a separate agent implementation.
 
-Extensions, skills, prompt templates, themes, and AMIDE packages remain the primary customization surfaces. They can add project-specific workflows, custom tools and UI, permission policies, provider integrations, and orchestration patterns around the built-in runtime.
+Extensions, skills, prompt templates, themes, and ACRYL packages remain the primary customization surfaces. They can add project-specific workflows, custom tools and UI, permission policies, provider integrations, and orchestration patterns around the built-in runtime.
 
-AMIDE preserves MIT attribution to pi-mono for its upstream lineage, but upstream Pi product claims and limitations do not describe the current AMIDE architecture.
+ACRYL preserves MIT attribution to pi-mono for its upstream lineage, but upstream Pi product claims and limitations do not describe the current ACRYL architecture.

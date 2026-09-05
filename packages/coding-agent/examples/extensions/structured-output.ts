@@ -6,7 +6,7 @@
  */
 
 import { Text } from "@earendil-works/pi-tui";
-import { defineTool, type ExtensionAPI } from "amide";
+import { defineTool, type ExtensionAPI } from "acryl";
 import { Type } from "typebox";
 
 interface StructuredOutputDetails {

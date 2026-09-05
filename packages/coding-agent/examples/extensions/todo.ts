@@ -12,7 +12,7 @@
 
 import { StringEnum } from "@earendil-works/pi-ai";
 import { matchesKey, Text, truncateToWidth } from "@earendil-works/pi-tui";
-import type { ExtensionAPI, ExtensionContext, Theme } from "amide";
+import type { ExtensionAPI, ExtensionContext, Theme } from "acryl";
 import { Type } from "typebox";
 
 interface Todo {

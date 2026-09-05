@@ -19,7 +19,7 @@ import type {
 import { latestAutonomousGateAttempt } from "../headless-completion.js";
 import { type AcpEventMappingState, acpUpdatesForSessionEvent } from "./acp-events.js";
 import { resolveAcpMcpServers } from "./acp-mcp.js";
-import { AMIDE_META_NAMESPACE, type PrimeAgentAutonomousMeta, primeAgentMeta } from "./acp-meta.js";
+import { ACRYL_META_NAMESPACE, type PrimeAgentAutonomousMeta, primeAgentMeta } from "./acp-meta.js";
 import { type AcpStopReason, acpStopReason } from "./acp-stop-reason.js";
 
 /**
@@ -267,14 +267,14 @@ class AcpUpdateProducer {
 			unknown
 		>;
 		const priorPrimeMeta =
-			priorMeta[AMIDE_META_NAMESPACE] && typeof priorMeta[AMIDE_META_NAMESPACE] === "object"
-				? (priorMeta[AMIDE_META_NAMESPACE] as Record<string, unknown>)
+			priorMeta[ACRYL_META_NAMESPACE] && typeof priorMeta[ACRYL_META_NAMESPACE] === "object"
+				? (priorMeta[ACRYL_META_NAMESPACE] as Record<string, unknown>)
 				: {};
 		const correlatedUpdate = {
 			...update,
 			_meta: {
 				...priorMeta,
-				[AMIDE_META_NAMESPACE]: {
+				[ACRYL_META_NAMESPACE]: {
 					...priorPrimeMeta,
 					promptTurnId: turnId,
 					eventSequence,
@@ -688,7 +688,7 @@ export async function runAcpModeWithConnection(
 				// the single-session slot) instead of dropping the connection.
 				sessionCapabilities: { close: {} },
 			},
-			agentInfo: { name: "prime-agent", title: "AMIDE", version: VERSION },
+			agentInfo: { name: "prime-agent", title: "ACRYL", version: VERSION },
 			// Advertise prime-agent extras under a namespaced key: ACP reserves
 			// every object root for future protocol fields.
 			_meta: primeAgentMeta({}),

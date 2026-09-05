@@ -4,7 +4,7 @@
  * Override settings using SettingsManager.
  */
 
-import { createAgentSession, SessionManager, SettingsManager } from "amide";
+import { createAgentSession, SessionManager, SettingsManager } from "acryl";
 
 const cwd = process.cwd();
 

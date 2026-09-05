@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { resolveKernelBootConcurrency } from "../src/core/kernel/boot-gate.js";
 
-const ENV = "AMIDE_MAX_CONCURRENT_KERNEL_BOOTS";
+const ENV = "ACRYL_MAX_CONCURRENT_KERNEL_BOOTS";
 
 describe("resolveKernelBootConcurrency", () => {
 	afterEach(() => {

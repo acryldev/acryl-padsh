@@ -5,7 +5,7 @@
  * Useful to ensure work is committed before switching context.
  */
 
-import type { ExtensionAPI, ExtensionContext } from "amide";
+import type { ExtensionAPI, ExtensionContext } from "acryl";
 
 async function checkDirtyRepo(
 	pi: ExtensionAPI,

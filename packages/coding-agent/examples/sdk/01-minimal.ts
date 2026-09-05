@@ -5,7 +5,7 @@
  * from cwd and ~/.pi/agent. Model chosen from settings or first available.
  */
 
-import { createAgentSession } from "amide";
+import { createAgentSession } from "acryl";
 
 const { session } = await createAgentSession();
 

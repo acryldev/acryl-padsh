@@ -69,7 +69,7 @@ export interface DaemonSocketIdentity {
 
 export function defaultDaemonSocketPath(): string {
 	if (process.platform === "win32") {
-		return "\\\\.\\pipe\\amide-daemon";
+		return "\\\\.\\pipe\\acryl-daemon";
 	}
 	return join(defaultDaemonSocketDir(), "daemon.sock");
 }
@@ -277,7 +277,7 @@ function assertSocketLeaseHeld(socketPath: string, lease: DaemonSocketPathLease)
 }
 
 export function defaultDaemonSocketDir(): string {
-	const override = process.env.AMIDE_DAEMON_SOCKET_DIR;
+	const override = process.env.ACRYL_DAEMON_SOCKET_DIR;
 	// Normalize: ensureDefaultDaemonSocketDir() compares this against
 	// dirname(join(defaultDaemonSocketDir(), "daemon.sock")), which node:path
 	// always normalizes. An unnormalized override (e.g. a double slash from
@@ -285,7 +285,7 @@ export function defaultDaemonSocketDir(): string {
 	// skip directory creation entirely - not throw, just never mkdir.
 	if (override) return resolve(override);
 	const suffix = typeof process.getuid === "function" ? String(process.getuid()) : "user";
-	return join(tmpdir(), `amide-${suffix}`);
+	return join(tmpdir(), `acryl-${suffix}`);
 }
 
 function ensureDefaultDaemonSocketDir(socketPath: string): void {

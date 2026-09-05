@@ -10,7 +10,7 @@ import {
 const defaultPrimeAgentDownloadBaseUrl = "https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev";
 const originalSkipVersionCheck = process.env.PI_SKIP_VERSION_CHECK;
 const originalOffline = process.env.PI_OFFLINE;
-const originalPrimeAgentDownloadBaseUrl = process.env.AMIDE_DOWNLOAD_BASE_URL;
+const originalPrimeAgentDownloadBaseUrl = process.env.ACRYL_DOWNLOAD_BASE_URL;
 
 function restoreEnv(name: string, value: string | undefined): void {
 	if (value === undefined) {
@@ -24,7 +24,7 @@ afterEach(() => {
 	vi.unstubAllGlobals();
 	restoreEnv("PI_SKIP_VERSION_CHECK", originalSkipVersionCheck);
 	restoreEnv("PI_OFFLINE", originalOffline);
-	restoreEnv("AMIDE_DOWNLOAD_BASE_URL", originalPrimeAgentDownloadBaseUrl);
+	restoreEnv("ACRYL_DOWNLOAD_BASE_URL", originalPrimeAgentDownloadBaseUrl);
 });
 
 describe("version checks", () => {
@@ -45,7 +45,7 @@ describe("version checks", () => {
 		await expect(checkForNewPiVersion("1.2.2")).resolves.toBe("1.2.3");
 	});
 
-	it("uses the AMIDE release manifest with a AMIDE user agent", async () => {
+	it("uses the ACRYL release manifest with a ACRYL user agent", async () => {
 		const fetchMock = vi.fn(async () => Response.json({ version: "v1.2.4" }));
 		vi.stubGlobal("fetch", fetchMock);
 

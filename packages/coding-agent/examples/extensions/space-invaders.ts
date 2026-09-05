@@ -4,7 +4,7 @@
  */
 
 import { isKeyRelease, Key, matchesKey, visibleWidth } from "@earendil-works/pi-tui";
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 
 const GAME_WIDTH = 60;
 const GAME_HEIGHT = 24;

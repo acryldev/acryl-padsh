@@ -17,78 +17,78 @@ if (mainCallIndex === -1) {
 
 const harnessSource = `${installerSource.slice(0, mainCallIndex)}
 
-amide_test_cols=80
-amide_test_rows=24
+acryl_test_cols=80
+acryl_test_rows=24
 
-amide_read_terminal_size() {
-	amide_screen_cols="$amide_test_cols"
-	amide_screen_rows="$amide_test_rows"
+acryl_read_terminal_size() {
+	acryl_screen_cols="$acryl_test_cols"
+	acryl_screen_rows="$acryl_test_rows"
 }
 
 print_render_meta() {
 	label="$1"
-	if amide_show_logo; then
+	if acryl_show_logo; then
 		visible=1
 	else
 		visible=0
 	fi
-	content_height=$(amide_content_height)
+	content_height=$(acryl_content_height)
 	printf '__META__ %s cols=%s rows=%s layout_show_logo=%s lab_width=%s render_lab_width=%s compact=%s visible=%s content_height=%s\\n' \\
-		"$label" "$amide_screen_cols" "$amide_screen_rows" "$amide_screen_layout_show_logo" \\
-		"$amide_screen_layout_lab_width" "$amide_screen_render_lab_width" "$amide_screen_compact" "$visible" "$content_height"
+		"$label" "$acryl_screen_cols" "$acryl_screen_rows" "$acryl_screen_layout_show_logo" \\
+		"$acryl_screen_layout_lab_width" "$acryl_screen_render_lab_width" "$acryl_screen_compact" "$visible" "$content_height"
 }
 
 render_case() {
-	amide_screen_title="Installing AMIDE"
-	amide_screen_detail="Fetching the verified package."
-	amide_screen_question=
-	amide_screen_frame=1
-	amide_screen_cols="$1"
-	amide_screen_rows="$2"
-	amide_screen_layout_ready=0
-	amide_screen_layout_show_logo=0
-	amide_screen_layout_lab_width=0
-	amide_screen_render_lab_width=0
-	amide_screen_compact=0
-	amide_init_screen_layout
-	amide_refresh_screen_layout_mode
+	acryl_screen_title="Installing ACRYL"
+	acryl_screen_detail="Fetching the verified package."
+	acryl_screen_question=
+	acryl_screen_frame=1
+	acryl_screen_cols="$1"
+	acryl_screen_rows="$2"
+	acryl_screen_layout_ready=0
+	acryl_screen_layout_show_logo=0
+	acryl_screen_layout_lab_width=0
+	acryl_screen_render_lab_width=0
+	acryl_screen_compact=0
+	acryl_init_screen_layout
+	acryl_refresh_screen_layout_mode
 	print_render_meta first
 	printf '__RENDER_START__ first\\n'
-	amide_render_screen
+	acryl_render_screen
 	printf '__RENDER_END__ first\\n'
 
-	amide_screen_frame=2
-	amide_screen_cols="$3"
-	amide_screen_rows="$4"
-	amide_refresh_screen_layout_mode
+	acryl_screen_frame=2
+	acryl_screen_cols="$3"
+	acryl_screen_rows="$4"
+	acryl_refresh_screen_layout_mode
 	print_render_meta second
 	printf '__RENDER_START__ second\\n'
-	amide_render_screen
+	acryl_render_screen
 	printf '__RENDER_END__ second\\n'
 }
 
 screen_case() {
-	amide_screen_enabled=1
-	amide_screen_drawn=0
-	amide_screen_last_cols=0
-	amide_screen_last_rows=0
-	amide_screen_layout_ready=0
-	amide_screen_layout_show_logo=0
-	amide_screen_layout_lab_width=0
-	amide_screen_render_lab_width=0
-	amide_screen_compact=0
-	amide_screen_frame=0
+	acryl_screen_enabled=1
+	acryl_screen_drawn=0
+	acryl_screen_last_cols=0
+	acryl_screen_last_rows=0
+	acryl_screen_layout_ready=0
+	acryl_screen_layout_show_logo=0
+	acryl_screen_layout_lab_width=0
+	acryl_screen_render_lab_width=0
+	acryl_screen_compact=0
+	acryl_screen_frame=0
 
-	amide_test_cols="$1"
-	amide_test_rows="$2"
+	acryl_test_cols="$1"
+	acryl_test_rows="$2"
 	printf '__SCREEN_START__ first\\n' >&2
-	amide_screen "Installing AMIDE" "Installing AMIDE" "Fetching the verified package." ""
+	acryl_screen "Installing ACRYL" "Installing ACRYL" "Fetching the verified package." ""
 	printf '__SCREEN_END__ first\\n' >&2
 
-	amide_test_cols="$3"
-	amide_test_rows="$4"
+	acryl_test_cols="$3"
+	acryl_test_rows="$4"
 	printf '__SCREEN_START__ second\\n' >&2
-	amide_screen "Installing AMIDE" "Installing AMIDE" "Fetching the verified package." ""
+	acryl_screen "Installing ACRYL" "Installing ACRYL" "Fetching the verified package." ""
 	printf '__SCREEN_END__ second\\n' >&2
 }
 
@@ -97,8 +97,8 @@ progress_case() {
 Linking command binaries.
 Finalizing npm install."
 	for progress_frame in 1 24 25 48 49 200; do
-		amide_animation_frame="$progress_frame"
-		printf '__PROGRESS__ %s\t%s\t%s\\n' "$progress_frame" "$(amide_animation_status "Installing AMIDE" "$progress_details" static)" "$(amide_animation_detail "$progress_details")"
+		acryl_animation_frame="$progress_frame"
+		printf '__PROGRESS__ %s\t%s\t%s\\n' "$progress_frame" "$(acryl_animation_status "Installing ACRYL" "$progress_details" static)" "$(acryl_animation_detail "$progress_details")"
 	done
 }
 
@@ -107,7 +107,7 @@ screen_case "$@"
 progress_case
 `;
 
-const tempDir = mkdtempSync(join(tmpdir(), "amide-installer-render-"));
+const tempDir = mkdtempSync(join(tmpdir(), "acryl-installer-render-"));
 const harnessPath = join(tempDir, "harness.sh");
 
 try {
@@ -172,7 +172,7 @@ function checkNpmInstallPolicies() {
 	const tarballPath = join(tempDir, "verified release package.tgz");
 	const installHarnessSource = `${installerSource.slice(0, mainCallIndex)}
 
-amide_npm_install "$1"
+acryl_npm_install "$1"
 `;
 	const npmSource = `#!/bin/sh
 set -eu
@@ -316,7 +316,7 @@ function assertInstallerProgress(progress) {
 			`expected progress sample ${index + 1} to show "${expectedDetail}", got "${progress[index].detail}"`,
 		);
 		check(
-			progress[index].status === "Installing AMIDE...",
+			progress[index].status === "Installing ACRYL...",
 			`expected progress sample ${index + 1} to use indeterminate status`,
 		);
 		check(!progress[index].status.includes("%"), `expected progress sample ${index + 1} not to include a percent`);

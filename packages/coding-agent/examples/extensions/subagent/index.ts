@@ -20,7 +20,7 @@ import type { AgentToolResult } from "@earendil-works/pi-agent-core";
 import type { Message } from "@earendil-works/pi-ai";
 import { StringEnum } from "@earendil-works/pi-ai";
 import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
-import { type ExtensionAPI, getMarkdownTheme, withFileMutationQueue } from "amide";
+import { type ExtensionAPI, getMarkdownTheme, withFileMutationQueue } from "acryl";
 import { Type } from "typebox";
 import { type AgentConfig, type AgentScope, discoverAgents } from "./agents.js";
 

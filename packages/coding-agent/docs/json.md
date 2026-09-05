@@ -1,10 +1,10 @@
 # JSON Event Stream Mode
 
 ```bash
-amide --mode json "Your prompt"
+acryl --mode json "Your prompt"
 ```
 
-Outputs all session events as JSON lines to stdout. Useful for integrating AMIDE into other tools or custom UIs.
+Outputs all session events as JSON lines to stdout. Useful for integrating ACRYL into other tools or custom UIs.
 
 ## Event Types
 
@@ -78,5 +78,5 @@ Followed by events as they occur:
 ## Example
 
 ```bash
-amide --mode json "List files" 2>/dev/null | jq -c 'select(.type == "message_end")'
+acryl --mode json "List files" 2>/dev/null | jq -c 'select(.type == "message_end")'
 ```

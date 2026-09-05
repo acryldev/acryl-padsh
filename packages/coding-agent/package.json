@@ -1,14 +1,14 @@
 {
-	"name": "@webboxes/amide",
+	"name": "acryl",
 	"version": "0.9.3",
-	"description": "AMIDE - Adaptive Machine Intelligence Development Engine: a coding agent CLI with a persistent Python REPL kernel and session management",
+	"description": "ACRYL - a coding agent CLI with a persistent Python REPL kernel and session management",
 	"type": "module",
 	"piConfig": {
-		"name": "amide",
-		"configDir": ".amide/agent"
+		"name": "acryl",
+		"configDir": ".acryl/agent"
 	},
 	"bin": {
-		"amide": "dist/bundle/cli.js"
+		"acryl": "dist/bundle/cli.js"
 	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -103,12 +103,12 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/amidedev/amide.git",
+		"url": "git+https://github.com/acryldev/acryl-padsh.git",
 		"directory": "packages/coding-agent"
 	},
-	"homepage": "https://amide.dev",
+	"homepage": "https://github.com/acryldev/acryl-padsh",
 	"bugs": {
-		"url": "https://github.com/amidedev/amide/issues"
+		"url": "https://github.com/acryldev/acryl-padsh/issues"
 	},
 	"engines": {
 		"node": ">=22.8.0"

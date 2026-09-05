@@ -1,4 +1,4 @@
-> AMIDE can create prompt templates. Ask it to build one for your workflow.
+> ACRYL can create prompt templates. Ask it to build one for your workflow.
 
 # Prompt Templates
 
@@ -6,10 +6,10 @@ Prompt templates are Markdown snippets that expand into full prompts. Type `/nam
 
 ## Locations
 
-AMIDE loads prompt templates from:
+ACRYL loads prompt templates from:
 
-- Global: `~/.amide/agent/prompts/*.md`
-- Project: `.amide/agent/prompts/*.md`
+- Global: `~/.acryl/agent/prompts/*.md`
+- Project: `.acryl/agent/prompts/*.md`
 - Packages: `prompts/` directories or `pi.prompts` entries in `package.json`
 - Settings: `prompts` array with files or directories
 - CLI: `--prompt-template <path>` (repeatable)

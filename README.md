@@ -1,25 +1,17 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/amide_logo_v4.1_white_transparent_bg.png">
-    <source media="(prefers-color-scheme: light)" srcset="assets/brand/amide_logo_v4.1_black_transparent_bg.png">
-    <img alt="AMIDE" src="assets/brand/amide_logo_v4.1_black_transparent_bg.png" width="240">
-  </picture>
-</p>
-
-<h1 align="center">AMIDE</h1>
+<h1 align="center">ACRYL</h1>
 
 <h3 align="center">
 Adaptive Machine Intelligence Development Engine
 </h3>
 
 <p align="center">
-  <a href="docs/AMIDE-ROADMAP.md">Roadmap</a> &bull;
-  <a href="docs/AMIDE Implementation Specification.md">Implementation Spec</a> &bull;
+  <a href="docs/ACRYL-PADSH-ROADMAP.md">Roadmap</a> &bull;
+  <a href="docs/ACRYL Implementation Specification.md">Implementation Spec</a> &bull;
   <a href="UPSTREAMS.md">Upstreams</a> &bull;
   <a href="packages/coding-agent/docs/index.md">CLI Documentation</a>
 </p>
 
-AMIDE runs on a persistent iPython/RLM session — self-extensible via live
+ACRYL runs on a persistent iPython/RLM session — self-extensible via live
 TypeScript extensions (`/reload`, no rebuild required), daemon-backed
 resident workers, recursive subagents, goals, schedules, and autonomous mode
 that survive terminal detach — composed through a Cordis Metaframework
@@ -30,22 +22,22 @@ instead of climbing as they grow. Token efficiency is a stated
 differentiator here, not a side effect. See
 [Acknowledgements](#acknowledgements) below for what this is built on.
 
-**Forward direction:** AMIDE is intended to become multi-surface — one
+**Forward direction:** ACRYL is intended to become multi-surface — one
 central agent that extends itself with new capabilities and can drive
 multiple presentation surfaces (an Electron GUI, a web-app server) rather
 than owning a single fixed UI, in the spirit of Cordis's and Pi's own
-extensibility philosophy. See `docs/AMIDE-ROADMAP.md` for what's actually
+extensibility philosophy. See `docs/ACRYL-PADSH-ROADMAP.md` for what's actually
 built versus what's stated direction.
 
 > [!NOTE]
-> AMIDE is an active fork of Prime Agent. Internal source, some environment
+> ACRYL is an active fork of Prime Agent. Internal source, some environment
 > variables, and install scripts still say "Prime Agent" in places where
 > renaming would mean rebranding a vendored third-party library (`pi-tui`,
-> `pi-ai`, `pi-agent-core`) rather than AMIDE's own code — see
-> `docs/AMIDE-ROADMAP.md` and `UPSTREAMS.md` for exactly what's ours versus
+> `pi-ai`, `pi-agent-core`) rather than ACRYL's own code — see
+> `docs/ACRYL-PADSH-ROADMAP.md` and `UPSTREAMS.md` for exactly what's ours versus
 > upstream.
 
-Prime Agent — the execution model AMIDE builds on — is designed around two
+Prime Agent — the execution model ACRYL builds on — is designed around two
 core abstractions:
 
 - The **[Recursive Language Model (RLM)](https://www.primeintellect.ai/blog/rlm)** treats context as variables (*prompt-as-a-variable*) and tools like recursive subagents as function calls (*programmatic tool/sub-agent calling*) inside a persistent REPL.
@@ -61,11 +53,11 @@ core abstractions:
 
 ## Getting Started
 
-AMIDE isn't published yet; run it from source (Node.js 22.8.0+):
+ACRYL isn't published yet; run it from source (Node.js 22.8.0+):
 
 ```bash
-git clone git@github.com:amidedev/amide.git
-cd amide
+git clone git@github.com:acryldev/acryl-padsh.git
+cd acryl-padsh
 npm ci
 ```
 
@@ -74,16 +66,16 @@ script preserves the caller's working directory, so it can be run against a
 separate test project from anywhere:
 
 ```bash
-/path/to/amide/amide.sh
+/path/to/acryl/acryl.sh
 ```
 
 On first launch, run `/login` to choose a subscription or API-key provider.
-AMIDE works in the current directory and can run commands and modify files
+ACRYL works in the current directory and can run commands and modify files
 there. Use a disposable clone, clean worktree, or another checkpoint you can
 inspect and restore.
 
 > [!WARNING]
-> AMIDE executes model-generated Python and project commands with your user
+> ACRYL executes model-generated Python and project commands with your user
 > permissions. Its worker and kernel processes improve lifecycle isolation
 > and recovery; they are **not** a security sandbox. Review changes and use
 > trusted repositories, instructions, skills, and extensions only. Run
@@ -93,25 +85,25 @@ inspect and restore.
 Useful commands:
 
 ```bash
-amide agents                   # Browse running, idle, and saved sessions
-amide attach <agent>           # Reattach to a running session
-amide --resume [path|id]       # Browse sessions or resume one directly
-amide status                   # Inspect background service state
-amide doctor [--fix]           # Inspect or repair background services
-amide update [--force]         # Update AMIDE
-amide shutdown [--force]       # Stop every agent, worker, and background service
+acryl agents                   # Browse running, idle, and saved sessions
+acryl attach <agent>           # Reattach to a running session
+acryl --resume [path|id]       # Browse sessions or resume one directly
+acryl status                   # Inspect background service state
+acryl doctor [--fix]           # Inspect or repair background services
+acryl update [--force]         # Update ACRYL
+acryl shutdown [--force]       # Stop every agent, worker, and background service
 ```
 
 ## Built for Long-Running Work
 
-AMIDE is built for long-running work, especially for evaluations in
+ACRYL is built for long-running work, especially for evaluations in
 research. These features are available in the TUI, and when run
 autonomously.
 
 - **Continual Harness:** `/refine` can persist focused, reviewable lessons as supplemental prompts, memories, reusable skill descriptions, or subagent specifications, with recorded refinement history. It does not replace packaging and reviewing new executable skills.
 - **Direct agent-to-agent communication:** running agents and retained subagents can discover one another, exchange messages, and steer active work.
 - **Daemon-backed continuity:** active sessions, Python REPL state, schedules, and subagents keep running when the terminal detaches and can be reattached later.
-- **Heartbeats and schedules:** `/heartbeat`, `rlm_heartbeat`, and `amide schedule` can re-enter a session periodically or at a specific time.
+- **Heartbeats and schedules:** `/heartbeat`, `rlm_heartbeat`, and `acryl schedule` can re-enter a session periodically or at a specific time.
 - **Persistent goals:** `/goal` keeps an objective and its progress active across turns until it is completed, paused, or cleared.
 - **Bounded autonomous mode:** `/autonomous` continues within configured turn, token, and time budgets and can run user-defined quality gates. A passed gate checks only what that gate verifies; reaching a limit does not imply task success.
 
@@ -136,7 +128,7 @@ following the [security policy](SECURITY.md).
 
 ## Acknowledgements
 
-AMIDE is a fork of [Prime Agent](https://github.com/PrimeIntellect-ai/prime-agent), whose agent and TUI is built on top of [`pi`](https://github.com/earendil-works/pi). It additionally draws its Cordis/Monotonic-Prompt-Architecture direction from [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) and from [`acryldev/acryl`](https://github.com/acryldev/acryl)'s existing Cordis control-plane work. See `UPSTREAMS.md` and `THIRD_PARTY_NOTICES.md` for full attribution.
+ACRYL is a fork of [Prime Agent](https://github.com/PrimeIntellect-ai/prime-agent), whose agent and TUI is built on top of [`pi`](https://github.com/earendil-works/pi). It additionally draws its Cordis/Monotonic-Prompt-Architecture direction from [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) and from [`acryldev/acryl`](https://github.com/acryldev/acryl)'s existing Cordis control-plane work. See `UPSTREAMS.md` and `THIRD_PARTY_NOTICES.md` for full attribution.
 
 ## License
 
@@ -144,7 +136,7 @@ MIT — see `LICENSE` and `THIRD_PARTY_NOTICES.md`.
 
 ## Citation
 
-AMIDE's execution model is built on Prime Agent's RLM harness. If you use
+ACRYL's execution model is built on Prime Agent's RLM harness. If you use
 this codebase in your research, please cite the underlying work:
 
 ```bibtex

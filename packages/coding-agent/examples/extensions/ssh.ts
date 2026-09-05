@@ -14,8 +14,8 @@
  */
 
 import { spawn } from "node:child_process";
-import type { ExtensionAPI } from "amide";
-import { type BashOperations, createBashTool, createEditTool, type EditOperations } from "amide";
+import type { ExtensionAPI } from "acryl";
+import { type BashOperations, createBashTool, createEditTool, type EditOperations } from "acryl";
 
 function sshExec(remote: string, command: string): Promise<Buffer> {
 	return new Promise((resolve, reject) => {

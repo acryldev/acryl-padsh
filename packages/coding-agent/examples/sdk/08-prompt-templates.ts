@@ -11,7 +11,7 @@ import {
 	getAgentDir,
 	type PromptTemplate,
 	SessionManager,
-} from "amide";
+} from "acryl";
 
 // Define custom templates
 const deployTemplate: PromptTemplate = {

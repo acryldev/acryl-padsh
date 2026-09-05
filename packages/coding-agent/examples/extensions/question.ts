@@ -5,7 +5,7 @@
  */
 
 import { Editor, type EditorTheme, Key, matchesKey, Text, truncateToWidth } from "@earendil-works/pi-tui";
-import type { ExtensionAPI } from "amide";
+import type { ExtensionAPI } from "acryl";
 import { Type } from "typebox";
 
 interface OptionWithDesc {

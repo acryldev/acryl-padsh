@@ -7,8 +7,8 @@
  *   pi -e ./bash-spawn-hook.ts
  */
 
-import type { ExtensionAPI } from "amide";
-import { createBashTool } from "amide";
+import type { ExtensionAPI } from "acryl";
+import { createBashTool } from "acryl";
 
 export default function (pi: ExtensionAPI) {
 	const cwd = process.cwd();

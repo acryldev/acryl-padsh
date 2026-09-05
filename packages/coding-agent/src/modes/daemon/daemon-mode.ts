@@ -365,7 +365,7 @@ const UPDATE_RESTART_ABORT_BASH_TIMEOUT_MS = 5000;
 const SUPERVISOR_FENCE_POLL_MS = 250;
 const UPDATE_RESTART_MARKER =
 	"<prime_agent_update_interrupted>\n" +
-	"AMIDE was updated and intentionally interrupted this session. Continue from the saved transcript and restored tool/kernel state. Any running model, tool, bash, or child-agent work may have been partially completed.\n" +
+	"ACRYL was updated and intentionally interrupted this session. Continue from the saved transcript and restored tool/kernel state. Any running model, tool, bash, or child-agent work may have been partially completed.\n" +
 	"</prime_agent_update_interrupted>";
 const RECOVERY_CHECKPOINT_EVENTS: ReadonlySet<string> = new Set([
 	"agent_start",
@@ -678,7 +678,7 @@ export class AgentDaemon {
 
 		this.registerSignalHandlers();
 		this.summarizer.start();
-		this.log(`AMIDE daemon listening on ${this.socketPath}`);
+		this.log(`ACRYL daemon listening on ${this.socketPath}`);
 		// No startup restore: on-disk sessions return only via --resume or the agents view.
 		if (!this.shuttingDown) {
 			this.cronScheduler.start();

@@ -16,7 +16,7 @@ import lockfile from "proper-lockfile";
 import { getProcessStartId } from "../../core/session-lease.js";
 import { defaultDaemonSocketDir, normalizeSocketPath } from "./daemon-socket.js";
 
-const DAEMON_SUPERVISOR_REGISTRY_DIR_ENV = "AMIDE_INTERNAL_DAEMON_SUPERVISOR_REGISTRY_DIR";
+const DAEMON_SUPERVISOR_REGISTRY_DIR_ENV = "ACRYL_INTERNAL_DAEMON_SUPERVISOR_REGISTRY_DIR";
 
 const OWNER_VERSION = 1;
 const REGISTRY_LOCK_STALE_MS = 5000;
@@ -317,7 +317,7 @@ class DaemonShutdownAdmission {
  * per-invocation agent dir.
  */
 function defaultDaemonSupervisorRegistryDir(environment: NodeJS.ProcessEnv = process.env): string {
-	return environment[DAEMON_SUPERVISOR_REGISTRY_DIR_ENV] ?? join(homedir(), ".amide", "supervisor-owners");
+	return environment[DAEMON_SUPERVISOR_REGISTRY_DIR_ENV] ?? join(homedir(), ".acryl", "supervisor-owners");
 }
 
 /** Read-only legacy registry location, disabled when the registry is overridden. */
