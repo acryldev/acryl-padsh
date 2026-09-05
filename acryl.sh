@@ -2,24 +2,24 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-export AMIDE_LAUNCHER_PATH="$SCRIPT_DIR/amide.sh"
+export ACRYL_LAUNCHER_PATH="$SCRIPT_DIR/acryl.sh"
 # Isolate this fork's Python kernel venv from a real Prime Agent install's
 # ~/.prime/agent/kernel-venv. getKernelVenvDir() in
 # packages/coding-agent/src/core/kernel/bootstrap.ts doesn't derive from
 # piConfig/getAgentDir() (it's a separate, independently hardcoded path), so
 # it needs its own override here rather than a source change to Prime's
 # kernel bootstrap. Respects an explicit user override if already set.
-: "${AMIDE_KERNEL_VENV:="$HOME/.amide/agent/kernel-venv"}"
-export AMIDE_KERNEL_VENV
+: "${ACRYL_KERNEL_VENV:="$HOME/.acryl/agent/kernel-venv"}"
+export ACRYL_KERNEL_VENV
 # Same problem, same fix, for the daemon socket dir: defaultDaemonSocketDir()
 # in packages/coding-agent/src/modes/daemon/daemon-socket.ts hardcodes
 # $TMPDIR/prime-agent-<uid>, shared with a real Prime Agent install's daemon.
 # That's not just a config-file collision, it's the same running daemon
 # process and in-memory session state.
-: "${AMIDE_DAEMON_SOCKET_DIR:="${TMPDIR:-/tmp}/amide-$(id -u 2>/dev/null || echo user)"}"
-export AMIDE_DAEMON_SOCKET_DIR
+: "${ACRYL_DAEMON_SOCKET_DIR:="${TMPDIR:-/tmp}/acryl-$(id -u 2>/dev/null || echo user)"}"
+export ACRYL_DAEMON_SOCKET_DIR
 if BUILD_ID="$(git -C "$SCRIPT_DIR" describe --tags --always --dirty 2>/dev/null)"; then
-  export AMIDE_BUILD_ID="$BUILD_ID"
+  export ACRYL_BUILD_ID="$BUILD_ID"
 fi
 
 # Check for --no-env / --dist flags
@@ -74,7 +74,7 @@ if [[ "$NO_ENV" == "true" ]]; then
   unset AZURE_OPENAI_API_KEY
   unset AZURE_OPENAI_BASE_URL
   unset AZURE_OPENAI_RESOURCE_NAME
-  echo "Running Prime Agent without API keys..."
+  echo "Running ACRYL without API keys..."
 fi
 
 # --dist runs the bundled build (what users get; ~3x faster startup than tsx).

@@ -1,13 +1,13 @@
-# AMIDE Roadmap
+# ACRYL-PADSH Roadmap
 
 This is the global navigator for this repository: product direction,
 milestone sequencing, and the invariants that must not be violated. It is not
 a task tracker — individual implementation tasks live in Spec Kit
 `specs/<NNN-feature>/tasks.md` when a milestone below is actually planned. For
 full architectural detail, read
-`docs/AMIDE Implementation Specification.md` (103 sections; cited as
+`docs/ACRYL Implementation Specification.md` (103 sections; cited as
 "Spec §N" below) and
-`docs/MonotonicPromptArchitecture_quick_overview_in_relation_to_DSH_and_AMIDE_project.md`
+`docs/MonotonicPromptArchitecture_quick_overview_in_relation_to_DSH_and_ACRYL_project.md`
 ("MPA doc"). This roadmap changes only when product direction or a governing
 constraint changes, per `docs/workmethodology/acryl-hybrid-engineering-methodology.md` §2.1.
 
@@ -17,7 +17,7 @@ to `docs/ACRYL-ROADMAP.md`, which describes the current, separately shipping
 
 ## Product vision
 
-**AMIDE — Adaptive Machine Intelligence Development Engine.** AMIDE combines
+**ACRYL — Adaptive Machine Intelligence Development Engine.** ACRYL combines
 three proven lineages rather than inventing a fourth from scratch:
 
 - **Pi's self-extensibility** — a coding agent that can be extended with
@@ -38,7 +38,7 @@ extensions, goals, autonomous mode — Spec §3) while adopting Cordis as the
 internal composition/lifecycle substrate and MPA as the discipline governing
 every model request (Spec §18–§26).
 
-**Forward direction, not yet built:** AMIDE is intended to become
+**Forward direction, not yet built:** ACRYL is intended to become
 multi-surface — one central driving agent that can extend itself with new
 capabilities and drive multiple presentation surfaces (an Electron GUI, a
 web-app server) rather than owning a single fixed UI, in the spirit of
@@ -58,7 +58,7 @@ repository (Spec §1, §102).
        long-running RLM runtime
                    |
                    v
-            AMIDE Runtime Host
+            ACRYL Runtime Host
                    |
                    v
                  Cordis
@@ -137,7 +137,7 @@ the gate is summarized here.
 
 | # | Milestone | Gate | Spec |
 |---|---|---|---|
-| M0 | Upstream baseline | `amide == working Prime Agent`, no functional changes, upstream commit recorded in `UPSTREAMS.md` | §70 |
+| M0 | Upstream baseline | `acryl == working Prime Agent`, no functional changes, upstream commit recorded in `UPSTREAMS.md` | §70 |
 | M1 | Cordis runtime with zero behavior change | One root Cordis context per worker reaches `ACTIVE`; survives TUI detach; clean `DISPOSED` on shutdown | §71 |
 | M2 | Migrate `acrAgentControl` | Prime becomes the first registered provider; register/attach/dispatch/dispose all tested | §72 |
 | M3 | MPA observability before changing behavior | `/cache` command; systemHash/toolHash/messageHash/LCP/first-difference captured; baseline established, nothing optimized yet | §73 |
