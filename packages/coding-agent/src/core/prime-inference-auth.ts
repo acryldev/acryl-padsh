@@ -1,22 +1,10 @@
 import { Buffer } from "node:buffer";
 import { constants, generateKeyPairSync, privateDecrypt } from "node:crypto";
-import {
-	chmodSync,
-	closeSync,
-	existsSync,
-	mkdirSync,
-	openSync,
-	readFileSync,
-	renameSync,
-	rmSync,
-	writeFileSync,
-} from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { basename, dirname, join } from "node:path";
+import { join } from "node:path";
 import type { OAuthAuthInfo } from "@earendil-works/pi-ai";
 
-export const PRIME_INFERENCE_PROVIDER_ID = "prime-inference";
-export const PRIME_INFERENCE_PROVIDER_NAME = "Prime Inference";
 export const PRIME_AGENT_TRACES_PROVIDER_ID = "prime-agent-traces";
 export const ACRYL_AGENT_TRACES_PROVIDER_NAME = "ACRYL Agent Traces";
 
@@ -76,15 +64,7 @@ export type PrimeInferenceAccessResult =
 			message: string;
 	  };
 
-type PrimeAccessScope = "inference" | "agent_traces";
-
-export type PrimeTeam = {
-	teamId: string;
-	name: string;
-	slug?: string;
-	role?: string;
-	createdAt?: string;
-};
+type PrimeAccessScope = "agent_traces";
 
 function defaultPrimeCliConfigPath(): string {
 	return join(homedir(), ".prime", "config.json");
@@ -108,11 +88,6 @@ function stringEnv(name: string): string | undefined {
 	return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
-function numberField(data: Record<string, unknown>, key: string): number | undefined {
-	const value = data[key];
-	return typeof value === "number" && Number.isFinite(value) ? value : undefined;
-}
-
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -130,39 +105,6 @@ function readPrimeCliConfigData(configPath: string): Record<string, unknown> {
 		}
 	}
 	return data;
-}
-
-function writePrimeCliConfigData(configPath: string, data: Record<string, unknown>): void {
-	const dir = dirname(configPath);
-	if (!existsSync(dir)) {
-		mkdirSync(dir, { recursive: true, mode: 0o700 });
-	}
-	const tempPath = join(
-		dir,
-		`.${basename(configPath)}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`,
-	);
-	let fd: number | undefined = openSync(tempPath, "wx", 0o600);
-	try {
-		writeFileSync(fd, `${JSON.stringify(data, null, 2)}\n`, "utf-8");
-		closeSync(fd);
-		fd = undefined;
-		chmodSync(tempPath, 0o600);
-		renameSync(tempPath, configPath);
-		chmodSync(configPath, 0o600);
-	} finally {
-		if (fd !== undefined) {
-			closeSync(fd);
-		}
-		if (existsSync(tempPath)) {
-			rmSync(tempPath, { force: true });
-		}
-	}
-}
-
-function clearPrimeTeamFields(data: Record<string, unknown>): void {
-	delete data.team_id;
-	delete data.team_name;
-	delete data.team_role;
 }
 
 export function loadPrimeCliConfig(configPath: string = defaultPrimeCliConfigPath()): PrimeCliConfig {
@@ -195,42 +137,6 @@ export function loadPrimeCliConfig(configPath: string = defaultPrimeCliConfigPat
 		}
 	}
 	return config;
-}
-
-export function savePrimeCliApiKey(apiKey: string, configPath: string = defaultPrimeCliConfigPath()): PrimeCliConfig {
-	const data = readPrimeCliConfigData(configPath);
-	data.api_key = apiKey;
-	clearPrimeTeamFields(data);
-	writePrimeCliConfigData(configPath, data);
-	return loadPrimeCliConfig(configPath);
-}
-
-export function clearPrimeCliCredentials(configPath: string = defaultPrimeCliConfigPath()): PrimeCliConfig {
-	const data = readPrimeCliConfigData(configPath);
-	delete data.api_key;
-	clearPrimeTeamFields(data);
-	writePrimeCliConfigData(configPath, data);
-	return loadPrimeCliConfig(configPath);
-}
-
-export function savePrimeCliTeamSelection(
-	team: PrimeTeam | null,
-	configPath: string = defaultPrimeCliConfigPath(),
-): PrimeCliConfig {
-	const data = readPrimeCliConfigData(configPath);
-	if (team) {
-		data.team_id = team.teamId;
-		data.team_name = team.name;
-		if (team.role) {
-			data.team_role = team.role;
-		} else {
-			delete data.team_role;
-		}
-	} else {
-		clearPrimeTeamFields(data);
-	}
-	writePrimeCliConfigData(configPath, data);
-	return loadPrimeCliConfig(configPath);
 }
 
 export function resolvePrimeAgentTracesBaseUrl(baseUrl?: string): string {
@@ -337,94 +243,6 @@ async function readJsonObject(response: Response, context: string): Promise<Reco
 		throw new Error(`${context} returned an invalid response`);
 	}
 	return parsed;
-}
-
-function parsePrimeTeam(value: unknown): PrimeTeam | undefined {
-	if (!isRecord(value)) {
-		return undefined;
-	}
-	const teamId = stringField(value, "teamId");
-	if (!teamId) {
-		return undefined;
-	}
-
-	const team: PrimeTeam = {
-		teamId,
-		name: stringField(value, "name") ?? "Unknown",
-	};
-	const slug = stringField(value, "slug");
-	const role = stringField(value, "role");
-	const createdAt = stringField(value, "createdAt");
-	if (slug) {
-		team.slug = slug;
-	}
-	if (role) {
-		team.role = role;
-	}
-	if (createdAt) {
-		team.createdAt = createdAt;
-	}
-	return team;
-}
-
-export async function fetchPrimeTeams(
-	apiKey: string,
-	baseUrl: string,
-	options: {
-		fetchFn?: typeof fetch;
-		requestTimeoutMs?: number;
-		signal?: AbortSignal;
-	} = {},
-): Promise<PrimeTeam[]> {
-	const fetchFn = options.fetchFn ?? fetch;
-	const requestTimeoutMs = options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
-	const teams: PrimeTeam[] = [];
-	let offset = 0;
-	const limit = 100;
-
-	while (true) {
-		const url = new URL(`${normalizeBaseUrl(baseUrl)}/api/v1/user/teams`);
-		url.searchParams.set("offset", String(offset));
-		url.searchParams.set("limit", String(limit));
-		const response = await fetchWithTimeout(
-			fetchFn,
-			url,
-			{
-				method: "GET",
-				headers: {
-					Authorization: `Bearer ${apiKey}`,
-					Accept: "application/json",
-				},
-			},
-			requestTimeoutMs,
-			options.signal,
-		);
-
-		if (!response.ok) {
-			throw new Error(`Failed to fetch Prime teams: ${await readResponseMessage(response)}`);
-		}
-
-		const data = await readJsonObject(response, "Prime teams");
-		const batch = data.data;
-		if (!Array.isArray(batch)) {
-			throw new Error("Prime teams response missing team data");
-		}
-
-		for (const item of batch) {
-			const team = parsePrimeTeam(item);
-			if (team) {
-				teams.push(team);
-			}
-		}
-
-		const totalCount = numberField(data, "total_count") ?? teams.length;
-		if (batch.length === 0 || teams.length >= totalCount) {
-			break;
-		}
-		offset += limit;
-	}
-
-	return teams;
 }
 
 function createPrimeChallengeKeypair(): { privateKey: string; publicKey: string } {
@@ -608,18 +426,6 @@ async function checkPrimeScopeAccess(
 	return { ok: false, message: `Prime token does not have ${scopeLabel} write permission` };
 }
 
-export async function checkPrimeInferenceAccess(
-	apiKey: string,
-	baseUrl: string,
-	options: {
-		fetchFn?: typeof fetch;
-		requestTimeoutMs?: number;
-		signal?: AbortSignal;
-	} = {},
-): Promise<PrimeInferenceAccessResult> {
-	return checkPrimeScopeAccess(apiKey, baseUrl, "inference", "inference", options);
-}
-
 export async function checkPrimeAgentTracesAccess(
 	apiKey: string,
 	baseUrl: string,
@@ -635,49 +441,6 @@ export async function checkPrimeAgentTracesAccess(
 function formatAccessFailure(result: Exclude<PrimeInferenceAccessResult, { ok: true }>): string {
 	const status = result.status === undefined ? "" : `HTTP ${result.status}: `;
 	return `${status}${result.message}`;
-}
-
-export async function loginPrimeInference(
-	callbacks: PrimeInferenceLoginCallbacks,
-	options: PrimeInferenceLoginOptions = {},
-): Promise<PrimeInferenceLoginResult> {
-	const config = loadPrimeCliConfig(options.configPath);
-	const fetchFn = options.fetchFn ?? fetch;
-	const requestTimeoutMs = options.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
-	const pollIntervalMs = options.pollIntervalMs ?? DEFAULT_POLL_INTERVAL_MS;
-
-	if (config.apiKey) {
-		callbacks.onProgress?.("Checking existing Prime CLI credentials...");
-		const access = await checkPrimeInferenceAccess(config.apiKey, config.baseUrl, {
-			fetchFn,
-			requestTimeoutMs,
-			signal: callbacks.signal,
-		});
-		if (access.ok) {
-			throwIfCancelled(callbacks.signal);
-			return { apiKey: config.apiKey, source: "prime-cli" };
-		}
-		callbacks.onProgress?.(
-			`Existing Prime CLI key cannot access Prime Inference (${formatAccessFailure(access)}). Starting browser login...`,
-		);
-	} else {
-		callbacks.onProgress?.("No Prime CLI API key found. Starting browser login...");
-	}
-
-	const apiKey = await runPrimeBrowserLogin(config, callbacks, fetchFn, requestTimeoutMs, pollIntervalMs);
-	throwIfCancelled(callbacks.signal);
-	callbacks.onProgress?.("Checking Prime Inference access...");
-	const access = await checkPrimeInferenceAccess(apiKey, config.baseUrl, {
-		fetchFn,
-		requestTimeoutMs,
-		signal: callbacks.signal,
-	});
-	if (!access.ok) {
-		throw new Error(`Prime API key does not have Prime Inference access (${formatAccessFailure(access)})`);
-	}
-
-	throwIfCancelled(callbacks.signal);
-	return { apiKey, source: "browser" };
 }
 
 export async function loginPrimeAgentTraces(

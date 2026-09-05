@@ -6,11 +6,8 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	checkPrimeAgentTracesAccess,
-	checkPrimeInferenceAccess,
-	fetchPrimeTeams,
 	loadPrimeCliConfig,
 	loginPrimeAgentTraces,
-	loginPrimeInference,
 } from "../src/core/prime-inference-auth.js";
 
 function jsonResponse(body: unknown, status: number = 200): Response {
@@ -62,7 +59,7 @@ function encryptChallengeResult(publicKey: string, value: string): string {
 	).toString("base64");
 }
 
-describe("Prime Inference auth", () => {
+describe("Prime CLI / ACRYL Agent Traces auth", () => {
 	let tempDir: string;
 	let configPath: string;
 	let originalTraceBaseUrl: string | undefined;
@@ -154,49 +151,6 @@ describe("Prime Inference auth", () => {
 		}
 	});
 
-	it("fetches Prime teams across paginated responses", async () => {
-		const requestedUrls: string[] = [];
-		const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
-			requestedUrls.push(getUrl(input));
-			expect(getAuthorization(init)).toBe("Bearer prime-key");
-			if (requestedUrls.length === 1) {
-				return jsonResponse({
-					data: [{ teamId: "team-1", name: "Research", slug: "research", role: "admin" }],
-					total_count: 2,
-				});
-			}
-			return jsonResponse({
-				data: [{ teamId: "team-2", name: "Infra", slug: "infra", role: "member" }],
-				total_count: 2,
-			});
-		});
-
-		await expect(
-			fetchPrimeTeams("prime-key", "https://prime-api.example/api/v1", { fetchFn: fetchMock }),
-		).resolves.toEqual([
-			{ teamId: "team-1", name: "Research", slug: "research", role: "admin" },
-			{ teamId: "team-2", name: "Infra", slug: "infra", role: "member" },
-		]);
-		expect(requestedUrls).toEqual([
-			"https://prime-api.example/api/v1/user/teams?offset=0&limit=100",
-			"https://prime-api.example/api/v1/user/teams?offset=100&limit=100",
-		]);
-	});
-
-	it("checks Prime Inference access with Prime whoami permissions", async () => {
-		const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
-			expect(getUrl(input)).toBe("https://prime-api.example/api/v1/user/whoami");
-			expect(init?.method).toBe("GET");
-			expect(getAuthorization(init)).toBe("Bearer prime-key");
-			return jsonResponse({ data: { scope: { inference: { read: true, write: true } } } });
-		});
-
-		await expect(
-			checkPrimeInferenceAccess("prime-key", "https://prime-api.example", { fetchFn: fetchMock }),
-		).resolves.toEqual({ ok: true });
-		expect(fetchMock).toHaveBeenCalledOnce();
-	});
-
 	it("checks ACRYL trace access with Prime whoami permissions", async () => {
 		const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
 			expect(getUrl(input)).toBe("https://prime-api.example/api/v1/user/whoami");
@@ -271,40 +225,24 @@ describe("Prime Inference auth", () => {
 		});
 
 		await expect(
-			checkPrimeInferenceAccess("prime-key", "https://prime-api.example", { fetchFn: fetchMock }),
+			checkPrimeAgentTracesAccess("prime-key", "https://prime-api.example", { fetchFn: fetchMock }),
 		).rejects.toThrow("Prime whoami returned an invalid response");
-	});
-
-	it("imports a valid Prime CLI key", async () => {
-		writeFileSync(configPath, JSON.stringify({ api_key: "prime-cli-key" }));
-		const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit): Promise<Response> => {
-			expect(getUrl(input)).toBe("https://api.primeintellect.ai/api/v1/user/whoami");
-			expect(getAuthorization(init)).toBe("Bearer prime-cli-key");
-			return jsonResponse({ data: { scope: { inference: { write: true } } } });
-		});
-		const onAuth = vi.fn();
-
-		const result = await loginPrimeInference({ onAuth }, { configPath, fetchFn: fetchMock, requestTimeoutMs: 1000 });
-
-		expect(result).toEqual({ apiKey: "prime-cli-key", source: "prime-cli" });
-		expect(onAuth).not.toHaveBeenCalled();
-		expect(fetchMock).toHaveBeenCalledOnce();
 	});
 
 	it("honors cancellation before returning an imported Prime CLI key", async () => {
 		writeFileSync(configPath, JSON.stringify({ api_key: "prime-cli-key" }));
 		const controller = new AbortController();
 		const fetchMock = vi.fn(async (): Promise<Response> => {
-			const response = jsonResponse({ data: { scope: { inference: { write: true } } } });
+			const response = jsonResponse({ data: { scope: { agent_traces: { write: true } } } });
 			vi.spyOn(response, "json").mockImplementation(async () => {
 				controller.abort();
-				return { data: { scope: { inference: { write: true } } } };
+				return { data: { scope: { agent_traces: { write: true } } } };
 			});
 			return response;
 		});
 
 		await expect(
-			loginPrimeInference(
+			loginPrimeAgentTraces(
 				{
 					onAuth: () => {},
 					signal: controller.signal,
@@ -314,7 +252,8 @@ describe("Prime Inference auth", () => {
 		).rejects.toThrow("Login cancelled");
 	});
 
-	it("falls back to browser login when the Prime CLI key cannot access inference", async () => {
+	it("falls back to browser login when the Prime CLI key cannot access agent traces", async () => {
+		process.env.PRIME_AGENT_TRACES_BASE_URL = "https://prime-api.example/api/v1";
 		writeFileSync(
 			configPath,
 			JSON.stringify({
@@ -330,10 +269,10 @@ describe("Prime Inference auth", () => {
 			if (url === "https://prime-api.example/api/v1/user/whoami") {
 				const auth = getAuthorization(init);
 				if (auth === "Bearer old-key") {
-					return jsonResponse({ data: { scope: { inference: { read: true, write: false } } } });
+					return jsonResponse({ data: { scope: { agent_traces: { read: true, write: false } } } });
 				}
 				if (auth === "Bearer browser-key") {
-					return jsonResponse({ data: { scope: { inference: { read: true, write: true } } } });
+					return jsonResponse({ data: { scope: { agent_traces: { read: true, write: true } } } });
 				}
 			}
 			if (url === "https://prime-api.example/api/v1/auth_challenge/generate") {
@@ -349,7 +288,7 @@ describe("Prime Inference auth", () => {
 		const onAuth = vi.fn();
 		const progress: string[] = [];
 
-		const result = await loginPrimeInference(
+		const result = await loginPrimeAgentTraces(
 			{
 				onAuth,
 				onProgress: (message) => progress.push(message),
@@ -359,10 +298,10 @@ describe("Prime Inference auth", () => {
 
 		expect(result).toEqual({ apiKey: "browser-key", source: "browser" });
 		expect(onAuth).toHaveBeenCalledWith({
-			url: "https://prime-app.example/dashboard/tokens/challenge?code=challenge-code",
+			url: "https://prime-app.example/dashboard/tokens/challenge?code=challenge-code&scope=agent_traces",
 			instructions: "Code: challenge-code",
 		});
-		expect(progress.join("\n")).toContain("Existing Prime CLI key cannot access Prime Inference");
+		expect(progress.join("\n")).toContain("Existing Prime CLI key cannot upload ACRYL traces");
 	});
 
 	it("requests agent trace scope during ACRYL trace browser login", async () => {
@@ -408,6 +347,7 @@ describe("Prime Inference auth", () => {
 	});
 
 	it("rejects an expired browser challenge", async () => {
+		process.env.PRIME_AGENT_TRACES_BASE_URL = "https://prime-api.example/api/v1";
 		writeFileSync(configPath, JSON.stringify({ base_url: "https://prime-api.example" }));
 		const fetchMock = vi.fn(async (input: string | URL | Request): Promise<Response> => {
 			const url = getUrl(input);
@@ -421,7 +361,7 @@ describe("Prime Inference auth", () => {
 		});
 
 		await expect(
-			loginPrimeInference({ onAuth: () => {} }, { configPath, fetchFn: fetchMock, pollIntervalMs: 0 }),
+			loginPrimeAgentTraces({ onAuth: () => {} }, { configPath, fetchFn: fetchMock, pollIntervalMs: 0 }),
 		).rejects.toThrow("Prime login challenge expired");
 	});
 });

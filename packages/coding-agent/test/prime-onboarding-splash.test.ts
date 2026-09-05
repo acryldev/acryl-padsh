@@ -40,7 +40,7 @@ describe("PrimeOnboardingSplashComponent", () => {
 
 		expect(lines).toHaveLength(36);
 		expect(output).toContain("Welcome to ACRYL");
-		expect(output).toContain("Press Enter to login with Prime Intellect");
+		expect(output).toContain("Press Enter to choose a model");
 		expect(output).toContain("·");
 		expect(output).not.toContain("prime agent");
 		expect(output).not.toContain("Research and infrastructure assistant for high-context work.");
@@ -93,12 +93,12 @@ describe("PrimeOnboardingSplashComponent", () => {
 		const component = new PrimeOnboardingSplashComponent(
 			() => {},
 			() => {},
-			{ getRows: () => 36, continueActionLabel: "choose a model" },
+			{ getRows: () => 36, continueActionLabel: "open the model picker" },
 		);
 		const output = stripAnsi(component.render(100).join("\n"));
 
-		expect(output).toContain("Press Enter to choose a model");
-		expect(output).not.toContain("Press Enter to login with Prime Intellect");
+		expect(output).toContain("Press Enter to open the model picker");
+		expect(output).not.toContain("Press Enter to choose a model");
 	});
 
 	it("shows progress and ignores input while onboarding advances", () => {
@@ -140,7 +140,7 @@ describe("PrimeOnboardingSplashComponent", () => {
 		expect(renderRequests).toBe(3);
 		expect(secondRender).not.toBe(firstRender);
 		expect(secondRender).toContain("Welcome to ACRYL");
-		expect(secondRender).toContain("Press Enter to login with Prime Intellect");
+		expect(secondRender).toContain("Press Enter to choose a model");
 	});
 
 	it("centers stacked content in narrow terminals", () => {
@@ -152,7 +152,7 @@ describe("PrimeOnboardingSplashComponent", () => {
 		const rendered = component.render(60).map((line) => stripAnsi(line));
 		const logoLine = rendered.find((line) => line.includes(ACRYL_WORDMARK_LOGO_LONGEST_RUN));
 		const brandLine = rendered.find((line) => line.includes("Welcome to ACRYL"));
-		const hintLine = rendered.find((line) => line.includes("Press Enter to login with Prime Intellect"));
+		const hintLine = rendered.find((line) => line.includes("Press Enter to choose a model"));
 
 		expect(logoLine?.search(/\S/)).toBeGreaterThan(0);
 		expect(brandLine?.search(/\S/)).toBeGreaterThan(0);
