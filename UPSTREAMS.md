@@ -42,6 +42,11 @@ commit of each was used, and what has been ported or changed locally, per
   upstream, the same way Prime Agent's own team does, to stay wire-compatible
   with the pi.dev extension ecosystem. No sync has been performed yet — this
   remote exists for future diffing, not as an active merge target.
+- File-level breakdown of exactly what a sync would touch (new
+  `harness/` subsystem, the `utils/oauth/` → `auth/oauth/` reorg that
+  hits our ACRYL-branded `oauth-page.ts`, the highest-churn shared
+  files, and the effort estimate) is in
+  [`docs/PI-UPSTREAM-SYNC-ASSESSMENT.md`](docs/PI-UPSTREAM-SYNC-ASSESSMENT.md).
 - License: MIT.
 
 ## DeepSeek Harness / Cordis (architectural reference)
